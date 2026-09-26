@@ -1,0 +1,177 @@
+# Estructura del proyecto
+
+Refleja la organización descrita en la tesis (§5.3.2): directorios separados para modelos,
+repositorios, servicios, pantallas por módulo, componentes reutilizables y utilidades, y el código
+de las funciones de la nube en un directorio independiente.
+
+Paquete Android: `gt.umg.agroclima_jalapa` · Nombre del proyecto Dart: `agroclima_jalapa`.
+
+```
+agroclima_jalapa/
+├── CLAUDE.md                     # guía principal para Claude Code
+├── AGENTS.md
+├── ESTRUCTURA_PROYECTO.md        # este archivo
+├── README.md                     # cómo instalar y correr (humano)
+├── pubspec.yaml
+├── analysis_options.yaml         # flutter_lints
+├── .gitignore
+├── firebase.json                 # emuladores, reglas, índices, funciones
+├── .firebaserc
+├── firestore.rules               # reglas de seguridad (ver docs/MODELO_DATOS.md §4)
+├── firestore.indexes.json        # 2 índices compuestos sobre alertas
+│
+├── env/
+│   ├── dev.example.json          # {"OPENWEATHER_API_KEY": ""}  (versionado)
+│   └── dev.json                  # real, IGNORADO por git
+│
+├── assets/
+│   ├── geo/jalapa_municipios.geojson   # límites de los 7 municipios (validación RN-02)
+│   ├── img/                            # logo, ilustraciones de onboarding y estados vacíos
+│   └── fonts/                          # Roboto (si no se usa la del sistema)
+│
+├── android/                      # generado por flutter create; minSdk 26, canales de notificación
+│
+├── lib/
+│   ├── main.dart                 # inicializa Firebase, persistencia, FCM y MultiProvider
+│   ├── app.dart                  # MaterialApp.router, tema claro/oscuro
+│   ├── firebase_options.dart     # generado por flutterfire, IGNORADO por git
+│   │
+│   ├── config/
+│   │   ├── entorno.dart          # claves vía String.fromEnvironment
+│   │   ├── rutas.dart            # go_router: rutas, guardas de sesión, shell con barra inferior
+│   │   ├── textos.dart           # TODOS los textos visibles de la app
+│   │   ├── constantes.dart       # vigencia del dato, tamaño de celda, límites, etc.
+│   │   └── tema/
+│   │       ├── colores.dart      # tokens de la Tabla 71 y semáforo Tabla 72
+│   │       ├── tipografia.dart   # escala de la Tabla 73
+│   │       └── tema_app.dart     # ThemeData claro y oscuro (Material 3)
+│   │
+│   ├── modelos/                  # DTO del dominio: fromMap / toMap / copyWith
+│   │   ├── enums.dart            # Municipio, Cultivo, Etapa, TipoRiesgo, NivelSeveridad (+ etiquetas UI)
+│   │   ├── usuario.dart
+│   │   ├── preferencia_alerta.dart
+│   │   ├── parcela.dart
+│   │   ├── condicion_meteorologica.dart
+│   │   ├── pronostico_diario.dart
+│   │   ├── pronostico_horario.dart   # solo en memoria/caché local para el panel
+│   │   ├── umbral.dart
+│   │   ├── alerta.dart
+│   │   └── resultado.dart        # Resultado<T> con dato + vigente + error amigable
+│   │
+│   ├── repositorios/             # contrato abstracto + implementación en el mismo módulo
+│   │   ├── auth_repositorio.dart            # + firebase_auth_repositorio.dart
+│   │   ├── usuario_repositorio.dart         # perfil, preferencias, tokens FCM
+│   │   ├── parcelas_repositorio.dart
+│   │   ├── clima_repositorio.dart           # caché primero
+│   │   ├── alertas_repositorio.dart
+│   │   ├── umbrales_repositorio.dart        # solo lectura
+│   │   └── historial_repositorio.dart       # condiciones pasadas por rango de fechas
+│   │
+│   ├── servicios/                # lógica de negocio; no conocen widgets
+│   │   ├── openweather_cliente.dart         # FACHADA: arma peticiones, errores y traducción a dominio
+│   │   ├── validacion_geografica.dart       # punto en polígono → municipio o null
+│   │   ├── celda_clima.dart                 # coordenadas → id de celda
+│   │   ├── vigencia_servicio.dart           # ¿el dato guardado sigue vigente?
+│   │   ├── conectividad_servicio.dart       # estado y cambios de conexión
+│   │   ├── notificaciones_servicio.dart     # FCM: permiso, token, canales, abrir detalle
+│   │   ├── ubicacion_servicio.dart          # geolocator + permisos
+│   │   └── reportes_servicio.dart           # resumen por período + PDF
+│   │
+│   ├── pantallas/                # una carpeta por módulo; cada pantalla con su *_vm.dart
+│   │   ├── acceso/               # MOD-01: splash, onboarding, inicio_sesion, registro,
+│   │   │                         #         recuperar_contrasena, permiso_ubicacion, permiso_notificaciones
+│   │   ├── parcelas/             # MOD-02: registro_parcela (4 pasos), mis_parcelas, detalle_parcela
+│   │   ├── clima/                # MOD-03: panel_principal, detalle_pronostico, mapa_clima
+│   │   ├── alertas/              # MOD-04: centro_alertas, detalle_alerta, mis_avisos
+│   │   ├── reportes/             # MOD-05: reportes, historial, exportar_reporte
+│   │   ├── perfil/               # perfil, ajustes, ayuda_glosario, acerca_de
+│   │   └── shell/                # contenedor con la barra inferior de 5 destinos
+│   │
+│   ├── componentes/              # CO-18 transversales, reutilizables
+│   │   ├── chip_semaforo.dart    # color + ícono + palabra, siempre juntos
+│   │   ├── tarjeta_metrica.dart
+│   │   ├── boton_principal.dart  # 56 dp de alto, ancho completo
+│   │   ├── barra_progreso_pasos.dart
+│   │   ├── esqueleto_carga.dart
+│   │   ├── aviso_no_vigente.dart # "Datos de hace X. Sin señal." + Intentar de nuevo
+│   │   ├── estado_vacio.dart
+│   │   ├── estado_error.dart
+│   │   └── aviso_apoyo.dart      # "Información de apoyo, no es aviso oficial" (RC-03)
+│   │
+│   └── utilidades/
+│       ├── unidades.dart         # °C↔°F, manzana↔hectárea, m/s→km/h
+│       ├── fechas.dart           # id yyyyMMdd en hora de Guatemala, textos relativos
+│       ├── validadores.dart      # VA-02 a VA-05
+│       └── errores.dart          # traducción de excepciones a textos llanos
+│
+├── test/                         # espejo de lib/ (unit + widget)
+│
+├── functions/                    # Cloud Functions (JavaScript, Node LTS)
+│   ├── package.json              # firebase-functions, firebase-admin; jest para pruebas
+│   ├── index.js                  # exporta las funciones
+│   ├── src/
+│   │   ├── config.js             # periodicidad, tamaño de celda, ventana de duplicados, rangos VA-07
+│   │   ├── openweather.js        # cliente (fachada) del ciclo
+│   │   ├── adquisicion.js        # CMP-08: recorre parcelas, agrupa por celda, guarda pronósticos/condiciones
+│   │   ├── validacion.js         # VA-06..VA-08
+│   │   ├── motor/
+│   │   │   ├── evaluador.js      # CMP-09: aplica reglas y devuelve nivel por tipo de riesgo
+│   │   │   └── reglas/           # ESTRATEGIA: una regla por tipo de riesgo
+│   │   │       ├── lluvia_intensa.js
+│   │   │       ├── viento_fuerte.js
+│   │   │       ├── sequia.js
+│   │   │       ├── temperatura_baja.js
+│   │   │       ├── temperatura_alta.js
+│   │   │       └── humedad_alta.js
+│   │   ├── alertas.js            # CO-13: mensaje, medida sugerida, control de duplicados
+│   │   ├── notificaciones.js     # envío FCM respetando preferencias y horario de silencio
+│   │   ├── mensajes.js           # plantillas de texto de alertas (lenguaje de acción)
+│   │   └── limpieza.js           # borrado en cascada de parcela y de cuenta
+│   ├── seed/umbrales.json        # catálogo inicial (Tabla 31)
+│   ├── scripts/sembrar-umbrales.js
+│   └── test/
+│
+└── docs/
+    ├── PLAN_DE_TRABAJO.md
+    ├── REQUISITOS.md
+    ├── MODELO_DATOS.md
+    ├── UMBRALES.md
+    ├── DISENO_UI.md
+    ├── DECISIONES.md
+    ├── diseno/                   # PNG de los 35 mockups (00-sistema-*, 01-splash … 34-error-servicio)
+    └── plans/
+        ├── 00-configuracion-inicial.md
+        ├── 01-acceso-cuenta.md
+        ├── 02-parcelas.md
+        ├── 03-monitoreo-meteorologico.md
+        ├── 04-motor-alertas.md
+        └── 05-historial-reportes.md
+```
+
+## Dependencias de Flutter
+
+Agregarlas con `flutter pub add <paquete>` para obtener la versión vigente compatible
+(no copiar números de versión de memoria).
+
+| Paquete | Uso |
+|---|---|
+| firebase_core, firebase_auth, cloud_firestore, firebase_messaging | Firebase |
+| google_sign_in | Acceso con cuenta de Google |
+| provider | Estado (MVVM) e inyección de dependencias |
+| go_router | Navegación, guardas de sesión, barra inferior |
+| google_maps_flutter | Mapa de parcelas y capas |
+| geolocator, permission_handler | Ubicación y permisos |
+| http | Cliente OpenWeather |
+| connectivity_plus | Detección de conexión |
+| flutter_local_notifications | Canales y notificaciones en primer plano |
+| shared_preferences | Caché local pequeña (pronóstico horario, marca de onboarding) |
+| intl | Fechas y números en `es` |
+| fl_chart | Gráficas de pronóstico y reportes |
+| pdf, printing | Exportar reporte a PDF |
+| share_plus, url_launcher | Compartir por WhatsApp / abrir enlaces |
+| **dev:** flutter_lints, mocktail | Análisis y pruebas |
+
+## Dependencias de `functions/`
+
+`firebase-functions` (API v2: `onSchedule`, `onDocumentDeleted`, `defineSecret`), `firebase-admin`,
+y `jest` para pruebas. HTTP con `fetch` nativo de Node.

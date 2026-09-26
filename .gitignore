@@ -1,0 +1,117 @@
+# ============================================================
+# AgroClima Jalapa — .gitignore
+# Regla: nunca subir claves, configuración de Firebase ni archivos generados.
+# ============================================================
+
+# ---------- Secretos y configuración local (RNF-04) ----------
+# Claves para --dart-define-from-file (se versiona solo env/*.example.json)
+env/*.json
+!env/*.example.json
+*.env
+.env
+.env.*
+
+# Firebase (generados por flutterfire configure)
+lib/firebase_options.dart
+android/app/google-services.json
+**/google-services.json
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+database-debug.log
+pubsub-debug.log
+.firebase/
+
+# Firma de la aplicación
+*.jks
+*.keystore
+**/key.properties
+android/local.properties
+
+# ---------- Cloud Functions ----------
+functions/node_modules/
+functions/.env*
+functions/.secret.local
+functions/.runtimeconfig.json
+functions/coverage/
+functions/lib/
+npm-debug.log*
+yarn-error.log*
+
+# Datos exportados del emulador de Firebase
+emulator-data/
+.emulator-data/
+
+# ---------- Flutter / Dart ----------
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+**/build/
+/coverage/
+**/doc/api/
+.widget_preview/
+migrate_working_dir/
+*.g.dart.tmp
+
+# Símbolos y ofuscación
+app.*.symbols
+app.*.map.json
+
+# ---------- Android ----------
+android/.gradle/
+android/captures/
+android/gradlew
+android/gradlew.bat
+android/gradle/wrapper/gradle-wrapper.jar
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/.cxx/
+android/app/.cxx/
+**/GeneratedPluginRegistrant.java
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# ---------- iOS / web / escritorio (no se usan en este proyecto) ----------
+ios/
+web/
+windows/
+linux/
+macos/
+
+# ---------- IDE ----------
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+.atom/
+
+# ---------- Sistema operativo ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ---------- Varios ----------
+*.class
+*.log
+*.pyc
+*.swp
+*.tmp
+*.bak
+.build/
+.buildlog/
+.svn/
+.swiftpm/
