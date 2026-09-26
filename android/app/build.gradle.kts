@@ -21,7 +21,8 @@ val propiedadesLocales =
 
 android {
     namespace = "gt.umg.agroclima_jalapa"
-    compileSdk = flutter.compileSdkVersion
+    // permission_handler exige compilar contra Android 37; no cambia los teléfonos soportados (minSdk).
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
