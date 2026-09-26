@@ -23,6 +23,10 @@ Estado: ✅ decidida · ⏳ por confirmar con Steven.
 | D-15 | "Helada" en un objetivo específico | Se mantiene el umbral general de helada ≤ 0 °C (Bardales Espinoza et al., 2019), que aplica sobre todo a zonas altas (> 1 700 msnm) como Mataquescuintla. | ✅ |
 | D-16 | Package name | `gt.umg.agroclima_jalapa`. | ⏳ |
 | D-17 | Forma de trabajo | En la práctica **no se usan sprints**: se sigue el orden de `PLAN_DE_TRABAJO.md` (respeta las dependencias de la Tabla 42). Scrum y los 6 sprints quedan solo en la tesis. | ✅ |
+| D-18 | "Los próximos 7 días" del mockup | El plan Free solo da 5 días (`/data/2.5/forecast`). El panel muestra **"Los próximos 5 días"**; el resto del diseño de la lista no cambia. | ✅ |
+| D-19 | Métricas "Sol fuerte (UV)" y "Presión" del panel | El índice UV no viene en `/data/2.5/weather` ni en `/forecast` (solo en One Call, excluido). La cuadrícula 3×2 queda Humedad · Viento · Va a llover (`pop`) · Llovió hoy · **Se siente** (`feels_like`) · **Nubes** (`clouds.all`), sin presión (término poco útil para el productor). | ✅ |
+| D-20 | Umbral editable en "Mis avisos" (pantalla 23) | El diseño trae un deslizador "Frío que aguanta el café" para que el usuario cambie el umbral. La tesis fija umbrales en Firestore, solo escritos por funciones (RNF-19), y `DISENO_UI.md` no lo incluye. **No se implementa**; en su lugar se muestra el valor como dato informativo. | ✅ |
+| D-21 | Supuestos técnicos del handoff de diseño | El README del diseño menciona One Call, WorkManager cada 3 h y Room/SQLite. Se sustituyen por la pila de la tesis: `/2.5` Free (D-09), ciclo en Cloud Functions (D-06) y persistencia sin conexión de Firestore + `shared_preferences` (D-12). | ✅ |
 
 ## Pendientes a revisar al final (no bloquean)
 

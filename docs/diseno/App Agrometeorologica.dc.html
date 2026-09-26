@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#1B5E20"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="30" width="40" height="40" rx="12" fill="#fff"/><path d="M40 52a8 8 0 0 1 3-15 10 10 0 0 1 18 3 6 6 0 0 1-1 12z" fill="#1B5E20"/><path d="M44 57l-2 5M51 57l-2 5M58 57l-2 5" stroke="#1B5E20" stroke-width="2.5" stroke-linecap="round"/></svg></template>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#EDEBE4;font-family:Roboto,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1B5E20}a:hover{color:#2E7D32}
+.blk{padding:56px 60px 44px;border-bottom:1px solid rgba(0,0,0,.09)}
+.bhd{display:flex;align-items:baseline;gap:12px;margin:0 0 6px}
+.btag{font:700 11px/1 'Roboto Mono',monospace;letter-spacing:.08em;padding:5px 9px;background:#1A1C19;color:#fff;border-radius:5px;text-decoration:none}
+.bname{font:700 20px/1.2 Roboto,sans-serif;color:#1A1C19}
+.bsub{font:400 14px/1.5 Roboto,sans-serif;color:rgba(0,0,0,.55);margin:0 0 30px;max-width:760px}
+.row{display:flex;flex-wrap:wrap;gap:34px;align-items:flex-start}
+.scr{display:flex;flex-direction:column;gap:10px;width:360px;scroll-margin-top:20px}
+.slbl{display:flex;align-items:baseline;gap:8px;font:500 13px/1.3 Roboto,sans-serif;color:#1A1C19}
+.sid{font:700 10.5px/1 'Roboto Mono',monospace;padding:4px 7px;background:rgba(0,0,0,.09);color:#1A1C19;border-radius:5px;text-decoration:none}
+.scr:target .sid{background:#2E7D32;color:#fff}
+.note{margin:2px 0 0;font:400 12px/1.55 Roboto,sans-serif;color:rgba(0,0,0,.55);text-wrap:pretty}
+.ms{font-family:'Material Symbols Outlined';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr}
+</style>
+</helmet>
+
+<section class="blk" id="ds">
+<div class="bhd"><a class="btag" href="#ds">DS</a><span class="bname">Sistema de diseño — AgroClima Jalapa</span></div>
+<p class="bsub">Base para todas las pantallas: fondos claros por defecto (legibilidad bajo sol directo), tipografía grande, semáforo de riesgo consistente color + ícono + palabra, y áreas táctiles de 48×48 dp como mínimo.</p>
+
+<div class="row">
+
+<div style="width:360px;background:#fff;border:1px solid #DCDAD3;border-radius:16px;padding:22px 20px 24px">
+<div style="font:700 15px/1.2 Roboto;color:#1A1C19;margin-bottom:4px">Paleta</div>
+<div style="font:400 12px/1.4 Roboto;color:rgba(0,0,0,.5);margin-bottom:16px">Primario verde agrícola · acento azul cielo · semáforo de riesgo</div>
+
+<div style="font:500 11px/1 'Roboto Mono';letter-spacing:.06em;color:rgba(0,0,0,.45);margin:0 0 8px">PRIMARIO / SECUNDARIO</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px">
+<div style="background:#2E7D32;border-radius:10px;padding:12px 10px;color:#fff"><div style="font:500 13px/1.2 Roboto">Primario</div><div style="font:400 11px/1.4 'Roboto Mono';opacity:.85">#2E7D32</div></div>
+<div style="background:#1B5E20;border-radius:10px;padding:12px 10px;color:#fff"><div style="font:500 13px/1.2 Roboto">Primario oscuro</div><div style="font:400 11px/1.4 'Roboto Mono';opacity:.85">#1B5E20</div></div>
+<div style="background:#C8E6C9;border-radius:10px;padding:12px 10px;color:#14351A"><div style="font:500 13px/1.2 Roboto">Contenedor</div><div style="font:400 11px/1.4 'Roboto Mono';opacity:.7">#C8E6C9</div></div>
+<div style="background:#0277BD;border-radius:10px;padding:12px 10px;color:#fff"><div style="font:500 13px/1.2 Roboto">Acento cielo</div><div style="font:400 11px/1.4 'Roboto Mono';opacity:.85">#0277BD</div></div>
+</div>
+
+<div style="font:500 11px/1 'Roboto Mono';letter-spacing:.06em;color:rgba(0,0,0,.45);margin:0 0 8px">SEMÁFORO DE RIESGO</div>
+<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px">
+<div style="display:flex;align-items:center;gap:10px;background:#E8F5E9;border-left:6px solid #2E7D32;border-radius:8px;padding:10px 12px"><span class="ms" style="font-size:22px;color:#1B5E20">check_circle</span><div><div style="font:700 14px/1.2 Roboto;color:#14351A">NORMAL</div><div style="font:400 11px/1.4 'Roboto Mono';color:rgba(0,0,0,.55)">#2E7D32 · fondo #E8F5E9</div></div></div>
+<div style="display:flex;align-items:center;gap:10px;background:#FFF3D6;border-left:6px solid #B26A00;border-radius:8px;padding:10px 12px"><span class="ms" style="font-size:22px;color:#8A4B00">warning</span><div><div style="font:700 14px/1.2 Roboto;color:#4A2A00">PRECAUCIÓN</div><div style="font:400 11px/1.4 'Roboto Mono';color:rgba(0,0,0,.55)">#B26A00 · fondo #FFF3D6</div></div></div>
+<div style="display:flex;align-items:center;gap:10px;background:#FDE7E7;border-left:6px solid #B3261E;border-radius:8px;padding:10px 12px"><span class="ms" style="font-size:22px;color:#8C1D18">error</span><div><div style="font:700 14px/1.2 Roboto;color:#410E0B">PELIGRO</div><div style="font:400 11px/1.4 'Roboto Mono';color:rgba(0,0,0,.55)">#B3261E · fondo #FDE7E7</div></div></div>
+</div>
+
+<div style="font:500 11px/1 'Roboto Mono';letter-spacing:.06em;color:rgba(0,0,0,.45);margin:0 0 8px">NEUTROS</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+<div style="background:#F7F6F2;border:1px solid #DCDAD3;border-radius:8px;padding:10px 8px"><div style="font:500 12px/1.2 Roboto;color:#1A1C19">Fondo</div><div style="font:400 10px/1.4 'Roboto Mono';color:rgba(0,0,0,.5)">#F7F6F2</div></div>
+<div style="background:#fff;border:1px solid #DCDAD3;border-radius:8px;padding:10px 8px"><div style="font:500 12px/1.2 Roboto;color:#1A1C19">Superficie</div><div style="font:400 10px/1.4 'Roboto Mono';color:rgba(0,0,0,.5)">#FFFFFF</div></div>
+<div style="background:#1A1C19;border-radius:8px;padding:10px 8px"><div style="font:500 12px/1.2 Roboto;color:#fff">Texto</div><div style="font:400 10px/1.4 'Roboto Mono';color:rgba(255,255,255,.6)">#1A1C19</div></div>
+<div style="background:#10130F;border-radius:8px;padding:10px 8px"><div style="font:500 12px/1.2 Roboto;color:#fff">Fondo osc.</div><div style="font:400 10px/1.4 'Roboto Mono';color:rgba(255,255,255,.6)">#10130F</div></div>
+<div style="background:#1E231C;border-radius:8px;padding:10px 8px"><div style="font:500 12px/1.2 Roboto;color:#fff">Superf. osc.</div><div style="font:400 10px/1.4 'Roboto Mono';color:rgba(255,255,255,.6)">#1E231C</div></div>
+<div style="background:#A5D6A7;border-radius:8px;padding:10px 8px"><div style="font:500 12px/1.2 Roboto;color:#14351A">Primario osc.</div><div style="font:400 10px/1.4 'Roboto Mono';color:rgba(0,0,0,.55)">#A5D6A7</div></div>
+</div>
+</div>
+
+<div style="width:360px;background:#fff;border:1px solid #DCDAD3;border-radius:16px;padding:22px 20px 24px">
+<div style="font:700 15px/1.2 Roboto;color:#1A1C19;margin-bottom:4px">Tipografía — Roboto</div>
+<div style="font:400 12px/1.4 Roboto;color:rgba(0,0,0,.5);margin-bottom:18px">Una sola familia. Cuerpo mínimo 16 sp.</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:baseline;gap:12px"><span style="font:900 56px/1 Roboto;color:#1A1C19">24°</span><span style="font:400 11px/1.4 'Roboto Mono';color:rgba(0,0,0,.5)">Dato destacado<br>64 sp / 900</span></div>
+<div style="display:flex;align-items:baseline;gap:12px"><span style="font:700 32px/1.1 Roboto;color:#1A1C19">Titular</span><span style="font:400 11px/1.4 'Roboto Mono';color:rgba(0,0,0,.5)">Headline · 32 sp / 700</span></div>
+<div style="display:flex;align-items:baseline;gap:12px"><span style="font:700 24px/1.2 Roboto;color:#1A1C19">Título</span><span style="font:400 11px/1.4 'Roboto Mono';color:rgba(0,0,0,.5)">Title · 24 sp / 700</span></div>
+<div style="display:flex;align-items:baseline;gap:12px"><span style="font:500 20px/1.2 Roboto;color:#1A1C19">Subtítulo</span><span style="font:400 11px/1.4 'Roboto Mono';color:rgba(0,0,0,.5)">Subtitle · 20 sp / 500</span></div>
+<div style="display:flex;align-items:baseline;gap:12px"><span style="font:400 18px/1.4 Roboto;color:#1A1C19">Cuerpo grande</span><span style="font:400 11px/1.4 'Roboto Mono';color:rgba(0,0,0,.5)">Body L · 18 sp</span></div>
+<div style="display:flex;align-items:baseline;gap:12px"><span style="font:400 16px/1.5 Roboto;color:#1A1C19">Cuerpo base</span><span style="font:400 11px/1.4 'Roboto Mono';color:rgba(0,0,0,.5)">Body · 16 sp</span></div>
+<div style="display:flex;align-items:baseline;gap:12px"><span style="font:700 14px/1.3 Roboto;letter-spacing:.04em;color:#1A1C19">ETIQUETA</span><span style="font:400 11px/1.4 'Roboto Mono';color:rgba(0,0,0,.5)">Label · 14 sp / 700</span></div>
+</div>
+<div style="height:1px;background:#E7E5DE;margin:20px 0"></div>
+<div style="font:700 15px/1.2 Roboto;color:#1A1C19;margin-bottom:12px">Espaciado, radios y elevación</div>
+<div style="display:flex;gap:6px;align-items:flex-end;margin-bottom:14px">
+<div style="width:8px;height:8px;background:#2E7D32;border-radius:2px"></div>
+<div style="width:16px;height:16px;background:#2E7D32;border-radius:2px"></div>
+<div style="width:24px;height:24px;background:#2E7D32;border-radius:2px"></div>
+<div style="width:32px;height:32px;background:#2E7D32;border-radius:2px"></div>
+<div style="width:48px;height:48px;background:#2E7D32;border-radius:2px"></div>
+<span style="font:400 11px/1.4 'Roboto Mono';color:rgba(0,0,0,.5);padding-bottom:2px">8 · 16 · 24 · 32 · 48 dp</span>
+</div>
+<div style="display:flex;gap:10px;align-items:center">
+<div style="width:56px;height:44px;background:#F1EFE9;border:1px solid #DCDAD3;border-radius:8px"></div>
+<div style="width:56px;height:44px;background:#F1EFE9;border:1px solid #DCDAD3;border-radius:16px"></div>
+<div style="width:56px;height:44px;background:#fff;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.14),0 3px 8px rgba(0,0,0,.08)"></div>
+<span style="font:400 11px/1.4 'Roboto Mono';color:rgba(0,0,0,.5)">r8 · r16 · elev.1</span>
+</div>
+</div>
+
+<div style="width:360px;background:#fff;border:1px solid #DCDAD3;border-radius:16px;padding:22px 20px 24px">
+<div style="font:700 15px/1.2 Roboto;color:#1A1C19;margin-bottom:4px">Componentes</div>
+<div style="font:400 12px/1.4 Roboto;color:rgba(0,0,0,.5);margin-bottom:18px">Todo ícono lleva etiqueta de texto. Altura mínima 48 dp.</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<button style="height:56px;background:#2E7D32;color:#fff;border:0;border-radius:12px;font:700 18px/1 Roboto;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer" style-hover="background:#1B5E20"><span class="ms" style="font-size:22px">check</span>Botón primario</button>
+<button style="height:56px;background:#fff;color:#1B5E20;border:2px solid #2E7D32;border-radius:12px;font:700 18px/1 Roboto;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer" style-hover="background:#E8F5E9">Botón secundario</button>
+<div>
+<div style="font:700 14px/1.3 Roboto;color:#3D4139;margin-bottom:6px">Nombre de la parcela</div>
+<div style="height:56px;border:2px solid #B9B7AE;border-radius:12px;display:flex;align-items:center;padding:0 14px;font:400 18px/1 Roboto;color:#1A1C19;background:#fff">El Guayabal</div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<div style="height:40px;padding:0 16px;border-radius:20px;background:#2E7D32;color:#fff;font:500 15px/40px Roboto">Jalapa</div>
+<div style="height:40px;padding:0 16px;border-radius:20px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 15px/37px Roboto">Monjas</div>
+<div style="height:40px;padding:0 16px;border-radius:20px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 15px/37px Roboto">Mataquescuintla</div>
+</div>
+<div style="display:flex;gap:8px">
+<div style="flex:1;background:#F7F6F2;border:1px solid #E2E0D8;border-radius:12px;padding:12px 10px;text-align:center"><span class="ms" style="font-size:26px;color:#0277BD">humidity_percentage</span><div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin-top:4px">68%</div><div style="font:400 14px/1.3 Roboto;color:#4A4E47">Humedad</div></div>
+<div style="flex:1;background:#F7F6F2;border:1px solid #E2E0D8;border-radius:12px;padding:12px 10px;text-align:center"><span class="ms" style="font-size:26px;color:#0277BD">air</span><div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin-top:4px">18</div><div style="font:400 14px/1.3 Roboto;color:#4A4E47">Viento km/h</div></div>
+<div style="flex:1;background:#F7F6F2;border:1px solid #E2E0D8;border-radius:12px;padding:12px 10px;text-align:center"><span class="ms" style="font-size:26px;color:#0277BD">rainy</span><div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin-top:4px">20%</div><div style="font:400 14px/1.3 Roboto;color:#4A4E47">Lluvia</div></div>
+</div>
+<div style="display:flex;align-items:center;gap:10px;background:#3D4139;color:#fff;border-radius:10px;padding:12px 14px"><span class="ms" style="font-size:22px">cloud_off</span><span style="font:500 15px/1.3 Roboto">Sin internet · datos del 12 ago 6:00 a.m.</span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><div style="height:16px;width:60%;background:#E4E2DA;border-radius:8px"></div><div style="height:56px;background:#E4E2DA;border-radius:12px"></div><div style="height:16px;width:40%;background:#E4E2DA;border-radius:8px"></div></div>
+</div>
+</div>
+
+<div style="width:360px;background:#fff;border:1px solid #DCDAD3;border-radius:16px;padding:22px 20px 24px">
+<div style="font:700 15px/1.2 Roboto;color:#1A1C19;margin-bottom:4px">Iconografía — Material Symbols</div>
+<div style="font:400 12px/1.4 Roboto;color:rgba(0,0,0,.5);margin-bottom:18px">Siempre acompañados de su palabra.</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px 8px">
+<div style="text-align:center"><span class="ms" style="font-size:30px;color:#1A1C19">sunny</span><div style="font:400 12px/1.3 Roboto;color:#4A4E47;margin-top:4px">Sol</div></div>
+<div style="text-align:center"><span class="ms" style="font-size:30px;color:#1A1C19">cloud</span><div style="font:400 12px/1.3 Roboto;color:#4A4E47;margin-top:4px">Nublado</div></div>
+<div style="text-align:center"><span class="ms" style="font-size:30px;color:#1A1C19">rainy</span><div style="font:400 12px/1.3 Roboto;color:#4A4E47;margin-top:4px">Lluvia</div></div>
+<div style="text-align:center"><span class="ms" style="font-size:30px;color:#1A1C19">thunderstorm</span><div style="font:400 12px/1.3 Roboto;color:#4A4E47;margin-top:4px">Tormenta</div></div>
+<div style="text-align:center"><span class="ms" style="font-size:30px;color:#1A1C19">ac_unit</span><div style="font:400 12px/1.3 Roboto;color:#4A4E47;margin-top:4px">Helada</div></div>
+<div style="text-align:center"><span class="ms" style="font-size:30px;color:#1A1C19">air</span><div style="font:400 12px/1.3 Roboto;color:#4A4E47;margin-top:4px">Viento</div></div>
+<div style="text-align:center"><span class="ms" style="font-size:30px;color:#1A1C19">humidity_percentage</span><div style="font:400 12px/1.3 Roboto;color:#4A4E47;margin-top:4px">Humedad</div></div>
+<div style="text-align:center"><span class="ms" style="font-size:30px;color:#1A1C19">local_fire_department</span><div style="font:400 12px/1.3 Roboto;color:#4A4E47;margin-top:4px">Sequía</div></div>
+<div style="text-align:center"><span class="ms" style="font-size:30px;color:#1A1C19">agriculture</span><div style="font:400 12px/1.3 Roboto;color:#4A4E47;margin-top:4px">Parcela</div></div>
+<div style="text-align:center"><span class="ms" style="font-size:30px;color:#1A1C19">map</span><div style="font:400 12px/1.3 Roboto;color:#4A4E47;margin-top:4px">Mapa</div></div>
+<div style="text-align:center"><span class="ms" style="font-size:30px;color:#1A1C19">notifications_active</span><div style="font:400 12px/1.3 Roboto;color:#4A4E47;margin-top:4px">Alertas</div></div>
+<div style="text-align:center"><span class="ms" style="font-size:30px;color:#1A1C19">bar_chart</span><div style="font:400 12px/1.3 Roboto;color:#4A4E47;margin-top:4px">Reportes</div></div>
+</div>
+<div style="height:1px;background:#E7E5DE;margin:20px 0"></div>
+<div style="font:700 15px/1.2 Roboto;color:#1A1C19;margin-bottom:10px">Lenguaje</div>
+<div style="display:flex;flex-direction:column;gap:8px;font:400 14px/1.45 Roboto">
+<div style="display:flex;gap:8px"><span class="ms" style="font-size:18px;color:#B3261E;flex:none;margin-top:1px">close</span><span style="color:rgba(0,0,0,.5)">"Precipitación acumulada 45 mm/h"</span></div>
+<div style="display:flex;gap:8px"><span class="ms" style="font-size:18px;color:#2E7D32;flex:none;margin-top:1px">check</span><span style="color:#1A1C19">"Va a llover fuerte"</span></div>
+<div style="display:flex;gap:8px"><span class="ms" style="font-size:18px;color:#B3261E;flex:none;margin-top:1px">close</span><span style="color:rgba(0,0,0,.5)">"Temperatura de punto de rocío"</span></div>
+<div style="display:flex;gap:8px"><span class="ms" style="font-size:18px;color:#2E7D32;flex:none;margin-top:1px">check</span><span style="color:#1A1C19">"Sensación de frío"</span></div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="blk" id="b1">
+<div class="bhd"><a class="btag" href="#b1">B1</a><span class="bname">Bloque 1 — Acceso e incorporación</span></div>
+<p class="bsub">Pantallas 1 a 6. Una sola tarea por pantalla, campos de 56 dp y botones que ocupan todo el ancho: el dedo grande y la pantalla al sol no perdonan objetivos pequeños.</p>
+<div class="row">
+
+<div class="scr" id="S01">
+<div class="slbl"><a class="sid" href="#S01">01</a>Splash / carga inicial</div>
+<div style="width:360px;height:800px;background:#1B5E20;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;font-family:Roboto,sans-serif;color:#fff">
+  <div style="width:120px;height:120px;border-radius:36px;background:#fff;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:72px;color:#1B5E20">rainy</span></div>
+  <div style="text-align:center"><div style="font:900 40px/1.1 Roboto">AgroClima</div><div style="font:500 22px/1.2 Roboto;opacity:.9;margin-top:4px">Jalapa</div><div style="font:400 16px/1.4 Roboto;opacity:.8;margin-top:12px">El clima de su parcela,<br>antes de que pase</div></div>
+  <div style="width:180px;height:6px;border-radius:3px;background:rgba(255,255,255,.28);margin-top:14px;overflow:hidden"><div style="width:55%;height:100%;background:#A5D6A7;border-radius:3px"></div></div>
+  <div style="position:absolute"></div>
+</div>
+<p class="note">Marca y promesa en una sola frase corta. La barra de progreso comunica espera sin texto técnico.</p>
+</div>
+
+<div class="scr" id="S02a">
+<div class="slbl"><a class="sid" href="#S02a">02a</a>Onboarding 1 de 3</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#F7F6F2;color:#1A1C19;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="display:flex;justify-content:flex-end;padding:6px 8px"><div style="min-width:48px;height:48px;padding:0 14px;display:flex;align-items:center;justify-content:center;font:700 16px/1 Roboto;color:#1B5E20">Omitir</div></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;text-align:center;gap:26px">
+    <div style="width:220px;height:200px;border-radius:20px;background:#E8F5E9;border:2px dashed #A5C7A8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><span class="ms" style="font-size:76px;color:#2E7D32">pin_drop</span><span style="font:400 11px/1.3 'Roboto Mono';color:#5B6355">ILUSTRACIÓN<br>parcela en el mapa</span></div>
+    <div><div style="font:700 30px/1.2 Roboto;color:#1A1C19">Marque su parcela</div><div style="font:400 18px/1.45 Roboto;color:#4A4E47;margin-top:10px">Ponga un punto donde está su terreno.</div></div>
+  </div>
+  <div style="padding:0 20px 26px;display:flex;flex-direction:column;gap:20px;align-items:center">
+    <div style="display:flex;gap:8px"><span style="width:28px;height:10px;border-radius:5px;background:#2E7D32"></span><span style="width:10px;height:10px;border-radius:5px;background:#C9C7BF"></span><span style="width:10px;height:10px;border-radius:5px;background:#C9C7BF"></span></div>
+    <div style="width:100%;height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center">Siguiente</div>
+  </div>
+</div>
+<p class="note">Una idea por pantalla, una sola línea de texto y una ilustración grande. El indicador de paso dice cuánto falta sin palabras.</p>
+</div>
+
+<div class="scr" id="S02b">
+<div class="slbl"><a class="sid" href="#S02b">02b</a>Onboarding 2 de 3</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#F7F6F2;color:#1A1C19;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="display:flex;justify-content:flex-end;padding:6px 8px"><div style="min-width:48px;height:48px;padding:0 14px;display:flex;align-items:center;justify-content:center;font:700 16px/1 Roboto;color:#1B5E20">Omitir</div></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;text-align:center;gap:26px">
+    <div style="width:220px;height:200px;border-radius:20px;background:#E1F1FA;border:2px dashed #9CC4DC;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><span class="ms" style="font-size:76px;color:#0277BD">thermostat</span><span style="font:400 11px/1.3 'Roboto Mono';color:#4E6675">ILUSTRACIÓN<br>clima del terreno</span></div>
+    <div><div style="font:700 30px/1.2 Roboto;color:#1A1C19">Vea el clima de ahí</div><div style="font:400 18px/1.45 Roboto;color:#4A4E47;margin-top:10px">No el del pueblo: el de su terreno.</div></div>
+  </div>
+  <div style="padding:0 20px 26px;display:flex;flex-direction:column;gap:20px;align-items:center">
+    <div style="display:flex;gap:8px"><span style="width:10px;height:10px;border-radius:5px;background:#C9C7BF"></span><span style="width:28px;height:10px;border-radius:5px;background:#2E7D32"></span><span style="width:10px;height:10px;border-radius:5px;background:#C9C7BF"></span></div>
+    <div style="width:100%;height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center">Siguiente</div>
+  </div>
+</div>
+<p class="note">El beneficio se explica por contraste con lo que ya conocen ("no el del pueblo"), que es como se informan hoy por radio.</p>
+</div>
+
+<div class="scr" id="S02c">
+<div class="slbl"><a class="sid" href="#S02c">02c</a>Onboarding 3 de 3</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#F7F6F2;color:#1A1C19;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="height:60px"></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;text-align:center;gap:26px">
+    <div style="width:220px;height:200px;border-radius:20px;background:#FFF3D6;border:2px dashed #D9B77A;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><span class="ms" style="font-size:76px;color:#8A4B00">notifications_active</span><span style="font:400 11px/1.3 'Roboto Mono';color:#6B5327">ILUSTRACIÓN<br>aviso anticipado</span></div>
+    <div><div style="font:700 30px/1.2 Roboto;color:#1A1C19">Le avisamos antes</div><div style="font:400 18px/1.45 Roboto;color:#4A4E47;margin-top:10px">Un día antes de la helada o el aguacero.</div></div>
+  </div>
+  <div style="padding:0 20px 26px;display:flex;flex-direction:column;gap:20px;align-items:center">
+    <div style="display:flex;gap:8px"><span style="width:10px;height:10px;border-radius:5px;background:#C9C7BF"></span><span style="width:10px;height:10px;border-radius:5px;background:#C9C7BF"></span><span style="width:28px;height:10px;border-radius:5px;background:#2E7D32"></span></div>
+    <div style="width:100%;height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center">Empezar</div>
+  </div>
+</div>
+<p class="note">El último paso cambia "Siguiente" por "Empezar" y quita "Omitir": no hay ambigüedad sobre dónde termina la introducción.</p>
+</div>
+
+<div class="scr" id="S03">
+<div class="slbl"><a class="sid" href="#S03">03</a>Inicio de sesión</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#F7F6F2;color:#1A1C19;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="flex:1;padding:24px 20px;display:flex;flex-direction:column">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:26px"><div style="width:56px;height:56px;border-radius:18px;background:#1B5E20;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:34px;color:#fff">rainy</span></div><div style="font:900 26px/1.1 Roboto;color:#1A1C19">AgroClima<br><span style="font-weight:500;font-size:18px;color:#4A4E47">Jalapa</span></div></div>
+    <div style="font:700 28px/1.2 Roboto;color:#1A1C19;margin-bottom:20px">Entre a su cuenta</div>
+    <div style="font:700 15px/1.3 Roboto;color:#3D4139;margin-bottom:6px">Su correo</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:12px;display:flex;align-items:center;gap:10px;padding:0 14px;background:#fff;margin-bottom:18px"><span class="ms" style="font-size:22px;color:#6B6F68">mail</span><span style="font:400 18px/1 Roboto;color:#1A1C19">juan.lopez@correo.com</span></div>
+    <div style="font:700 15px/1.3 Roboto;color:#3D4139;margin-bottom:6px">Su contraseña</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:12px;display:flex;align-items:center;gap:10px;padding:0 14px;background:#fff"><span class="ms" style="font-size:22px;color:#6B6F68">lock</span><span style="flex:1;font:400 18px/1 Roboto;color:#1A1C19;letter-spacing:.15em">••••••••</span><div style="display:flex;align-items:center;gap:4px;color:#1B5E20"><span class="ms" style="font-size:22px">visibility</span><span style="font:700 13px/1 Roboto">Ver</span></div></div>
+    <div style="font:700 16px/1 Roboto;color:#1B5E20;padding:16px 2px">Olvidé mi contraseña</div>
+    <div style="height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center;margin-top:6px">Entrar</div>
+    <div style="display:flex;align-items:center;gap:12px;margin:22px 0"><div style="flex:1;height:1px;background:#DCDAD3"></div><span style="font:400 15px/1 Roboto;color:#6B6F68">o</span><div style="flex:1;height:1px;background:#DCDAD3"></div></div>
+    <div style="height:56px;background:#fff;border:2px solid #B9B7AE;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:10px;font:700 17px/1 Roboto;color:#3D4139"><span class="ms" style="font-size:22px;color:#0277BD">account_circle</span>Entrar con Google</div>
+    <div style="flex:1"></div>
+    <div style="text-align:center;font:400 17px/1.4 Roboto;color:#4A4E47">¿Todavía no tiene cuenta?<br><span style="font-weight:700;color:#1B5E20;font-size:18px">Crear cuenta</span></div>
+  </div>
+</div>
+<p class="note">Etiquetas escritas como se habla ("Su correo") y botón "Ver" con palabra junto al ojo: escribir contraseñas a ciegas es la primera causa de abandono en este perfil.</p>
+</div>
+
+<div class="scr" id="S04">
+<div class="slbl"><a class="sid" href="#S04">04</a>Registro</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 14px;display:flex;align-items:center;gap:8px;flex:none"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div style="font:700 22px/1.2 Roboto">Crear cuenta</div></div>
+  <div style="flex:1;overflow:auto;padding:18px 20px 20px">
+    <div style="font:700 15px/1.3 Roboto;color:#3D4139;margin-bottom:6px">Su nombre completo</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:12px;display:flex;align-items:center;padding:0 14px;background:#fff;font:400 18px/1 Roboto;color:#1A1C19;margin-bottom:16px">Juan López García</div>
+    <div style="font:700 15px/1.3 Roboto;color:#3D4139;margin-bottom:6px">Su teléfono</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:12px;display:flex;align-items:center;gap:8px;padding:0 14px;background:#fff;margin-bottom:16px"><span style="font:500 18px/1 Roboto;color:#6B6F68">+502</span><span style="font:400 18px/1 Roboto;color:#1A1C19">5512 3456</span></div>
+    <div style="font:700 15px/1.3 Roboto;color:#3D4139;margin-bottom:6px">Su correo</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:12px;display:flex;align-items:center;padding:0 14px;background:#fff;font:400 18px/1 Roboto;color:#1A1C19;margin-bottom:16px">juan.lopez@correo.com</div>
+    <div style="font:700 15px/1.3 Roboto;color:#3D4139;margin-bottom:6px">Cree una contraseña</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:12px;display:flex;align-items:center;padding:0 14px;background:#fff;font:400 18px/1 Roboto;color:#1A1C19;letter-spacing:.15em;margin-bottom:6px">••••••••</div>
+    <div style="font:400 15px/1.4 Roboto;color:#4A4E47;margin-bottom:16px">Use al menos 8 letras o números.</div>
+    <div style="font:700 15px/1.3 Roboto;color:#3D4139;margin-bottom:6px">Repita la contraseña</div>
+    <div style="height:56px;border:2px solid #2E7D32;border-radius:12px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#fff;font:400 18px/1 Roboto;color:#1A1C19;letter-spacing:.15em;margin-bottom:20px">••••••••<span class="ms" style="font-size:24px;color:#2E7D32">check_circle</span></div>
+    <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:22px"><div style="width:28px;height:28px;border-radius:6px;background:#2E7D32;display:flex;align-items:center;justify-content:center;flex:none"><span class="ms" style="font-size:22px;color:#fff">check</span></div><div style="font:400 16px/1.4 Roboto;color:#3D4139">Acepto los <span style="color:#1B5E20;font-weight:700">términos de uso</span> y el manejo de mis datos.</div></div>
+    <div style="height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center">Crear mi cuenta</div>
+  </div>
+</div>
+<p class="note">Validación positiva visible (palomita verde) en vez de mensajes de error rojos: refuerza que va bien mientras avanza.</p>
+</div>
+
+<div class="scr" id="S05">
+<div class="slbl"><a class="sid" href="#S05">05</a>Recuperar contraseña · confirmación</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 14px;display:flex;align-items:center;gap:8px;flex:none"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div style="font:700 22px/1.2 Roboto">Recuperar contraseña</div></div>
+  <div style="padding:20px 20px 0">
+    <div style="font:400 18px/1.45 Roboto;color:#3D4139;margin-bottom:18px">Escriba su correo y le mandamos un enlace para poner una contraseña nueva.</div>
+    <div style="font:700 15px/1.3 Roboto;color:#3D4139;margin-bottom:6px">Su correo</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:12px;display:flex;align-items:center;gap:10px;padding:0 14px;background:#fff;margin-bottom:18px"><span class="ms" style="font-size:22px;color:#6B6F68">mail</span><span style="font:400 18px/1 Roboto;color:#1A1C19">juan.lopez@correo.com</span></div>
+    <div style="height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center">Enviar enlace</div>
+    <div style="margin-top:24px;background:#E8F5E9;border:2px solid #2E7D32;border-radius:16px;padding:16px;display:flex;gap:12px"><span class="ms" style="font-size:32px;color:#1B5E20;flex:none">mark_email_read</span><div><div style="font:700 18px/1.2 Roboto;color:#14351A">Ya se lo enviamos</div><div style="font:400 16px/1.4 Roboto;color:#1F3B23;margin-top:4px">Revise su correo. Si no lo ve, busque en "correo no deseado".</div></div></div>
+  </div>
+</div>
+<p class="note">La confirmación aparece en la misma pantalla, no en otra: el usuario no pierde el contexto ni tiene que volver.</p>
+</div>
+
+<div class="scr" id="S06a">
+<div class="slbl"><a class="sid" href="#S06a">06a</a>Permiso de ubicación</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#F7F6F2;color:#1A1C19;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;text-align:center;gap:24px">
+    <div style="width:200px;height:180px;border-radius:20px;background:#E8F5E9;border:2px dashed #A5C7A8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><span class="ms" style="font-size:72px;color:#2E7D32">my_location</span><span style="font:400 11px/1.3 'Roboto Mono';color:#5B6355">ILUSTRACIÓN<br>ubicación</span></div>
+    <div style="font:700 28px/1.25 Roboto;color:#1A1C19">Necesitamos saber dónde está su parcela</div>
+    <div style="font:400 18px/1.5 Roboto;color:#4A4E47">Así le damos el clima de su terreno y no el de otro lugar. Nadie más ve dónde está.</div>
+  </div>
+  <div style="padding:0 20px 26px;display:flex;flex-direction:column;gap:12px">
+    <div style="height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center">Permitir</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:14px;color:#3D4139;font:700 18px/52px Roboto;text-align:center;background:#fff">Ahora no</div>
+  </div>
+</div>
+<p class="note">Se explica el beneficio y la privacidad antes de que salte el diálogo del sistema; "Ahora no" evita que un rechazo cierre la puerta para siempre.</p>
+</div>
+
+<div class="scr" id="S06b">
+<div class="slbl"><a class="sid" href="#S06b">06b</a>Permiso de notificaciones</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#F7F6F2;color:#1A1C19;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;text-align:center;gap:24px">
+    <div style="width:200px;height:180px;border-radius:20px;background:#FFF3D6;border:2px dashed #D9B77A;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><span class="ms" style="font-size:72px;color:#8A4B00">notifications_active</span><span style="font:400 11px/1.3 'Roboto Mono';color:#6B5327">ILUSTRACIÓN<br>aviso</span></div>
+    <div style="font:700 28px/1.25 Roboto;color:#1A1C19">Deje que le avisemos del peligro</div>
+    <div style="font:400 18px/1.5 Roboto;color:#4A4E47">Le mandamos un aviso un día antes de una helada, un aguacero o viento fuerte. Solo eso.</div>
+  </div>
+  <div style="padding:0 20px 26px;display:flex;flex-direction:column;gap:12px">
+    <div style="height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center">Permitir avisos</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:14px;color:#3D4139;font:700 18px/52px Roboto;text-align:center;background:#fff">Ahora no</div>
+  </div>
+</div>
+<p class="note">"Solo eso" desactiva el miedo al spam, la razón más común por la que se niegan los permisos de notificación.</p>
+</div>
+
+</div>
+</section>
+
+<section class="blk" id="b2">
+<div class="bhd"><a class="btag" href="#b2">B2</a><span class="bname">Bloque 2 — Gestión de parcelas</span></div>
+<p class="bsub">Pantallas 7 a 10. El registro de parcela es el único asistente de varios pasos de la app: barra de progreso siempre visible y una decisión por paso.</p>
+<div class="row">
+
+<div class="scr" id="S07a">
+<div class="slbl"><a class="sid" href="#S07a">07·1</a>Registro de parcela — paso 1 de 4</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 12px;flex:none"><div style="display:flex;align-items:center;gap:8px"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div><div style="font:700 22px/1.2 Roboto">Nueva parcela</div><div style="font:400 15px/1.3 Roboto;opacity:.85">Paso 1 de 4</div></div></div><div style="display:flex;gap:6px;margin-top:10px"><div style="flex:1;height:8px;border-radius:4px;background:#A5D6A7"></div><div style="flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.28)"></div><div style="flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.28)"></div><div style="flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.28)"></div></div></div>
+  <div style="flex:1;overflow:auto;padding:20px">
+    <div style="font:700 24px/1.25 Roboto;color:#1A1C19;margin-bottom:6px">¿Cómo le llama a su parcela?</div>
+    <div style="font:400 16px/1.4 Roboto;color:#4A4E47;margin-bottom:14px">Un nombre que usted reconozca.</div>
+    <div style="height:56px;border:2px solid #2E7D32;border-radius:12px;display:flex;align-items:center;padding:0 14px;background:#fff;font:400 18px/1 Roboto;color:#1A1C19;margin-bottom:28px">El Guayabal</div>
+    <div style="font:700 24px/1.25 Roboto;color:#1A1C19;margin-bottom:14px">¿En qué municipio queda?</div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <div style="height:48px;padding:0 18px;border-radius:24px;background:#2E7D32;color:#fff;font:700 16px/48px Roboto">Jalapa</div>
+      <div style="height:48px;padding:0 18px;border-radius:24px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/45px Roboto">San Pedro Pinula</div>
+      <div style="height:48px;padding:0 18px;border-radius:24px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/45px Roboto">San Luis Jilotepeque</div>
+      <div style="height:48px;padding:0 18px;border-radius:24px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/45px Roboto">San Manuel Chaparrón</div>
+      <div style="height:48px;padding:0 18px;border-radius:24px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/45px Roboto">San Carlos Alzatate</div>
+      <div style="height:48px;padding:0 18px;border-radius:24px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/45px Roboto">Monjas</div>
+      <div style="height:48px;padding:0 18px;border-radius:24px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/45px Roboto">Mataquescuintla</div>
+    </div>
+  </div>
+  <div style="flex:none;padding:12px 20px 20px;background:#fff;border-top:1px solid #DCDAD3"><div style="height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center">Siguiente</div></div>
+</div>
+<p class="note">Los 7 municipios como chips de 48 dp visibles de golpe: sin desplegables, que exigen dos toques y ocultan las opciones.</p>
+</div>
+
+<div class="scr" id="S07b">
+<div class="slbl"><a class="sid" href="#S07b">07·2</a>Paso 2 — cultivo y fase</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 12px;flex:none"><div style="display:flex;align-items:center;gap:8px"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div><div style="font:700 22px/1.2 Roboto">Nueva parcela</div><div style="font:400 15px/1.3 Roboto;opacity:.85">Paso 2 de 4</div></div></div><div style="display:flex;gap:6px;margin-top:10px"><div style="flex:1;height:8px;border-radius:4px;background:#A5D6A7"></div><div style="flex:1;height:8px;border-radius:4px;background:#A5D6A7"></div><div style="flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.28)"></div><div style="flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.28)"></div></div></div>
+  <div style="flex:1;overflow:auto;padding:20px">
+    <div style="font:700 24px/1.25 Roboto;color:#1A1C19;margin-bottom:14px">¿Qué siembra ahí?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px">
+      <div style="background:#E8F5E9;border:3px solid #2E7D32;border-radius:16px;padding:16px 10px;text-align:center"><span class="ms" style="font-size:44px;color:#1B5E20">grass</span><div style="font:700 18px/1.25 Roboto;color:#14351A;margin-top:6px">Maíz y frijol</div></div>
+      <div style="background:#fff;border:2px solid #DCDAD3;border-radius:16px;padding:16px 10px;text-align:center"><span class="ms" style="font-size:44px;color:#4A4E47">nutrition</span><div style="font:700 18px/1.25 Roboto;color:#3D4139;margin-top:6px">Hortalizas</div></div>
+      <div style="background:#fff;border:2px solid #DCDAD3;border-radius:16px;padding:16px 10px;text-align:center"><span class="ms" style="font-size:44px;color:#4A4E47">coffee</span><div style="font:700 18px/1.25 Roboto;color:#3D4139;margin-top:6px">Café</div></div>
+      <div style="background:#fff;border:2px solid #DCDAD3;border-radius:16px;padding:16px 10px;text-align:center"><span class="ms" style="font-size:44px;color:#4A4E47">park</span><div style="font:700 18px/1.25 Roboto;color:#3D4139;margin-top:6px">Frutales</div></div>
+    </div>
+    <div style="font:700 24px/1.25 Roboto;color:#1A1C19;margin-bottom:14px">¿Cómo va el cultivo?</div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <div style="height:48px;padding:0 18px;border-radius:24px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/45px Roboto">Siembra</div>
+      <div style="height:48px;padding:0 18px;border-radius:24px;background:#2E7D32;color:#fff;font:700 16px/48px Roboto">Crecimiento</div>
+      <div style="height:48px;padding:0 18px;border-radius:24px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/45px Roboto">Floración</div>
+      <div style="height:48px;padding:0 18px;border-radius:24px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/45px Roboto">Maduración</div>
+      <div style="height:48px;padding:0 18px;border-radius:24px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/45px Roboto">Cosecha</div>
+    </div>
+  </div>
+  <div style="flex:none;padding:12px 20px 20px;background:#fff;border-top:1px solid #DCDAD3"><div style="height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center">Siguiente</div></div>
+</div>
+<p class="note">El cultivo y su fase definen los umbrales de alerta; se preguntan con las palabras del campo ("Maíz y frijol", no "granos básicos").</p>
+</div>
+
+<div class="scr" id="S07c">
+<div class="slbl"><a class="sid" href="#S07c">07·3</a>Paso 3 — ubicación en el mapa</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 12px;flex:none"><div style="display:flex;align-items:center;gap:8px"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div><div style="font:700 22px/1.2 Roboto">Ponga el punto</div><div style="font:400 15px/1.3 Roboto;opacity:.85">Paso 3 de 4</div></div></div><div style="display:flex;gap:6px;margin-top:10px"><div style="flex:1;height:8px;border-radius:4px;background:#A5D6A7"></div><div style="flex:1;height:8px;border-radius:4px;background:#A5D6A7"></div><div style="flex:1;height:8px;border-radius:4px;background:#A5D6A7"></div><div style="flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.28)"></div></div></div>
+  <div style="flex:1;position:relative;background:#DDE6D6;overflow:hidden">
+    <svg style="position:absolute;inset:0;width:100%;height:100%" preserveAspectRatio="none"><defs><pattern id="mapstripe2" width="14" height="14" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#DDE6D6"></rect><rect width="7" height="14" fill="#D2DDCA"></rect></pattern></defs><rect width="100%" height="100%" fill="url(#mapstripe2)"></rect></svg>
+    <div style="position:absolute;top:74px;left:50%;transform:translateX(-50%);font:400 12px/1.4 'Roboto Mono';color:#5B6355;background:rgba(255,255,255,.75);padding:5px 10px;border-radius:6px">MAPA SATELITAL</div>
+    <div style="position:absolute;top:12px;left:12px;right:12px;height:52px;background:#fff;border-radius:26px;display:flex;align-items:center;gap:10px;padding:0 16px;box-shadow:0 2px 8px rgba(0,0,0,.2)"><span class="ms" style="font-size:24px;color:#6B6F68">search</span><span style="font:400 17px/1 Roboto;color:#6B6F68">Buscar aldea o lugar</span></div>
+    <div style="position:absolute;top:47%;left:50%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center"><span class="ms" style="font-size:52px;color:#B3261E;text-shadow:0 3px 6px rgba(0,0,0,.35)">location_on</span></div>
+    <div style="position:absolute;top:47%;left:50%;transform:translate(-50%,-50%);width:14px;height:6px;border-radius:50%;background:rgba(0,0,0,.28)"></div>
+    <div style="position:absolute;top:calc(47% + 14px);left:50%;transform:translateX(-50%);background:#1A1C19;color:#fff;border-radius:8px;padding:6px 10px;font:500 14px/1.2 Roboto">Arrastre el pin</div>
+    <div style="position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-direction:column;gap:10px">
+      <div style="height:56px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:10px;font:700 18px/1 Roboto;color:#1B5E20;box-shadow:0 2px 8px rgba(0,0,0,.2)"><span class="ms" style="font-size:24px">my_location</span>Usar mi ubicación</div>
+      <div style="background:#fff;border-radius:16px;padding:14px;box-shadow:0 3px 12px rgba(0,0,0,.18)">
+        <div style="display:flex;justify-content:space-between;font:400 16px/1.4 Roboto;color:#4A4E47"><span>Coordenadas</span><span style="font-family:'Roboto Mono';color:#1A1C19">14.633, -89.988</span></div>
+        <div style="display:flex;justify-content:space-between;font:400 16px/1.4 Roboto;color:#4A4E47;margin-top:4px"><span>Altura</span><span style="font-weight:700;color:#1A1C19">1,380 msnm</span></div>
+        <div style="height:1px;background:#EDEBE4;margin:12px 0"></div>
+        <div style="font:700 15px/1.3 Roboto;color:#3D4139;margin-bottom:6px">¿Cuánto mide? (aproximado)</div>
+        <div style="display:flex;gap:8px"><div style="flex:1;height:52px;border:2px solid #B9B7AE;border-radius:12px;display:flex;align-items:center;padding:0 14px;font:400 18px/1 Roboto;color:#1A1C19">2.5</div><div style="height:52px;padding:0 16px;border-radius:12px;background:#2E7D32;color:#fff;font:700 16px/52px Roboto">manzanas</div><div style="height:52px;padding:0 16px;border-radius:12px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/49px Roboto">ha</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="note">"Usar mi ubicación" resuelve el caso más común (está parado en la parcela) sin tocar el mapa; el pin arrastrable queda como alternativa, nunca como única vía.</p>
+</div>
+
+<div class="scr" id="S07d">
+<div class="slbl"><a class="sid" href="#S07d">07·4</a>Paso 4 — resumen y confirmación</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 12px;flex:none"><div style="display:flex;align-items:center;gap:8px"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div><div style="font:700 22px/1.2 Roboto">Revise los datos</div><div style="font:400 15px/1.3 Roboto;opacity:.85">Paso 4 de 4</div></div></div><div style="display:flex;gap:6px;margin-top:10px"><div style="flex:1;height:8px;border-radius:4px;background:#A5D6A7"></div><div style="flex:1;height:8px;border-radius:4px;background:#A5D6A7"></div><div style="flex:1;height:8px;border-radius:4px;background:#A5D6A7"></div><div style="flex:1;height:8px;border-radius:4px;background:#A5D6A7"></div></div></div>
+  <div style="flex:1;overflow:auto;padding:16px 20px">
+    <div style="height:130px;border-radius:16px;background:#DDE6D6;position:relative;overflow:hidden;margin-bottom:16px">
+      <svg style="position:absolute;inset:0;width:100%;height:100%" preserveAspectRatio="none"><rect width="100%" height="100%" fill="url(#mapstripe2)"></rect></svg>
+      <span class="ms" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:44px;color:#B3261E">location_on</span>
+    </div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:26px;color:#1B5E20">agriculture</span><div style="flex:1"><div style="font:400 15px/1.2 Roboto;color:#6B6F68">Nombre</div><div style="font:700 19px/1.3 Roboto;color:#1A1C19">El Guayabal</div></div><span style="font:700 16px/1 Roboto;color:#1B5E20">Cambiar</span></div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:26px;color:#1B5E20">location_city</span><div style="flex:1"><div style="font:400 15px/1.2 Roboto;color:#6B6F68">Municipio</div><div style="font:700 19px/1.3 Roboto;color:#1A1C19">Jalapa</div></div><span style="font:700 16px/1 Roboto;color:#1B5E20">Cambiar</span></div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:26px;color:#1B5E20">grass</span><div style="flex:1"><div style="font:400 15px/1.2 Roboto;color:#6B6F68">Cultivo</div><div style="font:700 19px/1.3 Roboto;color:#1A1C19">Maíz y frijol · Crecimiento</div></div><span style="font:700 16px/1 Roboto;color:#1B5E20">Cambiar</span></div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px"><span class="ms" style="font-size:26px;color:#1B5E20">straighten</span><div style="flex:1"><div style="font:400 15px/1.2 Roboto;color:#6B6F68">Tamaño y altura</div><div style="font:700 19px/1.3 Roboto;color:#1A1C19">2.5 manzanas · 1,380 msnm</div></div><span style="font:700 16px/1 Roboto;color:#1B5E20">Cambiar</span></div>
+    </div>
+  </div>
+  <div style="flex:none;padding:12px 20px 20px;background:#fff;border-top:1px solid #DCDAD3"><div style="height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center">Guardar parcela</div></div>
+</div>
+<p class="note">Cada dato tiene su propio "Cambiar": corregir un error no obliga a rehacer el asistente completo.</p>
+</div>
+
+<div class="scr" id="S08">
+<div class="slbl"><a class="sid" href="#S08">08</a>Mis parcelas</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;position:relative;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:10px 16px 14px;flex:none"><div style="font:700 22px/1.2 Roboto">Mis parcelas</div><div style="font:400 15px/1.3 Roboto;opacity:.85">3 terrenos registrados</div></div>
+  <div style="flex:1;overflow:auto;padding:14px 16px 90px;display:flex;flex-direction:column;gap:12px">
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;overflow:hidden;display:flex">
+      <div style="width:96px;background:#DDE6D6;position:relative;flex:none"><svg style="position:absolute;inset:0;width:100%;height:100%" preserveAspectRatio="none"><rect width="100%" height="100%" fill="url(#mapstripe2)"></rect></svg><span class="ms" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:30px;color:#B3261E">location_on</span></div>
+      <div style="flex:1;padding:12px 14px"><div style="font:700 20px/1.2 Roboto;color:#1A1C19">El Guayabal</div><div style="font:400 16px/1.4 Roboto;color:#4A4E47;margin-top:2px">Jalapa · Maíz y frijol</div><div style="display:flex;align-items:center;gap:8px;margin-top:8px"><span style="font:900 26px/1 Roboto;color:#1A1C19">24°</span><span style="display:flex;align-items:center;gap:5px;background:#FFF3D6;border:1.5px solid #B26A00;border-radius:16px;padding:3px 10px"><span class="ms" style="font-size:16px;color:#8A4B00">warning</span><span style="font:700 13px/1.3 Roboto;color:#4A2A00">PRECAUCIÓN</span></span></div></div>
+    </div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;overflow:hidden;display:flex">
+      <div style="width:96px;background:#DDE6D6;position:relative;flex:none"><svg style="position:absolute;inset:0;width:100%;height:100%" preserveAspectRatio="none"><rect width="100%" height="100%" fill="url(#mapstripe2)"></rect></svg><span class="ms" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:30px;color:#2E7D32">location_on</span></div>
+      <div style="flex:1;padding:12px 14px"><div style="font:700 20px/1.2 Roboto;color:#1A1C19">La Joya</div><div style="font:400 16px/1.4 Roboto;color:#4A4E47;margin-top:2px">Mataquescuintla · Café</div><div style="display:flex;align-items:center;gap:8px;margin-top:8px"><span style="font:900 26px/1 Roboto;color:#1A1C19">18°</span><span style="display:flex;align-items:center;gap:5px;background:#E8F5E9;border:1.5px solid #2E7D32;border-radius:16px;padding:3px 10px"><span class="ms" style="font-size:16px;color:#1B5E20">check_circle</span><span style="font:700 13px/1.3 Roboto;color:#14351A">NORMAL</span></span></div></div>
+    </div>
+    <div style="display:flex;border-radius:16px;overflow:hidden">
+      <div style="flex:1;background:#fff;border:1px solid #E2E0D8;border-right:0;border-radius:16px 0 0 16px;padding:12px 14px"><div style="font:700 20px/1.2 Roboto;color:#1A1C19">El Zapote</div><div style="font:400 16px/1.4 Roboto;color:#4A4E47;margin-top:2px">Monjas · Hortalizas</div><div style="display:flex;align-items:center;gap:8px;margin-top:8px"><span style="font:900 26px/1 Roboto;color:#1A1C19">29°</span><span style="display:flex;align-items:center;gap:5px;background:#FDE7E7;border:1.5px solid #B3261E;border-radius:16px;padding:3px 10px"><span class="ms" style="font-size:16px;color:#8C1D18">error</span><span style="font:700 13px/1.3 Roboto;color:#410E0B">PELIGRO</span></span></div></div>
+      <div style="width:76px;background:#0277BD;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px"><span class="ms" style="font-size:26px">edit</span><span style="font:700 13px/1 Roboto">Editar</span></div>
+      <div style="width:76px;background:#B3261E;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:0 16px 16px 0"><span class="ms" style="font-size:26px">delete</span><span style="font:700 13px/1 Roboto">Borrar</span></div>
+    </div>
+  </div>
+  <div style="position:absolute;right:16px;bottom:96px;height:60px;padding:0 22px;border-radius:30px;background:#2E7D32;color:#fff;display:flex;align-items:center;gap:10px;box-shadow:0 4px 12px rgba(0,0,0,.25)"><span class="ms" style="font-size:28px">add</span><span style="font:700 18px/1 Roboto">Agregar parcela</span></div>
+  <div style="flex:none;background:#fff;border-top:1px solid #DCDAD3;display:flex;padding:6px 0 10px">
+    <div style="flex:1;text-align:center;color:#1B5E20"><span class="ms" style="font-size:26px">home</span><div style="font:700 13px/1.3 Roboto">Inicio</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">map</span><div style="font:400 13px/1.3 Roboto">Mapa</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">notifications</span><div style="font:400 13px/1.3 Roboto">Alertas</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">bar_chart</span><div style="font:400 13px/1.3 Roboto">Reportes</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">person</span><div style="font:400 13px/1.3 Roboto">Perfil</div></div>
+  </div>
+</div>
+<p class="note">La tercera tarjeta muestra el gesto deslizable ya abierto, con las acciones etiquetadas: descubrirlas no depende de adivinar el gesto.</p>
+</div>
+
+<div class="scr" id="S09">
+<div class="slbl"><a class="sid" href="#S09">09</a>Detalle y edición · modal de borrar</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;position:relative;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 14px;display:flex;align-items:center;gap:8px;flex:none"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div style="font:700 22px/1.2 Roboto">El Guayabal</div></div>
+  <div style="flex:1;overflow:auto;padding:16px 20px">
+    <div style="height:120px;border-radius:16px;background:#DDE6D6;position:relative;overflow:hidden;margin-bottom:16px"><svg style="position:absolute;inset:0;width:100%;height:100%" preserveAspectRatio="none"><rect width="100%" height="100%" fill="url(#mapstripe2)"></rect></svg><span class="ms" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:40px;color:#B3261E">location_on</span></div>
+    <div style="font:700 15px/1.3 Roboto;color:#3D4139;margin-bottom:6px">Nombre</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:12px;display:flex;align-items:center;padding:0 14px;background:#fff;font:400 18px/1 Roboto;color:#1A1C19;margin-bottom:16px">El Guayabal</div>
+    <div style="font:700 15px/1.3 Roboto;color:#3D4139;margin-bottom:6px">Municipio</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:12px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#fff;font:400 18px/1 Roboto;color:#1A1C19;margin-bottom:16px">Jalapa<span class="ms" style="font-size:24px;color:#6B6F68">arrow_drop_down</span></div>
+    <div style="font:700 15px/1.3 Roboto;color:#3D4139;margin-bottom:6px">Cultivo y fase</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:12px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#fff;font:400 18px/1 Roboto;color:#1A1C19">Maíz y frijol · Crecimiento<span class="ms" style="font-size:24px;color:#6B6F68">arrow_drop_down</span></div>
+  </div>
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:24px">
+    <div style="background:#fff;border-radius:22px;padding:24px 20px;width:100%;text-align:center">
+      <span class="ms" style="font-size:48px;color:#B3261E">delete_forever</span>
+      <div style="font:700 24px/1.25 Roboto;color:#1A1C19;margin-top:10px">¿Borrar El Guayabal?</div>
+      <div style="font:400 17px/1.45 Roboto;color:#4A4E47;margin-top:8px">Se pierde su historial de clima y ya no recibirá avisos de este terreno.</div>
+      <div style="height:56px;background:#B3261E;border-radius:14px;color:#fff;font:700 18px/56px Roboto;margin-top:20px">Sí, borrar</div>
+      <div style="height:56px;border:2px solid #B9B7AE;border-radius:14px;color:#3D4139;font:700 18px/52px Roboto;margin-top:10px">No, quedarme</div>
+    </div>
+  </div>
+</div>
+<p class="note">Las dos opciones del modal se nombran con la consecuencia ("Sí, borrar" / "No, quedarme"), no con "Aceptar / Cancelar".</p>
+</div>
+
+<div class="scr" id="S10">
+<div class="slbl"><a class="sid" href="#S10">10</a>Estado vacío de parcelas</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:10px 16px 14px;flex:none"><div style="font:700 22px/1.2 Roboto">Mis parcelas</div></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px;text-align:center;gap:22px">
+    <div style="width:190px;height:170px;border-radius:20px;background:#E8F5E9;border:2px dashed #A5C7A8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><span class="ms" style="font-size:70px;color:#2E7D32">agriculture</span><span style="font:400 11px/1.3 'Roboto Mono';color:#5B6355">ILUSTRACIÓN<br>terreno vacío</span></div>
+    <div style="font:700 26px/1.3 Roboto;color:#1A1C19">Todavía no ha<br>registrado su parcela</div>
+    <div style="font:400 18px/1.5 Roboto;color:#4A4E47">Marque su terreno en el mapa y empiece a recibir el clima y los avisos.</div>
+  </div>
+  <div style="padding:0 20px 26px"><div style="height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px"><span class="ms" style="font-size:26px">add</span>Registrar mi parcela</div></div>
+  <div style="flex:none;background:#fff;border-top:1px solid #DCDAD3;display:flex;padding:6px 0 10px">
+    <div style="flex:1;text-align:center;color:#1B5E20"><span class="ms" style="font-size:26px">home</span><div style="font:700 13px/1.3 Roboto">Inicio</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">map</span><div style="font:400 13px/1.3 Roboto">Mapa</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">notifications</span><div style="font:400 13px/1.3 Roboto">Alertas</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">bar_chart</span><div style="font:400 13px/1.3 Roboto">Reportes</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">person</span><div style="font:400 13px/1.3 Roboto">Perfil</div></div>
+  </div>
+</div>
+<p class="note">El vacío no se queda en el diagnóstico: la única acción posible ocupa todo el ancho abajo, donde llega el pulgar.</p>
+</div>
+
+</div>
+</section>
+
+<section class="blk" id="b3">
+<div class="bhd"><a class="btag" href="#b3">B3</a><span class="bname">Bloque 3 — Monitoreo meteorológico</span></div>
+<p class="bsub">Pantallas 11 a 13. El panel principal es la pantalla más importante: tres niveles de importancia (riesgo del día → temperatura actual → detalle), nunca más.</p>
+<div class="row">
+
+<div class="scr" id="S11">
+<div class="slbl"><a class="sid" href="#S11">11</a>Inicio / Panel principal — tema claro</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span style="display:flex;gap:6px"><span class="ms" style="font-size:14px">signal_cellular_alt</span><span class="ms" style="font-size:14px">wifi</span><span class="ms" style="font-size:14px">battery_full</span></span></div>
+  <div style="background:#1B5E20;color:#fff;padding:10px 16px 14px;display:flex;align-items:center;justify-content:space-between;flex:none">
+    <div style="display:flex;align-items:center;gap:10px;min-height:48px">
+      <span class="ms" style="font-size:26px">agriculture</span>
+      <div><div style="font:700 20px/1.2 Roboto;display:flex;align-items:center;gap:4px">El Guayabal <span class="ms" style="font-size:22px">arrow_drop_down</span></div><div style="font:400 14px/1.3 Roboto;opacity:.85">Jalapa · 1,380 msnm</div></div>
+    </div>
+    <div style="position:relative;width:48px;height:48px;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:28px">notifications</span><span style="position:absolute;top:6px;right:6px;min-width:20px;height:20px;background:#B3261E;border:2px solid #1B5E20;border-radius:10px;color:#fff;font:700 11px/16px Roboto;text-align:center">2</span></div>
+  </div>
+  <div style="flex:1;overflow:auto;padding:0 0 12px">
+    <div style="margin:12px 16px 0;background:#FFF3D6;border:2px solid #B26A00;border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center">
+      <span class="ms" style="font-size:36px;color:#8A4B00;flex:none">air</span>
+      <div><div style="font:900 20px/1.15 Roboto;color:#4A2A00;letter-spacing:.01em">PRECAUCIÓN</div><div style="font:400 16px/1.35 Roboto;color:#4A2A00;margin-top:2px">Viento fuerte hoy de 2 a 6 de la tarde</div></div>
+    </div>
+    <div style="margin:12px 16px 0;background:#fff;border:1px solid #E2E0D8;border-radius:16px;padding:18px 16px 16px;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+      <div style="display:flex;align-items:center;gap:14px">
+        <span class="ms" style="font-size:68px;color:#F2A007;flex:none">sunny</span>
+        <div style="flex:1"><div style="font:900 64px/1 Roboto;color:#1A1C19;letter-spacing:-.02em">24°</div><div style="font:700 24px/1.2 Roboto;color:#3D4139;margin-top:2px">Soleado</div></div>
+      </div>
+      <div style="display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid #EDEBE4;font:400 16px/1.3 Roboto;color:#3D4139">
+        <span>Se siente <b style="font-weight:700;color:#1A1C19">26°</b></span>
+        <span style="display:flex;align-items:center;gap:3px"><span class="ms" style="font-size:18px;color:#B3261E">arrow_upward</span>Máx <b style="font-weight:700;color:#1A1C19">28°</b></span>
+        <span style="display:flex;align-items:center;gap:3px"><span class="ms" style="font-size:18px;color:#0277BD">arrow_downward</span>Mín <b style="font-weight:700;color:#1A1C19">14°</b></span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 16px 0">
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#0277BD">humidity_percentage</span><div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin-top:4px">68%</div><div style="font:400 14px/1.25 Roboto;color:#4A4E47">Humedad</div></div>
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#0277BD">air</span><div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin-top:4px">18 NE</div><div style="font:400 14px/1.25 Roboto;color:#4A4E47">Viento km/h</div></div>
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#0277BD">rainy</span><div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin-top:4px">20%</div><div style="font:400 14px/1.25 Roboto;color:#4A4E47">Va a llover</div></div>
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#0277BD">water_drop</span><div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin-top:4px">0 mm</div><div style="font:400 14px/1.25 Roboto;color:#4A4E47">Llovió hoy</div></div>
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#B26A00">wb_sunny</span><div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin-top:4px">9 alto</div><div style="font:400 14px/1.25 Roboto;color:#4A4E47">Sol fuerte</div></div>
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#0277BD">compress</span><div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin-top:4px">1013</div><div style="font:400 14px/1.25 Roboto;color:#4A4E47">Presión hPa</div></div>
+    </div>
+    <div style="margin:20px 16px 0;font:700 20px/1.2 Roboto;color:#1A1C19">Hoy, hora por hora</div>
+    <div style="display:flex;gap:8px;overflow:auto;padding:10px 16px 4px">
+      <div style="flex:none;width:74px;background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:10px 4px;text-align:center"><div style="font:500 15px/1.2 Roboto;color:#4A4E47">Ahora</div><span class="ms" style="font-size:28px;color:#F2A007;margin:6px 0;display:block">sunny</span><div style="font:700 20px/1.1 Roboto;color:#1A1C19">24°</div><div style="font:400 14px/1.3 Roboto;color:#0277BD">0%</div></div>
+      <div style="flex:none;width:74px;background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:10px 4px;text-align:center"><div style="font:500 15px/1.2 Roboto;color:#4A4E47">8 a.m.</div><span class="ms" style="font-size:28px;color:#F2A007;margin:6px 0;display:block">sunny</span><div style="font:700 20px/1.1 Roboto;color:#1A1C19">26°</div><div style="font:400 14px/1.3 Roboto;color:#0277BD">0%</div></div>
+      <div style="flex:none;width:74px;background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:10px 4px;text-align:center"><div style="font:500 15px/1.2 Roboto;color:#4A4E47">11 a.m.</div><span class="ms" style="font-size:28px;color:#7A8087;margin:6px 0;display:block">partly_cloudy_day</span><div style="font:700 20px/1.1 Roboto;color:#1A1C19">28°</div><div style="font:400 14px/1.3 Roboto;color:#0277BD">10%</div></div>
+      <div style="flex:none;width:74px;background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:10px 4px;text-align:center"><div style="font:500 15px/1.2 Roboto;color:#4A4E47">2 p.m.</div><span class="ms" style="font-size:28px;color:#7A8087;margin:6px 0;display:block">air</span><div style="font:700 20px/1.1 Roboto;color:#1A1C19">27°</div><div style="font:400 14px/1.3 Roboto;color:#0277BD">20%</div></div>
+    </div>
+    <div style="margin:16px 16px 0;font:700 20px/1.2 Roboto;color:#1A1C19">Los próximos 7 días</div>
+    <div style="margin:10px 16px 0;background:#fff;border:1px solid #E2E0D8;border-radius:16px;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #EDEBE4;min-height:48px"><span style="flex:1;font:500 18px/1.2 Roboto;color:#1A1C19">Miércoles</span><span class="ms" style="font-size:26px;color:#7A8087">partly_cloudy_day</span><span style="width:52px;text-align:right;font:400 16px/1.2 Roboto;color:#0277BD">20%</span><span style="width:74px;text-align:right;font:700 18px/1.2 Roboto;color:#1A1C19">28° <span style="font-weight:400;color:#6B6F68">14°</span></span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #EDEBE4;min-height:48px"><span style="flex:1;font:500 18px/1.2 Roboto;color:#1A1C19">Jueves</span><span class="ms" style="font-size:26px;color:#0277BD">rainy</span><span style="width:52px;text-align:right;font:400 16px/1.2 Roboto;color:#0277BD">80%</span><span style="width:74px;text-align:right;font:700 18px/1.2 Roboto;color:#1A1C19">25° <span style="font-weight:400;color:#6B6F68">15°</span></span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;min-height:48px"><span style="flex:1;font:500 18px/1.2 Roboto;color:#1A1C19">Viernes</span><span class="ms" style="font-size:26px;color:#0277BD">thunderstorm</span><span style="width:52px;text-align:right;font:400 16px/1.2 Roboto;color:#0277BD">90%</span><span style="width:74px;text-align:right;font:700 18px/1.2 Roboto;color:#1A1C19">24° <span style="font-weight:400;color:#6B6F68">15°</span></span></div>
+    </div>
+    <div style="margin:12px 16px 0;background:#E8F5E9;border:2px solid #2E7D32;border-radius:16px;padding:14px;display:flex;gap:12px">
+      <span class="ms" style="font-size:32px;color:#1B5E20;flex:none">tips_and_updates</span>
+      <div><div style="font:700 18px/1.2 Roboto;color:#14351A">Consejo de hoy</div><div style="font:400 16px/1.4 Roboto;color:#1F3B23;margin-top:4px">No fumigue en la tarde: el viento se lleva el producto. Hágalo temprano.</div></div>
+    </div>
+    <div style="margin:14px 16px 0;text-align:center;font:400 14px/1.3 Roboto;color:#6B6F68">Actualizado hace 5 minutos · deslice hacia abajo para actualizar</div>
+  </div>
+  <div style="flex:none;background:#fff;border-top:1px solid #DCDAD3;display:flex;padding:6px 0 10px">
+    <div style="flex:1;text-align:center;color:#1B5E20"><span class="ms" style="font-size:26px">home</span><div style="font:700 13px/1.3 Roboto">Inicio</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">map</span><div style="font:400 13px/1.3 Roboto">Mapa</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58;position:relative"><span class="ms" style="font-size:26px">notifications</span><span style="position:absolute;top:-2px;right:22px;min-width:18px;height:18px;background:#B3261E;border-radius:9px;color:#fff;font:700 11px/18px Roboto">2</span><div style="font:400 13px/1.3 Roboto">Alertas</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">bar_chart</span><div style="font:400 13px/1.3 Roboto">Reportes</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">person</span><div style="font:400 13px/1.3 Roboto">Perfil</div></div>
+  </div>
+</div>
+<p class="note">El riesgo del día va antes que el clima: el productor sabe si debe actuar sin leer nada más que una palabra y un ícono. La temperatura a 64 sp se lee a un brazo de distancia bajo sol.</p>
+</div>
+
+<div class="scr" id="S11b">
+<div class="slbl"><a class="sid" href="#S11b">11-osc</a>Panel principal — tema oscuro</div>
+<div style="width:360px;height:800px;background:#10130F;border-radius:26px;border:1px solid #2A2F27;box-shadow:0 6px 20px rgba(0,0,0,.2);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#10130F;color:#E6E9E2;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span style="display:flex;gap:6px"><span class="ms" style="font-size:14px">signal_cellular_alt</span><span class="ms" style="font-size:14px">wifi</span><span class="ms" style="font-size:14px">battery_full</span></span></div>
+  <div style="background:#1E231C;color:#E6E9E2;padding:10px 16px 14px;display:flex;align-items:center;justify-content:space-between;flex:none">
+    <div style="display:flex;align-items:center;gap:10px;min-height:48px"><span class="ms" style="font-size:26px;color:#A5D6A7">agriculture</span>
+    <div><div style="font:700 20px/1.2 Roboto;display:flex;align-items:center;gap:4px">El Guayabal <span class="ms" style="font-size:22px">arrow_drop_down</span></div><div style="font:400 14px/1.3 Roboto;color:#A8ADA3">Jalapa · 1,380 msnm</div></div></div>
+    <div style="position:relative;width:48px;height:48px;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:28px">notifications</span><span style="position:absolute;top:6px;right:6px;min-width:20px;height:20px;background:#F2B8B5;border:2px solid #1E231C;border-radius:10px;color:#410E0B;font:700 11px/16px Roboto;text-align:center">2</span></div>
+  </div>
+  <div style="flex:1;overflow:auto;padding:0 0 12px">
+    <div style="margin:12px 16px 0;background:#3A2A08;border:2px solid #F6C453;border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center"><span class="ms" style="font-size:36px;color:#F6C453;flex:none">air</span><div><div style="font:900 20px/1.15 Roboto;color:#FFE3A3">PRECAUCIÓN</div><div style="font:400 16px/1.35 Roboto;color:#F2E6CE;margin-top:2px">Viento fuerte hoy de 2 a 6 de la tarde</div></div></div>
+    <div style="margin:12px 16px 0;background:#1E231C;border:1px solid #2E342B;border-radius:16px;padding:18px 16px 16px">
+      <div style="display:flex;align-items:center;gap:14px"><span class="ms" style="font-size:68px;color:#F6C453;flex:none">sunny</span><div><div style="font:900 64px/1 Roboto;color:#E6E9E2;letter-spacing:-.02em">24°</div><div style="font:700 24px/1.2 Roboto;color:#C3C8BE;margin-top:2px">Soleado</div></div></div>
+      <div style="display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid #2E342B;font:400 16px/1.3 Roboto;color:#C3C8BE"><span>Se siente <b style="color:#E6E9E2">26°</b></span><span style="display:flex;align-items:center;gap:3px"><span class="ms" style="font-size:18px;color:#F2B8B5">arrow_upward</span>Máx <b style="color:#E6E9E2">28°</b></span><span style="display:flex;align-items:center;gap:3px"><span class="ms" style="font-size:18px;color:#8FD0F5">arrow_downward</span>Mín <b style="color:#E6E9E2">14°</b></span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 16px 0">
+      <div style="background:#1E231C;border:1px solid #2E342B;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#8FD0F5">humidity_percentage</span><div style="font:700 20px/1.2 Roboto;color:#E6E9E2;margin-top:4px">68%</div><div style="font:400 14px/1.25 Roboto;color:#A8ADA3">Humedad</div></div>
+      <div style="background:#1E231C;border:1px solid #2E342B;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#8FD0F5">air</span><div style="font:700 20px/1.2 Roboto;color:#E6E9E2;margin-top:4px">18 NE</div><div style="font:400 14px/1.25 Roboto;color:#A8ADA3">Viento km/h</div></div>
+      <div style="background:#1E231C;border:1px solid #2E342B;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#8FD0F5">rainy</span><div style="font:700 20px/1.2 Roboto;color:#E6E9E2;margin-top:4px">20%</div><div style="font:400 14px/1.25 Roboto;color:#A8ADA3">Va a llover</div></div>
+      <div style="background:#1E231C;border:1px solid #2E342B;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#8FD0F5">water_drop</span><div style="font:700 20px/1.2 Roboto;color:#E6E9E2;margin-top:4px">0 mm</div><div style="font:400 14px/1.25 Roboto;color:#A8ADA3">Llovió hoy</div></div>
+      <div style="background:#1E231C;border:1px solid #2E342B;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#F6C453">wb_sunny</span><div style="font:700 20px/1.2 Roboto;color:#E6E9E2;margin-top:4px">9 alto</div><div style="font:400 14px/1.25 Roboto;color:#A8ADA3">Sol fuerte</div></div>
+      <div style="background:#1E231C;border:1px solid #2E342B;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#8FD0F5">compress</span><div style="font:700 20px/1.2 Roboto;color:#E6E9E2;margin-top:4px">1013</div><div style="font:400 14px/1.25 Roboto;color:#A8ADA3">Presión hPa</div></div>
+    </div>
+    <div style="margin:20px 16px 0;font:700 20px/1.2 Roboto;color:#E6E9E2">Hoy, hora por hora</div>
+    <div style="display:flex;gap:8px;overflow:auto;padding:10px 16px 4px">
+      <div style="flex:none;width:74px;background:#1E231C;border:1px solid #2E342B;border-radius:12px;padding:10px 4px;text-align:center"><div style="font:500 15px/1.2 Roboto;color:#A8ADA3">Ahora</div><span class="ms" style="font-size:28px;color:#F6C453;margin:6px 0;display:block">sunny</span><div style="font:700 20px/1.1 Roboto;color:#E6E9E2">24°</div><div style="font:400 14px/1.3 Roboto;color:#8FD0F5">0%</div></div>
+      <div style="flex:none;width:74px;background:#1E231C;border:1px solid #2E342B;border-radius:12px;padding:10px 4px;text-align:center"><div style="font:500 15px/1.2 Roboto;color:#A8ADA3">8 a.m.</div><span class="ms" style="font-size:28px;color:#F6C453;margin:6px 0;display:block">sunny</span><div style="font:700 20px/1.1 Roboto;color:#E6E9E2">26°</div><div style="font:400 14px/1.3 Roboto;color:#8FD0F5">0%</div></div>
+      <div style="flex:none;width:74px;background:#1E231C;border:1px solid #2E342B;border-radius:12px;padding:10px 4px;text-align:center"><div style="font:500 15px/1.2 Roboto;color:#A8ADA3">11 a.m.</div><span class="ms" style="font-size:28px;color:#C3C8BE;margin:6px 0;display:block">partly_cloudy_day</span><div style="font:700 20px/1.1 Roboto;color:#E6E9E2">28°</div><div style="font:400 14px/1.3 Roboto;color:#8FD0F5">10%</div></div>
+      <div style="flex:none;width:74px;background:#1E231C;border:1px solid #2E342B;border-radius:12px;padding:10px 4px;text-align:center"><div style="font:500 15px/1.2 Roboto;color:#A8ADA3">2 p.m.</div><span class="ms" style="font-size:28px;color:#C3C8BE;margin:6px 0;display:block">air</span><div style="font:700 20px/1.1 Roboto;color:#E6E9E2">27°</div><div style="font:400 14px/1.3 Roboto;color:#8FD0F5">20%</div></div>
+    </div>
+    <div style="margin:12px 16px 0;background:#14301A;border:2px solid #A5D6A7;border-radius:16px;padding:14px;display:flex;gap:12px"><span class="ms" style="font-size:32px;color:#A5D6A7;flex:none">tips_and_updates</span><div><div style="font:700 18px/1.2 Roboto;color:#C8E6C9">Consejo de hoy</div><div style="font:400 16px/1.4 Roboto;color:#DDEEDD;margin-top:4px">No fumigue en la tarde: el viento se lleva el producto. Hágalo temprano.</div></div></div>
+    <div style="margin:14px 16px 0;text-align:center;font:400 14px/1.3 Roboto;color:#8A8F86">Actualizado hace 5 minutos</div>
+  </div>
+  <div style="flex:none;background:#1E231C;border-top:1px solid #2E342B;display:flex;padding:6px 0 10px">
+    <div style="flex:1;text-align:center;color:#A5D6A7"><span class="ms" style="font-size:26px">home</span><div style="font:700 13px/1.3 Roboto">Inicio</div></div>
+    <div style="flex:1;text-align:center;color:#A8ADA3"><span class="ms" style="font-size:26px">map</span><div style="font:400 13px/1.3 Roboto">Mapa</div></div>
+    <div style="flex:1;text-align:center;color:#A8ADA3"><span class="ms" style="font-size:26px">notifications</span><div style="font:400 13px/1.3 Roboto">Alertas</div></div>
+    <div style="flex:1;text-align:center;color:#A8ADA3"><span class="ms" style="font-size:26px">bar_chart</span><div style="font:400 13px/1.3 Roboto">Reportes</div></div>
+    <div style="flex:1;text-align:center;color:#A8ADA3"><span class="ms" style="font-size:26px">person</span><div style="font:400 13px/1.3 Roboto">Perfil</div></div>
+  </div>
+</div>
+<p class="note">El tema oscuro conserva la misma jerarquía y el mismo semáforo; el ámbar se aclara a #F6C453 para mantener contraste AA sobre fondo oscuro.</p>
+</div>
+
+<div class="scr" id="S12">
+<div class="slbl"><a class="sid" href="#S12">12</a>Detalle de pronóstico</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 14px;display:flex;align-items:center;gap:8px;flex:none"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div style="font:700 22px/1.2 Roboto">Pronóstico detallado</div></div>
+  <div style="flex:1;overflow:auto;padding-bottom:12px">
+    <div style="display:flex;gap:8px;overflow:auto;padding:12px 16px">
+      <div style="flex:none;padding:10px 14px;border-radius:22px;background:#2E7D32;color:#fff;font:700 16px/1.2 Roboto;text-align:center">Miércoles<br><span style="font-weight:400;font-size:14px">Hoy</span></div>
+      <div style="flex:none;padding:10px 14px;border-radius:22px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/1.2 Roboto;text-align:center">Jueves<br><span style="font-size:14px">13 ago</span></div>
+      <div style="flex:none;padding:10px 14px;border-radius:22px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/1.2 Roboto;text-align:center">Viernes<br><span style="font-size:14px">14 ago</span></div>
+    </div>
+    <div style="margin:4px 16px 0;background:#fff;border:1px solid #E2E0D8;border-radius:16px;padding:16px">
+      <div style="font:700 18px/1.2 Roboto;color:#1A1C19">Cómo cambia la temperatura</div>
+      <div style="font:400 15px/1.35 Roboto;color:#4A4E47;margin-top:2px">Lo más frío será a las 5 de la mañana</div>
+      <div style="position:relative;height:130px;margin-top:14px">
+        <svg viewBox="0 0 300 120" style="width:100%;height:100%;overflow:visible">
+          <line x1="0" y1="10" x2="300" y2="10" stroke="#EDEBE4" stroke-width="1"></line>
+          <line x1="0" y1="55" x2="300" y2="55" stroke="#EDEBE4" stroke-width="1"></line>
+          <line x1="0" y1="100" x2="300" y2="100" stroke="#EDEBE4" stroke-width="1"></line>
+          <polyline points="0,88 50,96 100,70 150,26 200,18 250,44 300,72" fill="none" stroke="#B26A00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          <circle cx="200" cy="18" r="6" fill="#B26A00"></circle>
+          <circle cx="50" cy="96" r="6" fill="#0277BD"></circle>
+        </svg>
+        <div style="position:absolute;top:-2px;left:62%;font:700 15px/1 Roboto;color:#B26A00">28°</div>
+        <div style="position:absolute;bottom:12px;left:8%;font:700 15px/1 Roboto;color:#0277BD">14°</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font:400 14px/1.2 Roboto;color:#6B6F68;margin-top:4px"><span>12 a.m.</span><span>6 a.m.</span><span>12 p.m.</span><span>6 p.m.</span></div>
+    </div>
+    <div style="margin:12px 16px 0;background:#fff;border:1px solid #E2E0D8;border-radius:16px;padding:16px">
+      <div style="font:700 18px/1.2 Roboto;color:#1A1C19">Cuánta lluvia caerá</div>
+      <div style="font:400 15px/1.35 Roboto;color:#4A4E47;margin-top:2px">Total esperado hoy: 6 mm — lluvia ligera</div>
+      <div style="display:flex;align-items:flex-end;gap:6px;height:110px;margin-top:14px">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="height:6%;background:#B3D9F2;border-radius:4px 4px 0 0"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="height:2%;background:#B3D9F2;border-radius:4px 4px 0 0"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="height:14%;background:#7EBEE8;border-radius:4px 4px 0 0"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="height:38%;background:#4FA3DB;border-radius:4px 4px 0 0"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="height:76%;background:#0277BD;border-radius:4px 4px 0 0"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="height:52%;background:#4FA3DB;border-radius:4px 4px 0 0"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="height:20%;background:#7EBEE8;border-radius:4px 4px 0 0"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="height:8%;background:#B3D9F2;border-radius:4px 4px 0 0"></div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font:400 14px/1.2 Roboto;color:#6B6F68;margin-top:6px"><span>madrugada</span><span>mañana</span><span>tarde</span><span>noche</span></div>
+    </div>
+    <div style="margin:12px 16px 0;background:#fff;border:1px solid #E2E0D8;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:center;gap:12px"><span class="ms" style="font-size:28px;color:#0277BD">air</span><div style="flex:1;font:400 16px/1.3 Roboto;color:#3D4139">Viento más fuerte</div><div style="font:700 18px/1.2 Roboto;color:#1A1C19">32 km/h</div></div>
+      <div style="display:flex;align-items:center;gap:12px"><span class="ms" style="font-size:28px;color:#0277BD">humidity_percentage</span><div style="flex:1;font:400 16px/1.3 Roboto;color:#3D4139">Humedad del aire</div><div style="font:700 18px/1.2 Roboto;color:#1A1C19">68%</div></div>
+      <div style="display:flex;align-items:center;gap:12px"><span class="ms" style="font-size:28px;color:#B26A00">wb_twilight</span><div style="flex:1;font:400 16px/1.3 Roboto;color:#3D4139">Sale y se pone el sol</div><div style="font:700 18px/1.2 Roboto;color:#1A1C19">5:42 · 18:24</div></div>
+    </div>
+  </div>
+</div>
+<p class="note">Cada gráfica lleva una frase que la interpreta ("lluvia ligera", "lo más frío será a las 5"), para que la lectura no dependa de saber leer un eje.</p>
+</div>
+
+<div class="scr" id="S13">
+<div class="slbl"><a class="sid" href="#S13">13</a>Mapa meteorológico</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;position:relative;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:10px 16px 14px;flex:none"><div style="font:700 22px/1.2 Roboto">Mapa del clima</div><div style="font:400 15px/1.3 Roboto;opacity:.85">Departamento de Jalapa</div></div>
+  <div style="flex:1;position:relative;background:#DDE6D6;overflow:hidden">
+    <svg style="position:absolute;inset:0;width:100%;height:100%" preserveAspectRatio="none"><defs><pattern id="mapstripe" width="14" height="14" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#DDE6D6"></rect><rect width="7" height="14" fill="#D2DDCA"></rect></pattern></defs><rect width="100%" height="100%" fill="url(#mapstripe)"></rect></svg>
+    <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);font:400 12px/1.4 'Roboto Mono';color:#5B6355;background:rgba(255,255,255,.75);padding:5px 10px;border-radius:6px;text-align:center">MAPA GOOGLE MAPS<br>+ capa OpenWeather</div>
+    <div style="position:absolute;top:38%;left:34%;width:150px;height:120px;border-radius:60px;background:rgba(2,119,189,.34)"></div>
+    <div style="position:absolute;top:44%;left:42%;width:90px;height:70px;border-radius:40px;background:rgba(2,119,189,.5)"></div>
+    <div style="position:absolute;top:47%;left:47%;display:flex;flex-direction:column;align-items:center"><span class="ms" style="font-size:40px;color:#B3261E;text-shadow:0 2px 4px rgba(0,0,0,.3)">location_on</span><div style="background:#fff;border:1.5px solid #B3261E;border-radius:8px;padding:3px 8px;font:700 14px/1.2 Roboto;color:#1A1C19;margin-top:-6px">El Guayabal</div></div>
+    <div style="position:absolute;top:26%;left:20%;display:flex;flex-direction:column;align-items:center"><span class="ms" style="font-size:34px;color:#2E7D32;text-shadow:0 2px 4px rgba(0,0,0,.3)">location_on</span><div style="background:#fff;border:1.5px solid #2E7D32;border-radius:8px;padding:3px 8px;font:500 13px/1.2 Roboto;color:#1A1C19;margin-top:-6px">La Joya</div></div>
+    <div style="position:absolute;top:12px;left:12px;right:12px;display:flex;gap:8px;overflow:auto">
+      <div style="flex:none;height:44px;padding:0 14px;border-radius:22px;background:#0277BD;color:#fff;font:700 15px/44px Roboto;display:flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(0,0,0,.2)"><span class="ms" style="font-size:20px">rainy</span>Lluvia</div>
+      <div style="flex:none;height:44px;padding:0 14px;border-radius:22px;background:#fff;color:#3D4139;font:500 15px/44px Roboto;display:flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(0,0,0,.15)"><span class="ms" style="font-size:20px">cloud</span>Nubes</div>
+      <div style="flex:none;height:44px;padding:0 14px;border-radius:22px;background:#fff;color:#3D4139;font:500 15px/44px Roboto;display:flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(0,0,0,.15)"><span class="ms" style="font-size:20px">thermostat</span>Calor</div>
+      <div style="flex:none;height:44px;padding:0 14px;border-radius:22px;background:#fff;color:#3D4139;font:500 15px/44px Roboto;display:flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(0,0,0,.15)"><span class="ms" style="font-size:20px">air</span>Viento</div>
+    </div>
+    <div style="position:absolute;right:12px;bottom:150px;width:56px;height:56px;border-radius:28px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.22);display:flex;flex-direction:column;align-items:center;justify-content:center"><span class="ms" style="font-size:24px;color:#1B5E20">my_location</span><span style="font:700 9px/1.1 Roboto;color:#1B5E20">Mi parcela</span></div>
+    <div style="position:absolute;left:12px;right:12px;bottom:12px;background:#fff;border-radius:16px;padding:14px;box-shadow:0 3px 12px rgba(0,0,0,.18)">
+      <div style="font:700 17px/1.2 Roboto;color:#1A1C19">Qué significan los colores</div>
+      <div style="display:flex;height:14px;border-radius:7px;overflow:hidden;margin:10px 0 6px"><div style="flex:1;background:#CFE8F7"></div><div style="flex:1;background:#7EBEE8"></div><div style="flex:1;background:#0277BD"></div><div style="flex:1;background:#01426A"></div></div>
+      <div style="display:flex;justify-content:space-between;font:400 14px/1.2 Roboto;color:#4A4E47"><span>Poca lluvia</span><span>Lluvia fuerte</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:12px"><span style="font:500 15px/1.2 Roboto;color:#3D4139;flex:none">Ver más claro</span><div style="flex:1;height:6px;border-radius:3px;background:#E2E0D8;position:relative"><div style="position:absolute;left:0;top:0;bottom:0;width:62%;background:#0277BD;border-radius:3px"></div><div style="position:absolute;left:62%;top:50%;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:13px;background:#0277BD;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)"></div></div></div>
+    </div>
+  </div>
+  <div style="flex:none;background:#fff;border-top:1px solid #DCDAD3;display:flex;padding:6px 0 10px">
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">home</span><div style="font:400 13px/1.3 Roboto">Inicio</div></div>
+    <div style="flex:1;text-align:center;color:#1B5E20"><span class="ms" style="font-size:26px">map</span><div style="font:700 13px/1.3 Roboto">Mapa</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">notifications</span><div style="font:400 13px/1.3 Roboto">Alertas</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">bar_chart</span><div style="font:400 13px/1.3 Roboto">Reportes</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">person</span><div style="font:400 13px/1.3 Roboto">Perfil</div></div>
+  </div>
+</div>
+<p class="note">Las capas son chips con ícono y palabra, no un menú. La leyenda se titula "Qué significan los colores" para que nadie tenga que adivinar la escala.</p>
+</div>
+
+</div>
+</section>
+
+
+<section class="blk" id="b4">
+<div class="bhd"><a class="btag" href="#b4">B4</a><span class="bname">Bloque 4 — Motor de alertas</span></div>
+<p class="bsub">Pantallas 14 a 17. La alerta es el corazón del producto: severidad por color + ícono + palabra, ventana de tiempo en lenguaje hablado y el dato que la disparó siempre a la vista.</p>
+<div class="row">
+
+<div class="scr" id="S14">
+<div class="slbl"><a class="sid" href="#S14">14</a>Centro de alertas</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:10px 16px 0;flex:none">
+    <div style="font:700 22px/1.2 Roboto;margin-bottom:12px">Avisos</div>
+    <div style="display:flex;gap:22px"><div style="padding-bottom:10px;border-bottom:4px solid #A5D6A7;display:flex;align-items:center;gap:8px"><span style="font:700 18px/1 Roboto">Activos</span><span style="min-width:24px;height:24px;background:#B3261E;border-radius:12px;font:700 13px/24px Roboto;text-align:center;padding:0 6px">2</span></div><div style="padding-bottom:10px;font:400 18px/1 Roboto;opacity:.8">Anteriores</div></div>
+  </div>
+  <div style="flex:1;overflow:auto;padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px">
+    <div style="background:#fff;border:1px solid #E2E0D8;border-left:10px solid #B3261E;border-radius:14px;padding:14px;display:flex;gap:12px;position:relative">
+      <span style="position:absolute;top:14px;right:14px;width:12px;height:12px;border-radius:6px;background:#B3261E"></span>
+      <span class="ms" style="font-size:38px;color:#8C1D18;flex:none">ac_unit</span>
+      <div><div style="display:inline-flex;align-items:center;gap:5px;background:#FDE7E7;border-radius:14px;padding:3px 10px;margin-bottom:6px"><span class="ms" style="font-size:15px;color:#8C1D18">error</span><span style="font:700 13px/1.3 Roboto;color:#410E0B">PELIGRO</span></div>
+      <div style="font:700 22px/1.2 Roboto;color:#1A1C19">Va a caer helada</div>
+      <div style="font:400 16px/1.4 Roboto;color:#3D4139;margin-top:4px">La Joya · Café</div>
+      <div style="display:flex;align-items:center;gap:6px;font:500 16px/1.4 Roboto;color:#8C1D18;margin-top:6px"><span class="ms" style="font-size:19px">schedule</span>Mañana de 2:00 a 6:00 a.m.</div></div>
+    </div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-left:10px solid #B26A00;border-radius:14px;padding:14px;display:flex;gap:12px;position:relative">
+      <span style="position:absolute;top:14px;right:14px;width:12px;height:12px;border-radius:6px;background:#B3261E"></span>
+      <span class="ms" style="font-size:38px;color:#8A4B00;flex:none">air</span>
+      <div><div style="display:inline-flex;align-items:center;gap:5px;background:#FFF3D6;border-radius:14px;padding:3px 10px;margin-bottom:6px"><span class="ms" style="font-size:15px;color:#8A4B00">warning</span><span style="font:700 13px/1.3 Roboto;color:#4A2A00">PRECAUCIÓN</span></div>
+      <div style="font:700 22px/1.2 Roboto;color:#1A1C19">Viento fuerte</div>
+      <div style="font:400 16px/1.4 Roboto;color:#3D4139;margin-top:4px">El Guayabal · Maíz y frijol</div>
+      <div style="display:flex;align-items:center;gap:6px;font:500 16px/1.4 Roboto;color:#8A4B00;margin-top:6px"><span class="ms" style="font-size:19px">schedule</span>Hoy de 2:00 a 6:00 p.m.</div></div>
+    </div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-left:10px solid #2E7D32;border-radius:14px;padding:14px;display:flex;gap:12px;opacity:.85">
+      <span class="ms" style="font-size:38px;color:#1B5E20;flex:none">rainy</span>
+      <div><div style="display:inline-flex;align-items:center;gap:5px;background:#E8F5E9;border-radius:14px;padding:3px 10px;margin-bottom:6px"><span class="ms" style="font-size:15px;color:#1B5E20">check_circle</span><span style="font:700 13px/1.3 Roboto;color:#14351A">NORMAL</span></div>
+      <div style="font:700 22px/1.2 Roboto;color:#1A1C19">Buena lluvia</div>
+      <div style="font:400 16px/1.4 Roboto;color:#3D4139;margin-top:4px">El Zapote · Hortalizas</div>
+      <div style="display:flex;align-items:center;gap:6px;font:500 16px/1.4 Roboto;color:#4A4E47;margin-top:6px"><span class="ms" style="font-size:19px">schedule</span>Jueves por la tarde</div></div>
+    </div>
+  </div>
+  <div style="flex:none;background:#fff;border-top:1px solid #DCDAD3;display:flex;padding:6px 0 10px">
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">home</span><div style="font:400 13px/1.3 Roboto">Inicio</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">map</span><div style="font:400 13px/1.3 Roboto">Mapa</div></div>
+    <div style="flex:1;text-align:center;color:#1B5E20"><span class="ms" style="font-size:26px">notifications</span><div style="font:700 13px/1.3 Roboto">Alertas</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">bar_chart</span><div style="font:400 13px/1.3 Roboto">Reportes</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">person</span><div style="font:400 13px/1.3 Roboto">Perfil</div></div>
+  </div>
+</div>
+<p class="note">Orden por severidad, no por hora: lo que puede arruinar la cosecha va primero. La franja lateral de 10 dp da el nivel de riesgo aun de reojo.</p>
+</div>
+
+<div class="scr" id="S15">
+<div class="slbl"><a class="sid" href="#S15">15</a>Detalle de alerta</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#8C1D18;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#8C1D18;color:#fff;padding:8px 12px 18px;flex:none">
+    <span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span>
+    <div style="display:flex;align-items:center;gap:14px;padding:0 6px">
+      <span class="ms" style="font-size:56px;flex:none">ac_unit</span>
+      <div><div style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.2);border-radius:14px;padding:3px 10px;margin-bottom:4px"><span class="ms" style="font-size:16px">error</span><span style="font:700 14px/1.3 Roboto">PELIGRO</span></div><div style="font:900 30px/1.15 Roboto">Va a caer helada</div></div>
+    </div>
+  </div>
+  <div style="flex:1;overflow:auto;padding:14px 16px 16px">
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;gap:10px"><span class="ms" style="font-size:24px;color:#1B5E20">agriculture</span><span style="font:400 17px/1.3 Roboto;color:#3D4139">La Joya · Café en floración</span></div>
+      <div style="display:flex;align-items:center;gap:10px"><span class="ms" style="font-size:24px;color:#8C1D18">schedule</span><span style="font:700 18px/1.3 Roboto;color:#1A1C19">Mañana de 2:00 a 6:00 de la mañana</span></div>
+    </div>
+    <div style="background:#FDE7E7;border:2px solid #B3261E;border-radius:16px;padding:14px;margin-top:12px">
+      <div style="font:700 18px/1.25 Roboto;color:#410E0B">Por qué le avisamos</div>
+      <div style="display:flex;align-items:flex-end;gap:14px;margin-top:12px">
+        <div style="flex:1"><div style="font:400 15px/1.3 Roboto;color:#6B2320">Se espera</div><div style="font:900 40px/1 Roboto;color:#8C1D18">2 °C</div></div>
+        <div style="width:2px;height:44px;background:#E9BFBD"></div>
+        <div style="flex:1"><div style="font:400 15px/1.3 Roboto;color:#6B2320">El café aguanta hasta</div><div style="font:700 30px/1.1 Roboto;color:#410E0B">4 °C</div></div>
+      </div>
+      <div style="font:400 16px/1.45 Roboto;color:#5B2320;margin-top:12px">Va a estar 2 grados más frío de lo que aguanta su cultivo.</div>
+    </div>
+    <div style="font:700 22px/1.25 Roboto;color:#1A1C19;margin:18px 2px 10px">Qué puede hacer hoy</div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;overflow:hidden">
+      <div style="display:flex;gap:12px;padding:14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:28px;color:#1B5E20;flex:none">water_drop</span><span style="font:400 17px/1.4 Roboto;color:#3D4139">Riegue por la tarde: la tierra húmeda guarda calor en la noche.</span></div>
+      <div style="display:flex;gap:12px;padding:14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:28px;color:#1B5E20;flex:none">local_fire_department</span><span style="font:400 17px/1.4 Roboto;color:#3D4139">Prepare humo o fogatas en la orilla del cafetal de madrugada.</span></div>
+      <div style="display:flex;gap:12px;padding:14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:28px;color:#1B5E20;flex:none">layers</span><span style="font:400 17px/1.4 Roboto;color:#3D4139">Cubra los almácigos y las plantas nuevas con nailon o costales.</span></div>
+      <div style="display:flex;gap:12px;padding:14px"><span class="ms" style="font-size:28px;color:#1B5E20;flex:none">content_cut</span><span style="font:400 17px/1.4 Roboto;color:#3D4139">No pode ni fertilice hoy: la planta queda más débil al frío.</span></div>
+    </div>
+  </div>
+  <div style="flex:none;padding:12px 16px 18px;background:#fff;border-top:1px solid #DCDAD3;display:flex;flex-direction:column;gap:10px">
+    <div style="height:56px;background:#2E7D32;border-radius:14px;color:#fff;font:700 18px/56px Roboto;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px"><span class="ms" style="font-size:24px">check</span>Ya tomé medidas</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:14px;color:#3D4139;font:700 18px/52px Roboto;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px"><span class="ms" style="font-size:24px;color:#1B5E20">share</span>Avisar por WhatsApp</div>
+  </div>
+</div>
+<p class="note">La transparencia del umbral ("2 °C frente a 4 °C") se muestra como comparación visual, no como fórmula, y se traduce en una frase. Compartir por WhatsApp convierte al productor en difusor para sus vecinos.</p>
+</div>
+
+<div class="scr" id="S16">
+<div class="slbl"><a class="sid" href="#S16">16</a>Configuración de alertas</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 14px;display:flex;align-items:center;gap:8px;flex:none"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div style="font:700 22px/1.2 Roboto">Mis avisos</div></div>
+  <div style="flex:1;overflow:auto;padding:16px">
+    <div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin-bottom:10px">¿De qué le avisamos?</div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid #EDEBE4;min-height:56px"><span class="ms" style="font-size:28px;color:#0277BD">ac_unit</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#1A1C19">Helada</span><div style="width:56px;height:32px;border-radius:16px;background:#2E7D32;position:relative"><div style="position:absolute;right:3px;top:3px;width:26px;height:26px;border-radius:13px;background:#fff"></div></div></div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid #EDEBE4;min-height:56px"><span class="ms" style="font-size:28px;color:#0277BD">thunderstorm</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#1A1C19">Lluvia muy fuerte</span><div style="width:56px;height:32px;border-radius:16px;background:#2E7D32;position:relative"><div style="position:absolute;right:3px;top:3px;width:26px;height:26px;border-radius:13px;background:#fff"></div></div></div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid #EDEBE4;min-height:56px"><span class="ms" style="font-size:28px;color:#B26A00">local_fire_department</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#1A1C19">Sequía o canícula</span><div style="width:56px;height:32px;border-radius:16px;background:#2E7D32;position:relative"><div style="position:absolute;right:3px;top:3px;width:26px;height:26px;border-radius:13px;background:#fff"></div></div></div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px;min-height:56px"><span class="ms" style="font-size:28px;color:#6B6F68">air</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#6B6F68">Viento fuerte</span><div style="width:56px;height:32px;border-radius:16px;background:#C9C7BF;position:relative"><div style="position:absolute;left:3px;top:3px;width:26px;height:26px;border-radius:13px;background:#fff"></div></div></div>
+    </div>
+    <div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin:20px 0 10px">Avisarme desde</div>
+    <div style="display:flex;gap:8px">
+      <div style="flex:1;background:#fff;border:2px solid #DCDAD3;border-radius:14px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#2E7D32">check_circle</span><div style="font:700 14px/1.2 Roboto;color:#3D4139;margin-top:4px">Todo</div></div>
+      <div style="flex:1;background:#FFF3D6;border:3px solid #B26A00;border-radius:14px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#8A4B00">warning</span><div style="font:700 14px/1.2 Roboto;color:#4A2A00;margin-top:4px">Precaución</div></div>
+      <div style="flex:1;background:#fff;border:2px solid #DCDAD3;border-radius:14px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#B3261E">error</span><div style="font:700 14px/1.2 Roboto;color:#3D4139;margin-top:4px">Solo peligro</div></div>
+    </div>
+    <div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin:20px 0 10px">No sonar de noche</div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px"><span class="ms" style="font-size:28px;color:#4A4E47">bedtime</span><div style="flex:1"><div style="font:500 18px/1.3 Roboto;color:#1A1C19">De 9:00 p.m. a 5:00 a.m.</div><div style="font:400 15px/1.3 Roboto;color:#6B6F68">Los avisos de PELIGRO sí suenan</div></div><div style="width:56px;height:32px;border-radius:16px;background:#2E7D32;position:relative"><div style="position:absolute;right:3px;top:3px;width:26px;height:26px;border-radius:13px;background:#fff"></div></div></div>
+    <div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin:20px 0 10px">Frío que aguanta el café</div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;padding:16px 14px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 16px/1.3 Roboto;color:#4A4E47">Avisar si baja de</span><span style="font:900 28px/1 Roboto;color:#1A1C19">4 °C</span></div>
+      <div style="height:8px;border-radius:4px;background:#E2E0D8;position:relative;margin:18px 0 10px"><div style="position:absolute;left:0;top:0;bottom:0;width:40%;background:#0277BD;border-radius:4px"></div><div style="position:absolute;left:40%;top:50%;transform:translate(-50%,-50%);width:32px;height:32px;border-radius:16px;background:#0277BD;border:4px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.3)"></div></div>
+      <div style="display:flex;justify-content:space-between;font:400 14px/1.2 Roboto;color:#6B6F68"><span>0 °C</span><span style="color:#2E7D32;font-weight:700">Recomendado: 4 °C</span><span>10 °C</span></div>
+    </div>
+  </div>
+</div>
+<p class="note">Nadie tiene que saber meteorología: el valor recomendado por cultivo viene puesto y marcado en la barra; mover el control es opcional.</p>
+</div>
+
+<div class="scr" id="S17">
+<div class="slbl"><a class="sid" href="#S17">17</a>Notificaciones — 3 niveles</div>
+<div style="width:360px;height:800px;background:#243026;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;position:relative;font-family:Roboto,sans-serif">
+  <svg style="position:absolute;inset:0;width:100%;height:100%" preserveAspectRatio="none"><defs><pattern id="lockstripe" width="16" height="16" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#243026"></rect><rect width="8" height="16" fill="#2A382C"></rect></pattern></defs><rect width="100%" height="100%" fill="url(#lockstripe)"></rect></svg>
+  <div style="position:relative;height:28px;color:#E6E9E2;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>4:58</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="position:relative;text-align:center;color:#fff;padding:26px 0 6px"><div style="font:300 62px/1 Roboto">4:58</div><div style="font:400 17px/1.3 Roboto;opacity:.85;margin-top:6px">Miércoles, 12 de agosto</div><div style="font:400 11px/1.3 'Roboto Mono';opacity:.5;margin-top:8px">PANTALLA DE BLOQUEO</div></div>
+  <div style="position:relative;flex:1;padding:18px 12px;display:flex;flex-direction:column;gap:10px">
+    <div style="background:#fff;border-radius:18px;padding:14px;border-left:10px solid #B3261E">
+      <div style="display:flex;align-items:center;gap:8px;font:500 13px/1.2 Roboto;color:#6B6F68;margin-bottom:8px"><span class="ms" style="font-size:16px;color:#1B5E20">rainy</span>AgroClima · ahora</div>
+      <div style="display:flex;gap:12px"><span class="ms" style="font-size:34px;color:#8C1D18;flex:none">ac_unit</span><div><div style="font:700 19px/1.25 Roboto;color:#1A1C19">PELIGRO: va a caer helada en La Joya</div><div style="font:400 16px/1.4 Roboto;color:#3D4139;margin-top:3px">Mañana de 2 a 6 a.m. se esperan 2 °C. Toque para ver qué hacer.</div></div></div>
+    </div>
+    <div style="background:#fff;border-radius:18px;padding:14px;border-left:10px solid #B26A00">
+      <div style="display:flex;align-items:center;gap:8px;font:500 13px/1.2 Roboto;color:#6B6F68;margin-bottom:8px"><span class="ms" style="font-size:16px;color:#1B5E20">rainy</span>AgroClima · hace 3 h</div>
+      <div style="display:flex;gap:12px"><span class="ms" style="font-size:34px;color:#8A4B00;flex:none">air</span><div><div style="font:700 19px/1.25 Roboto;color:#1A1C19">PRECAUCIÓN: viento fuerte en El Guayabal</div><div style="font:400 16px/1.4 Roboto;color:#3D4139;margin-top:3px">Hoy de 2 a 6 p.m., hasta 32 km/h. No fumigue.</div></div></div>
+    </div>
+    <div style="background:#fff;border-radius:18px;padding:14px;border-left:10px solid #2E7D32">
+      <div style="display:flex;align-items:center;gap:8px;font:500 13px/1.2 Roboto;color:#6B6F68;margin-bottom:8px"><span class="ms" style="font-size:16px;color:#1B5E20">rainy</span>AgroClima · ayer</div>
+      <div style="display:flex;gap:12px"><span class="ms" style="font-size:34px;color:#1B5E20;flex:none">rainy</span><div><div style="font:700 19px/1.25 Roboto;color:#1A1C19">NORMAL: buena lluvia el jueves</div><div style="font:400 16px/1.4 Roboto;color:#3D4139;margin-top:3px">15 mm en El Zapote. Buen momento para sembrar.</div></div></div>
+    </div>
+  </div>
+</div>
+<p class="note">La notificación empieza con la palabra del semáforo y el nombre de la parcela: se entiende sin abrir la app, que es como la leerá la mayoría.</p>
+</div>
+
+</div>
+</section>
+
+<section class="blk" id="b5">
+<div class="bhd"><a class="btag" href="#b5">B5</a><span class="bname">Bloque 5 — Reportes e historial</span></div>
+<p class="bsub">Pantallas 18 a 20. Los números se acompañan siempre de una frase que los interpreta.</p>
+<div class="row">
+
+<div class="scr" id="S18">
+<div class="slbl"><a class="sid" href="#S18">18</a>Reportes</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:10px 16px 14px;display:flex;align-items:center;justify-content:space-between;flex:none"><div><div style="font:700 22px/1.2 Roboto">Resumen</div><div style="font:400 15px/1.3 Roboto;opacity:.85">El Guayabal</div></div><div style="width:48px;height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center"><span class="ms" style="font-size:24px">ios_share</span><span style="font:700 10px/1.1 Roboto">Enviar</span></div></div>
+  <div style="flex:1;overflow:auto;padding:14px 16px 16px">
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <div style="flex:1;height:44px;border-radius:22px;background:#2E7D32;color:#fff;font:700 15px/44px Roboto;text-align:center">7 días</div>
+      <div style="flex:1;height:44px;border-radius:22px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 15px/41px Roboto;text-align:center">30 días</div>
+      <div style="flex:1;height:44px;border-radius:22px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 15px/41px Roboto;text-align:center">Elegir</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:14px;padding:12px"><span class="ms" style="font-size:26px;color:#0277BD">rainy</span><div style="font:900 30px/1.1 Roboto;color:#1A1C19;margin-top:4px">4</div><div style="font:400 15px/1.3 Roboto;color:#4A4E47">días con lluvia</div></div>
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:14px;padding:12px"><span class="ms" style="font-size:26px;color:#0277BD">ac_unit</span><div style="font:900 30px/1.1 Roboto;color:#1A1C19;margin-top:4px">11 °C</div><div style="font:400 15px/1.3 Roboto;color:#4A4E47">la noche más fría</div></div>
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:14px;padding:12px"><span class="ms" style="font-size:26px;color:#0277BD">water_drop</span><div style="font:900 30px/1.1 Roboto;color:#1A1C19;margin-top:4px">46 mm</div><div style="font:400 15px/1.3 Roboto;color:#4A4E47">llovió en total</div></div>
+      <div style="background:#FDE7E7;border:1px solid #E9BFBD;border-radius:14px;padding:12px"><span class="ms" style="font-size:26px;color:#8C1D18">error</span><div style="font:900 30px/1.1 Roboto;color:#410E0B;margin-top:4px">1</div><div style="font:400 15px/1.3 Roboto;color:#5B2320">aviso de peligro</div></div>
+    </div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;padding:16px;margin-bottom:12px">
+      <div style="font:700 18px/1.2 Roboto;color:#1A1C19">Temperatura de la semana</div>
+      <svg viewBox="0 0 300 110" style="width:100%;height:110px;margin-top:12px;overflow:visible">
+        <line x1="0" y1="8" x2="300" y2="8" stroke="#EDEBE4"></line><line x1="0" y1="55" x2="300" y2="55" stroke="#EDEBE4"></line><line x1="0" y1="100" x2="300" y2="100" stroke="#EDEBE4"></line>
+        <polyline points="0,24 50,20 100,30 150,18 200,26 250,36 300,22" fill="none" stroke="#B26A00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+        <polyline points="0,82 50,76 100,88 150,70 200,80 250,94 300,78" fill="none" stroke="#0277BD" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+      </svg>
+      <div style="display:flex;gap:16px;margin-top:8px;font:400 15px/1.2 Roboto;color:#4A4E47"><span style="display:flex;align-items:center;gap:6px"><span style="width:16px;height:4px;background:#B26A00;border-radius:2px"></span>Más caliente</span><span style="display:flex;align-items:center;gap:6px"><span style="width:16px;height:4px;background:#0277BD;border-radius:2px"></span>Más frío</span></div>
+    </div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;padding:16px">
+      <div style="font:700 18px/1.2 Roboto;color:#1A1C19">Lluvia por día</div>
+      <div style="display:flex;align-items:flex-end;gap:8px;height:96px;margin-top:14px">
+        <div style="flex:1;height:12%;background:#B3D9F2;border-radius:4px 4px 0 0"></div>
+        <div style="flex:1;height:0%;background:#B3D9F2;border-radius:4px 4px 0 0"></div>
+        <div style="flex:1;height:46%;background:#4FA3DB;border-radius:4px 4px 0 0"></div>
+        <div style="flex:1;height:88%;background:#0277BD;border-radius:4px 4px 0 0"></div>
+        <div style="flex:1;height:0%;background:#B3D9F2;border-radius:4px 4px 0 0"></div>
+        <div style="flex:1;height:30%;background:#7EBEE8;border-radius:4px 4px 0 0"></div>
+        <div style="flex:1;height:6%;background:#B3D9F2;border-radius:4px 4px 0 0"></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:6px;font:400 14px/1.2 Roboto;color:#6B6F68;text-align:center"><span style="flex:1">L</span><span style="flex:1">M</span><span style="flex:1">M</span><span style="flex:1">J</span><span style="flex:1">V</span><span style="flex:1">S</span><span style="flex:1">D</span></div>
+    </div>
+  </div>
+  <div style="flex:none;background:#fff;border-top:1px solid #DCDAD3;display:flex;padding:6px 0 10px">
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">home</span><div style="font:400 13px/1.3 Roboto">Inicio</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">map</span><div style="font:400 13px/1.3 Roboto">Mapa</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">notifications</span><div style="font:400 13px/1.3 Roboto">Alertas</div></div>
+    <div style="flex:1;text-align:center;color:#1B5E20"><span class="ms" style="font-size:26px">bar_chart</span><div style="font:700 13px/1.3 Roboto">Reportes</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">person</span><div style="font:400 13px/1.3 Roboto">Perfil</div></div>
+  </div>
+</div>
+<p class="note">Los indicadores van antes que las gráficas: cuatro números grandes con su palabra responden la pregunta "¿cómo estuvo la semana?" sin interpretar ejes.</p>
+</div>
+
+<div class="scr" id="S19">
+<div class="slbl"><a class="sid" href="#S19">19</a>Historial climático</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 14px;display:flex;align-items:center;gap:8px;flex:none"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div style="font:700 22px/1.2 Roboto">Día por día</div></div>
+  <div style="padding:12px 16px 0;display:flex;gap:8px;flex:none"><div style="height:44px;padding:0 16px;border-radius:22px;background:#2E7D32;color:#fff;font:700 15px/44px Roboto">Todo</div><div style="height:44px;padding:0 16px;border-radius:22px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 15px/41px Roboto;display:flex;align-items:center;gap:6px"><span class="ms" style="font-size:18px">rainy</span>Con lluvia</div><div style="height:44px;padding:0 16px;border-radius:22px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 15px/41px Roboto;display:flex;align-items:center;gap:6px"><span class="ms" style="font-size:18px">warning</span>Con aviso</div></div>
+  <div style="flex:1;overflow:auto;padding:12px 16px 16px;display:flex;flex-direction:column;gap:8px">
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px"><div style="width:52px;flex:none"><div style="font:700 20px/1.1 Roboto;color:#1A1C19">12</div><div style="font:400 14px/1.2 Roboto;color:#6B6F68">agosto</div></div><span class="ms" style="font-size:28px;color:#F2A007">sunny</span><div style="flex:1;font:400 16px/1.3 Roboto;color:#3D4139">Soleado<br><span style="color:#6B6F68;font-size:15px">0 mm de lluvia</span></div><div style="font:700 18px/1.2 Roboto;color:#1A1C19;text-align:right">28°<br><span style="font-weight:400;color:#6B6F68">14°</span></div></div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;border-left:8px solid #B26A00"><div style="width:52px;flex:none"><div style="font:700 20px/1.1 Roboto;color:#1A1C19">11</div><div style="font:400 14px/1.2 Roboto;color:#6B6F68">agosto</div></div><span class="ms" style="font-size:28px;color:#0277BD">rainy</span><div style="flex:1;font:400 16px/1.3 Roboto;color:#3D4139">Llovió fuerte<br><span style="color:#6B6F68;font-size:15px">32 mm · 1 aviso</span></div><div style="font:700 18px/1.2 Roboto;color:#1A1C19;text-align:right">25°<br><span style="font-weight:400;color:#6B6F68">15°</span></div></div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px"><div style="width:52px;flex:none"><div style="font:700 20px/1.1 Roboto;color:#1A1C19">10</div><div style="font:400 14px/1.2 Roboto;color:#6B6F68">agosto</div></div><span class="ms" style="font-size:28px;color:#7A8087">partly_cloudy_day</span><div style="flex:1;font:400 16px/1.3 Roboto;color:#3D4139">Nublado<br><span style="color:#6B6F68;font-size:15px">6 mm de lluvia</span></div><div style="font:700 18px/1.2 Roboto;color:#1A1C19;text-align:right">26°<br><span style="font-weight:400;color:#6B6F68">16°</span></div></div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px"><div style="width:52px;flex:none"><div style="font:700 20px/1.1 Roboto;color:#1A1C19">9</div><div style="font:400 14px/1.2 Roboto;color:#6B6F68">agosto</div></div><span class="ms" style="font-size:28px;color:#F2A007">sunny</span><div style="flex:1;font:400 16px/1.3 Roboto;color:#3D4139">Soleado<br><span style="color:#6B6F68;font-size:15px">0 mm de lluvia</span></div><div style="font:700 18px/1.2 Roboto;color:#1A1C19;text-align:right">30°<br><span style="font-weight:400;color:#6B6F68">17°</span></div></div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px"><div style="width:52px;flex:none"><div style="font:700 20px/1.1 Roboto;color:#1A1C19">8</div><div style="font:400 14px/1.2 Roboto;color:#6B6F68">agosto</div></div><span class="ms" style="font-size:28px;color:#0277BD">rainy</span><div style="flex:1;font:400 16px/1.3 Roboto;color:#3D4139">Lluvia ligera<br><span style="color:#6B6F68;font-size:15px">8 mm de lluvia</span></div><div style="font:700 18px/1.2 Roboto;color:#1A1C19;text-align:right">27°<br><span style="font-weight:400;color:#6B6F68">15°</span></div></div>
+  </div>
+</div>
+<p class="note">Lista en vez de tabla: en 360 dp una tabla obliga a desplazar en horizontal, que es donde este perfil de usuario se pierde.</p>
+</div>
+
+<div class="scr" id="S20">
+<div class="slbl"><a class="sid" href="#S20">20</a>Exportar reporte (modal)</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;position:relative;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:10px 16px 14px;flex:none"><div style="font:700 22px/1.2 Roboto">Resumen</div><div style="font:400 15px/1.3 Roboto;opacity:.85">El Guayabal</div></div>
+  <div style="flex:1;padding:14px 16px;filter:blur(2px);opacity:.5"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="height:100px;background:#fff;border-radius:14px"></div><div style="height:100px;background:#fff;border-radius:14px"></div><div style="height:100px;background:#fff;border-radius:14px"></div><div style="height:100px;background:#fff;border-radius:14px"></div></div><div style="height:180px;background:#fff;border-radius:16px;margin-top:12px"></div></div>
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end">
+    <div style="width:100%;background:#fff;border-radius:26px 26px 0 0;padding:20px 20px 26px">
+      <div style="width:46px;height:5px;border-radius:3px;background:#D5D3CC;margin:0 auto 18px"></div>
+      <div style="font:700 24px/1.25 Roboto;color:#1A1C19">Guardar o enviar</div>
+      <div style="font:400 16px/1.4 Roboto;color:#4A4E47;margin-top:4px">Se hace un archivo PDF con el resumen.</div>
+      <div style="display:flex;gap:8px;margin:18px 0 16px"><div style="flex:1;height:48px;border-radius:24px;background:#2E7D32;color:#fff;font:700 16px/48px Roboto;text-align:center">7 días</div><div style="flex:1;height:48px;border-radius:24px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/45px Roboto;text-align:center">30 días</div><div style="flex:1;height:48px;border-radius:24px;background:#fff;border:1.5px solid #B9B7AE;color:#3D4139;font:500 16px/45px Roboto;text-align:center">Elegir</div></div>
+      <div style="background:#F7F6F2;border:1px solid #E2E0D8;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:18px"><span class="ms" style="font-size:32px;color:#B3261E">picture_as_pdf</span><div><div style="font:700 18px/1.2 Roboto;color:#1A1C19">Archivo PDF</div><div style="font:400 15px/1.3 Roboto;color:#6B6F68">Se abre en cualquier teléfono</div></div></div>
+      <div style="height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 19px/60px Roboto;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px"><span class="ms" style="font-size:24px">share</span>Compartir</div>
+      <div style="height:56px;border:2px solid #B9B7AE;border-radius:14px;color:#3D4139;font:700 18px/52px Roboto;text-align:center;margin-top:10px">Cancelar</div>
+    </div>
+  </div>
+</div>
+<p class="note">Se dice qué es un PDF con sus palabras ("se abre en cualquier teléfono"): el formato no se asume conocido.</p>
+</div>
+
+</div>
+</section>
+
+<section class="blk" id="b6">
+<div class="bhd"><a class="btag" href="#b6">B6</a><span class="bname">Bloque 6 — Perfil y soporte</span></div>
+<p class="bsub">Pantallas 21 a 24. Listas de una sola columna, cada fila con ícono + palabra y 56 dp de alto.</p>
+<div class="row">
+
+<div class="scr" id="S21">
+<div class="slbl"><a class="sid" href="#S21">21</a>Perfil de usuario</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:16px 16px 24px;display:flex;align-items:center;gap:14px;flex:none">
+    <div style="width:76px;height:76px;border-radius:38px;background:#A5D6A7;display:flex;align-items:center;justify-content:center;font:700 32px/1 Roboto;color:#14351A;flex:none">JL</div>
+    <div><div style="font:700 24px/1.2 Roboto">Juan López</div><div style="font:400 16px/1.4 Roboto;opacity:.85">juan.lopez@correo.com</div><div style="font:400 16px/1.4 Roboto;opacity:.85">Jalapa · 3 parcelas</div></div>
+  </div>
+  <div style="flex:1;overflow:auto;padding:14px 16px">
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:14px;padding:16px 14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:28px;color:#1B5E20">agriculture</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#1A1C19">Mis parcelas</span><span class="ms" style="font-size:24px;color:#9B9F98">chevron_right</span></div>
+      <div style="display:flex;align-items:center;gap:14px;padding:16px 14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:28px;color:#1B5E20">notifications</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#1A1C19">Mis avisos</span><span class="ms" style="font-size:24px;color:#9B9F98">chevron_right</span></div>
+      <div style="display:flex;align-items:center;gap:14px;padding:16px 14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:28px;color:#1B5E20">settings</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#1A1C19">Ajustes</span><span class="ms" style="font-size:24px;color:#9B9F98">chevron_right</span></div>
+      <div style="display:flex;align-items:center;gap:14px;padding:16px 14px"><span class="ms" style="font-size:28px;color:#1B5E20">help</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#1A1C19">Ayuda</span><span class="ms" style="font-size:24px;color:#9B9F98">chevron_right</span></div>
+    </div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:14px;color:#3D4139;font:700 18px/52px Roboto;text-align:center;background:#fff;margin-top:18px">Cerrar sesión</div>
+  </div>
+  <div style="flex:none;background:#fff;border-top:1px solid #DCDAD3;display:flex;padding:6px 0 10px">
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">home</span><div style="font:400 13px/1.3 Roboto">Inicio</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">map</span><div style="font:400 13px/1.3 Roboto">Mapa</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">notifications</span><div style="font:400 13px/1.3 Roboto">Alertas</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">bar_chart</span><div style="font:400 13px/1.3 Roboto">Reportes</div></div>
+    <div style="flex:1;text-align:center;color:#1B5E20"><span class="ms" style="font-size:26px">person</span><div style="font:700 13px/1.3 Roboto">Perfil</div></div>
+  </div>
+</div>
+<p class="note">Solo cuatro destinos y todos con nombre corto; "Eliminar cuenta" vive dentro de Ajustes, lejos del toque accidental.</p>
+</div>
+
+<div class="scr" id="S22">
+<div class="slbl"><a class="sid" href="#S22">22</a>Configuración general</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 14px;display:flex;align-items:center;gap:8px;flex:none"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div style="font:700 22px/1.2 Roboto">Ajustes</div></div>
+  <div style="flex:1;overflow:auto;padding:14px 16px 20px">
+    <div style="font:700 15px/1.3 Roboto;letter-spacing:.04em;color:#6B6F68;margin:0 2px 8px">CÓMO SE MUESTRAN LOS DATOS</div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;overflow:hidden;margin-bottom:20px">
+      <div style="display:flex;align-items:center;gap:14px;padding:14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:26px;color:#4A4E47">thermostat</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#1A1C19">Temperatura</span><div style="display:flex;gap:6px"><span style="height:40px;padding:0 14px;border-radius:20px;background:#2E7D32;color:#fff;font:700 15px/40px Roboto">°C</span><span style="height:40px;padding:0 14px;border-radius:20px;background:#F1EFE9;color:#4A4E47;font:500 15px/40px Roboto">°F</span></div></div>
+      <div style="display:flex;align-items:center;gap:14px;padding:14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:26px;color:#4A4E47">straighten</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#1A1C19">Terreno</span><div style="display:flex;gap:6px"><span style="height:40px;padding:0 14px;border-radius:20px;background:#2E7D32;color:#fff;font:700 15px/40px Roboto">Manzanas</span><span style="height:40px;padding:0 14px;border-radius:20px;background:#F1EFE9;color:#4A4E47;font:500 15px/40px Roboto">ha</span></div></div>
+      <div style="display:flex;align-items:center;gap:14px;padding:14px"><span class="ms" style="font-size:26px;color:#4A4E47">dark_mode</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#1A1C19">Pantalla oscura</span><div style="width:56px;height:32px;border-radius:16px;background:#C9C7BF;position:relative"><div style="position:absolute;left:3px;top:3px;width:26px;height:26px;border-radius:13px;background:#fff"></div></div></div>
+    </div>
+    <div style="font:700 15px/1.3 Roboto;letter-spacing:.04em;color:#6B6F68;margin:0 2px 8px">INTERNET Y AVISOS</div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;overflow:hidden;margin-bottom:20px">
+      <div style="display:flex;align-items:center;gap:14px;padding:14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:26px;color:#4A4E47">data_saver_on</span><div style="flex:1"><div style="font:500 18px/1.3 Roboto;color:#1A1C19">Ahorrar datos</div><div style="font:400 15px/1.3 Roboto;color:#6B6F68">Baja los mapas solo con wifi</div></div><div style="width:56px;height:32px;border-radius:16px;background:#2E7D32;position:relative"><div style="position:absolute;right:3px;top:3px;width:26px;height:26px;border-radius:13px;background:#fff"></div></div></div>
+      <div style="display:flex;align-items:center;gap:14px;padding:14px"><span class="ms" style="font-size:26px;color:#4A4E47">notifications</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#1A1C19">Mis avisos</span><span class="ms" style="font-size:24px;color:#9B9F98">chevron_right</span></div>
+    </div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:14px;padding:16px 14px;border-bottom:1px solid #EDEBE4"><span class="ms" style="font-size:26px;color:#4A4E47">logout</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#1A1C19">Cerrar sesión</span></div>
+      <div style="display:flex;align-items:center;gap:14px;padding:16px 14px"><span class="ms" style="font-size:26px;color:#B3261E">delete_forever</span><span style="flex:1;font:500 18px/1.3 Roboto;color:#B3261E">Eliminar mi cuenta</span></div>
+    </div>
+  </div>
+</div>
+<p class="note">Unidades locales primero: "manzanas" antes que hectáreas, porque es la medida con la que se habla de tierra en Jalapa.</p>
+</div>
+
+<div class="scr" id="S23">
+<div class="slbl"><a class="sid" href="#S23">23</a>Ayuda y glosario</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 14px;display:flex;align-items:center;gap:8px;flex:none"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div style="font:700 22px/1.2 Roboto">Ayuda</div></div>
+  <div style="flex:1;overflow:auto;padding:14px 16px 20px">
+    <div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin-bottom:10px">Preguntas comunes</div>
+    <div style="background:#fff;border:1px solid #E2E0D8;border-radius:16px;overflow:hidden;margin-bottom:20px">
+      <div style="padding:16px 14px;border-bottom:1px solid #EDEBE4"><div style="display:flex;align-items:center;gap:10px"><span style="flex:1;font:500 18px/1.35 Roboto;color:#1A1C19">¿Por qué no me llegan avisos?</span><span class="ms" style="font-size:26px;color:#1B5E20">expand_less</span></div><div style="font:400 17px/1.5 Roboto;color:#4A4E47;margin-top:10px">Revise que tenga internet y que los avisos estén encendidos en "Mis avisos".</div></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:16px 14px;border-bottom:1px solid #EDEBE4"><span style="flex:1;font:500 18px/1.35 Roboto;color:#1A1C19">¿Puedo poner más de una parcela?</span><span class="ms" style="font-size:26px;color:#9B9F98">expand_more</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:16px 14px"><span style="flex:1;font:500 18px/1.35 Roboto;color:#1A1C19">¿Funciona sin señal?</span><span class="ms" style="font-size:26px;color:#9B9F98">expand_more</span></div>
+    </div>
+    <div style="font:700 20px/1.2 Roboto;color:#1A1C19;margin-bottom:10px">¿Qué quiere decir?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:14px;padding:14px 10px;text-align:center"><span class="ms" style="font-size:40px;color:#0277BD">ac_unit</span><div style="font:700 17px/1.2 Roboto;color:#1A1C19;margin-top:6px">Helada</div><div style="font:400 15px/1.35 Roboto;color:#4A4E47;margin-top:4px">Cuando el frío quema la hoja de noche</div></div>
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:14px;padding:14px 10px;text-align:center"><span class="ms" style="font-size:40px;color:#B26A00">local_fire_department</span><div style="font:700 17px/1.2 Roboto;color:#1A1C19;margin-top:6px">Canícula</div><div style="font:400 15px/1.35 Roboto;color:#4A4E47;margin-top:4px">Los días secos de julio en plena lluvia</div></div>
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:14px;padding:14px 10px;text-align:center"><span class="ms" style="font-size:40px;color:#0277BD">humidity_percentage</span><div style="font:700 17px/1.2 Roboto;color:#1A1C19;margin-top:6px">Humedad</div><div style="font:400 15px/1.35 Roboto;color:#4A4E47;margin-top:4px">Cuánta agua trae el aire</div></div>
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:14px;padding:14px 10px;text-align:center"><span class="ms" style="font-size:40px;color:#0277BD">water_drop</span><div style="font:700 17px/1.2 Roboto;color:#1A1C19;margin-top:6px">Milímetro</div><div style="font:400 15px/1.35 Roboto;color:#4A4E47;margin-top:4px">10 mm moja un dedo de tierra</div></div>
+    </div>
+  </div>
+</div>
+<p class="note">El glosario define con imágenes mentales del campo ("moja un dedo de tierra"), no con definiciones de manual.</p>
+</div>
+
+<div class="scr" id="S24">
+<div class="slbl"><a class="sid" href="#S24">24</a>Acerca de</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:8px 12px 14px;display:flex;align-items:center;gap:8px;flex:none"><span class="ms" style="font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">arrow_back</span><div style="font:700 22px/1.2 Roboto">Acerca de</div></div>
+  <div style="flex:1;padding:30px 24px;display:flex;flex-direction:column;align-items:center;text-align:center">
+    <div style="width:96px;height:96px;border-radius:30px;background:#1B5E20;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:58px;color:#fff">rainy</span></div>
+    <div style="font:900 28px/1.15 Roboto;color:#1A1C19;margin-top:14px">AgroClima Jalapa</div>
+    <div style="font:400 17px/1.4 Roboto;color:#4A4E47;margin-top:4px">Versión 1.0</div>
+    <div style="width:100%;background:#fff;border:1px solid #E2E0D8;border-radius:16px;padding:16px;margin-top:24px;text-align:left">
+      <div style="font:700 17px/1.2 Roboto;color:#1A1C19">¿De dónde salen los datos?</div>
+      <div style="font:400 16px/1.45 Roboto;color:#4A4E47;margin-top:6px">Del servicio meteorológico OpenWeather y de los mapas de Google. Los avisos los calcula la app con los umbrales de cada cultivo.</div>
+    </div>
+    <div style="width:100%;background:#fff;border:1px solid #E2E0D8;border-radius:16px;padding:16px;margin-top:12px;text-align:left">
+      <div style="font:700 17px/1.2 Roboto;color:#1A1C19">Quién la hizo</div>
+      <div style="font:400 16px/1.45 Roboto;color:#4A4E47;margin-top:6px">Proyecto para los productores de los 7 municipios de Jalapa, Guatemala.</div>
+    </div>
+    <div style="font:400 16px/1.4 Roboto;color:#1B5E20;font-weight:700;margin-top:22px">Términos de uso y privacidad</div>
+  </div>
+</div>
+<p class="note">Decir de dónde vienen los datos y quién calcula los avisos sostiene la confianza en una app que pide cambiar decisiones de campo.</p>
+</div>
+
+</div>
+</section>
+
+<section class="blk" id="b7">
+<div class="bhd"><a class="btag" href="#b7">B7</a><span class="bname">Bloque 7 — Estados del sistema</span></div>
+<p class="bsub">Pantallas 25 a 28. En la parcela la señal falla: el estado sin conexión no es un caso raro, es el caso frecuente.</p>
+<div class="row">
+
+<div class="scr" id="S25">
+<div class="slbl"><a class="sid" href="#S25">25</a>Sin conexión a internet</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">signal_cellular_off</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:10px 16px 14px;display:flex;align-items:center;gap:10px;flex:none"><span class="ms" style="font-size:26px">agriculture</span><div><div style="font:700 20px/1.2 Roboto">El Guayabal</div><div style="font:400 14px/1.3 Roboto;opacity:.85">Jalapa</div></div></div>
+  <div style="background:#3D4139;color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;flex:none"><span class="ms" style="font-size:26px;flex:none">cloud_off</span><div><div style="font:700 17px/1.25 Roboto">No hay internet</div><div style="font:400 15px/1.35 Roboto;opacity:.9">Le mostramos lo último que guardamos</div></div></div>
+  <div style="flex:1;overflow:auto;padding-bottom:12px">
+    <div style="margin:12px 16px 0;background:#EFEDE6;border:2px dashed #B9B7AE;border-radius:12px;padding:10px 14px;text-align:center;font:500 16px/1.35 Roboto;color:#4A4E47">Datos del 12 de agosto, 6:00 a.m.</div>
+    <div style="margin:12px 16px 0;background:#fff;border:1px solid #E2E0D8;border-radius:16px;padding:18px 16px 16px;opacity:.92">
+      <div style="display:flex;align-items:center;gap:14px"><span class="ms" style="font-size:68px;color:#C0A34F;flex:none">sunny</span><div><div style="font:900 64px/1 Roboto;color:#3D4139;letter-spacing:-.02em">24°</div><div style="font:700 24px/1.2 Roboto;color:#6B6F68;margin-top:2px">Soleado</div></div></div>
+      <div style="display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid #EDEBE4;font:400 16px/1.3 Roboto;color:#6B6F68"><span>Se siente 26°</span><span>Máx 28°</span><span>Mín 14°</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 16px 0;opacity:.92">
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#6B8B9E">humidity_percentage</span><div style="font:700 20px/1.2 Roboto;color:#3D4139;margin-top:4px">68%</div><div style="font:400 14px/1.25 Roboto;color:#6B6F68">Humedad</div></div>
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#6B8B9E">air</span><div style="font:700 20px/1.2 Roboto;color:#3D4139;margin-top:4px">18 NE</div><div style="font:400 14px/1.25 Roboto;color:#6B6F68">Viento</div></div>
+      <div style="background:#fff;border:1px solid #E2E0D8;border-radius:12px;padding:12px 6px;text-align:center"><span class="ms" style="font-size:26px;color:#6B8B9E">rainy</span><div style="font:700 20px/1.2 Roboto;color:#3D4139;margin-top:4px">20%</div><div style="font:400 14px/1.25 Roboto;color:#6B6F68">Va a llover</div></div>
+    </div>
+    <div style="margin:16px 16px 0;height:56px;border:2px solid #1B5E20;border-radius:14px;color:#1B5E20;font:700 18px/52px Roboto;text-align:center;background:#fff;display:flex;align-items:center;justify-content:center;gap:10px"><span class="ms" style="font-size:24px">refresh</span>Intentar de nuevo</div>
+  </div>
+  <div style="flex:none;background:#fff;border-top:1px solid #DCDAD3;display:flex;padding:6px 0 10px">
+    <div style="flex:1;text-align:center;color:#1B5E20"><span class="ms" style="font-size:26px">home</span><div style="font:700 13px/1.3 Roboto">Inicio</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">map</span><div style="font:400 13px/1.3 Roboto">Mapa</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">notifications</span><div style="font:400 13px/1.3 Roboto">Alertas</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">bar_chart</span><div style="font:400 13px/1.3 Roboto">Reportes</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">person</span><div style="font:400 13px/1.3 Roboto">Perfil</div></div>
+  </div>
+</div>
+<p class="note">Los datos viejos se ven desaturados y con su fecha en un recuadro punteado: nunca se puede confundir lo guardado con lo actual.</p>
+</div>
+
+<div class="scr" id="S26">
+<div class="slbl"><a class="sid" href="#S26">26</a>Carga (skeleton)</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;padding:14px 16px;display:flex;align-items:center;gap:12px;flex:none"><div style="width:34px;height:34px;border-radius:17px;background:rgba(255,255,255,.28)"></div><div style="flex:1"><div style="height:18px;width:60%;background:rgba(255,255,255,.28);border-radius:9px"></div><div style="height:12px;width:40%;background:rgba(255,255,255,.2);border-radius:6px;margin-top:6px"></div></div></div>
+  <div style="flex:1;min-height:0;overflow:hidden;padding:0 16px">
+    <div style="height:76px;background:#E4E2DA;border-radius:14px;margin-top:12px"></div>
+    <div style="height:180px;background:#E4E2DA;border-radius:16px;margin-top:12px;display:flex;align-items:center;justify-content:center"><div style="width:130px;height:56px;background:#D8D5CC;border-radius:10px"></div></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px"><div style="height:96px;background:#E4E2DA;border-radius:12px"></div><div style="height:96px;background:#E4E2DA;border-radius:12px"></div><div style="height:96px;background:#E4E2DA;border-radius:12px"></div><div style="height:96px;background:#E4E2DA;border-radius:12px"></div><div style="height:96px;background:#E4E2DA;border-radius:12px"></div><div style="height:96px;background:#E4E2DA;border-radius:12px"></div></div>
+    <div style="height:18px;width:52%;background:#E4E2DA;border-radius:9px;margin-top:20px"></div>
+    <div style="display:flex;gap:8px;margin-top:12px"><div style="width:74px;height:110px;background:#E4E2DA;border-radius:12px"></div><div style="width:74px;height:110px;background:#E4E2DA;border-radius:12px"></div><div style="width:74px;height:110px;background:#E4E2DA;border-radius:12px"></div><div style="width:74px;height:110px;background:#E4E2DA;border-radius:12px"></div></div>
+    <div style="text-align:center;font:500 16px/1.3 Roboto;color:#6B6F68;margin-top:26px">Buscando el clima de su parcela…</div>
+  </div>
+  <div style="flex:none;background:#fff;border-top:1px solid #DCDAD3;display:flex;padding:6px 0 10px">
+    <div style="flex:1;text-align:center;color:#1B5E20"><span class="ms" style="font-size:26px">home</span><div style="font:700 13px/1.3 Roboto">Inicio</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">map</span><div style="font:400 13px/1.3 Roboto">Mapa</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">notifications</span><div style="font:400 13px/1.3 Roboto">Alertas</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">bar_chart</span><div style="font:400 13px/1.3 Roboto">Reportes</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">person</span><div style="font:400 13px/1.3 Roboto">Perfil</div></div>
+  </div>
+</div>
+<p class="note">El esqueleto anticipa la forma real del panel y se acompaña de una frase: en conexiones lentas la espera se explica, no se deja en blanco.</p>
+</div>
+
+<div class="scr" id="S27">
+<div class="slbl"><a class="sid" href="#S27">27</a>Error de servicio</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:10px 16px 14px;flex:none"><div style="font:700 20px/1.2 Roboto">El Guayabal</div></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px;text-align:center;gap:22px">
+    <div style="width:190px;height:170px;border-radius:20px;background:#EFEDE6;border:2px dashed #B9B7AE;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><span class="ms" style="font-size:70px;color:#6B6F68">cloud_alert</span><span style="font:400 11px/1.3 'Roboto Mono';color:#6B6F68">ILUSTRACIÓN<br>servicio caído</span></div>
+    <div style="font:700 26px/1.3 Roboto;color:#1A1C19">No pudimos traer el clima</div>
+    <div style="font:400 18px/1.5 Roboto;color:#4A4E47">Puede ser la señal o que el servicio esté ocupado. Intente otra vez en un momento.</div>
+  </div>
+  <div style="padding:0 20px 26px;display:flex;flex-direction:column;gap:12px">
+    <div style="height:60px;background:#2E7D32;border-radius:14px;color:#fff;font:700 20px/60px Roboto;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px"><span class="ms" style="font-size:26px">refresh</span>Intentar de nuevo</div>
+    <div style="height:56px;border:2px solid #B9B7AE;border-radius:14px;color:#3D4139;font:700 18px/52px Roboto;text-align:center;background:#fff">Ver datos guardados</div>
+  </div>
+</div>
+<p class="note">Ningún código de error: se nombra la causa probable en lenguaje llano y siempre queda una salida útil (los datos guardados).</p>
+</div>
+
+<div class="scr" id="S28">
+<div class="slbl"><a class="sid" href="#S28">28</a>Lista vacía de avisos</div>
+<div style="width:360px;height:800px;background:#F7F6F2;border-radius:26px;border:1px solid #C9C7BF;box-shadow:0 6px 20px rgba(0,0,0,.13);overflow:hidden;display:flex;flex-direction:column;font-family:Roboto,sans-serif">
+  <div style="height:28px;background:#1B5E20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 12px/1 Roboto;flex:none"><span>6:42</span><span class="ms" style="font-size:14px">battery_full</span></div>
+  <div style="background:#1B5E20;color:#fff;padding:10px 16px 0;flex:none"><div style="font:700 22px/1.2 Roboto;margin-bottom:12px">Avisos</div><div style="display:flex;gap:22px"><div style="padding-bottom:10px;border-bottom:4px solid #A5D6A7;font:700 18px/1 Roboto">Activos</div><div style="padding-bottom:10px;font:400 18px/1 Roboto;opacity:.8">Anteriores</div></div></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px;text-align:center;gap:20px">
+    <div style="width:130px;height:130px;border-radius:65px;background:#E8F5E9;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:66px;color:#2E7D32">check_circle</span></div>
+    <div style="font:700 26px/1.3 Roboto;color:#1A1C19">Todo tranquilo</div>
+    <div style="font:400 18px/1.5 Roboto;color:#4A4E47">No hay peligro para sus parcelas en los próximos días. Le avisamos si algo cambia.</div>
+  </div>
+  <div style="flex:none;background:#fff;border-top:1px solid #DCDAD3;display:flex;padding:6px 0 10px">
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">home</span><div style="font:400 13px/1.3 Roboto">Inicio</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">map</span><div style="font:400 13px/1.3 Roboto">Mapa</div></div>
+    <div style="flex:1;text-align:center;color:#1B5E20"><span class="ms" style="font-size:26px">notifications</span><div style="font:700 13px/1.3 Roboto">Alertas</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">bar_chart</span><div style="font:400 13px/1.3 Roboto">Reportes</div></div>
+    <div style="flex:1;text-align:center;color:#5B5F58"><span class="ms" style="font-size:26px">person</span><div style="font:400 13px/1.3 Roboto">Perfil</div></div>
+  </div>
+</div>
+<p class="note">Un vacío de alertas es una buena noticia y así se comunica ("Todo tranquilo"), en verde, para no dejar la duda de si la app falló.</p>
+</div>
+
+</div>
+</section>
+
+<section class="blk" id="fl" style="border-bottom:0">
+<div class="bhd"><a class="btag" href="#fl">FL</a><span class="bname">Flujos de navegación</span></div>
+<p class="bsub">Cinco recorridos. La barra inferior tiene exactamente 5 destinos: Inicio · Mapa · Alertas · Reportes · Perfil.</p>
+<div style="display:flex;flex-direction:column;gap:14px;max-width:1100px">
+
+<div style="background:#fff;border:1px solid #DCDAD3;border-radius:16px;padding:18px 20px">
+<div style="font:700 17px/1.2 Roboto;color:#1A1C19;margin-bottom:14px">1 · Primer uso</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+<span style="background:#F1EFE9;border:1px solid #DCDAD3;border-radius:10px;padding:10px 14px;font:500 14px/1.2 Roboto;color:#1A1C19">Splash</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#F1EFE9;border:1px solid #DCDAD3;border-radius:10px;padding:10px 14px;font:500 14px/1.2 Roboto;color:#1A1C19">Onboarding ×3</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#F1EFE9;border:1px solid #DCDAD3;border-radius:10px;padding:10px 14px;font:500 14px/1.2 Roboto;color:#1A1C19">Registro</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#F1EFE9;border:1px solid #DCDAD3;border-radius:10px;padding:10px 14px;font:500 14px/1.2 Roboto;color:#1A1C19">Permisos ×2</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#C8E6C9;border:1px solid #2E7D32;border-radius:10px;padding:10px 14px;font:700 14px/1.2 Roboto;color:#14351A">Registrar parcela (4 pasos)</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#2E7D32;border-radius:10px;padding:10px 14px;font:700 14px/1.2 Roboto;color:#fff">Panel principal</span>
+</div>
+</div>
+
+<div style="background:#fff;border:1px solid #DCDAD3;border-radius:16px;padding:18px 20px">
+<div style="font:700 17px/1.2 Roboto;color:#1A1C19;margin-bottom:14px">2 · Uso recurrente</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+<span style="background:#F1EFE9;border:1px solid #DCDAD3;border-radius:10px;padding:10px 14px;font:500 14px/1.2 Roboto;color:#1A1C19">Splash</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#2E7D32;border-radius:10px;padding:10px 14px;font:700 14px/1.2 Roboto;color:#fff">Panel principal</span>
+<span style="font:400 14px/1.2 Roboto;color:#6B6F68;margin-left:6px">— sesión guardada, sin volver a entrar</span>
+</div>
+</div>
+
+<div style="background:#fff;border:1px solid #DCDAD3;border-radius:16px;padding:18px 20px">
+<div style="font:700 17px/1.2 Roboto;color:#1A1C19;margin-bottom:14px">3 · Flujo de alerta</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+<span style="background:#FDE7E7;border:1px solid #B3261E;border-radius:10px;padding:10px 14px;font:700 14px/1.2 Roboto;color:#410E0B">Notificación push</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#F1EFE9;border:1px solid #DCDAD3;border-radius:10px;padding:10px 14px;font:500 14px/1.2 Roboto;color:#1A1C19">Detalle de alerta</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#F1EFE9;border:1px solid #DCDAD3;border-radius:10px;padding:10px 14px;font:500 14px/1.2 Roboto;color:#1A1C19">Recomendaciones</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#C8E6C9;border:1px solid #2E7D32;border-radius:10px;padding:10px 14px;font:700 14px/1.2 Roboto;color:#14351A">Ya tomé medidas</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#F1EFE9;border:1px solid #DCDAD3;border-radius:10px;padding:10px 14px;font:500 14px/1.2 Roboto;color:#1A1C19">Centro de alertas</span>
+<span style="background:#E1F1FA;border:1px solid #0277BD;border-radius:10px;padding:10px 14px;font:500 14px/1.2 Roboto;color:#01426A">Ramal: compartir por WhatsApp</span>
+</div>
+</div>
+
+<div style="background:#fff;border:1px solid #DCDAD3;border-radius:16px;padding:18px 20px">
+<div style="font:700 17px/1.2 Roboto;color:#1A1C19;margin-bottom:14px">4 · Flujo de consulta</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+<span style="background:#2E7D32;border-radius:10px;padding:10px 14px;font:700 14px/1.2 Roboto;color:#fff">Panel principal</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#F1EFE9;border:1px solid #DCDAD3;border-radius:10px;padding:10px 14px;font:500 14px/1.2 Roboto;color:#1A1C19">Detalle de pronóstico</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#F1EFE9;border:1px solid #DCDAD3;border-radius:10px;padding:10px 14px;font:500 14px/1.2 Roboto;color:#1A1C19">Mapa por capas</span><span class="ms" style="font-size:20px;color:#9B9F98">arrow_forward</span>
+<span style="background:#F1EFE9;border:1px solid #DCDAD3;border-radius:10px;padding:10px 14px;font:500 14px/1.2 Roboto;color:#1A1C19">Reportes</span>
+</div>
+</div>
+
+<div style="background:#fff;border:1px solid #DCDAD3;border-radius:16px;padding:18px 20px">
+<div style="font:700 17px/1.2 Roboto;color:#1A1C19;margin-bottom:14px">5 · Barra de navegación inferior</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<div style="flex:1;min-width:120px;background:#E8F5E9;border:2px solid #2E7D32;border-radius:12px;padding:14px;text-align:center"><span class="ms" style="font-size:28px;color:#1B5E20">home</span><div style="font:700 15px/1.2 Roboto;color:#14351A;margin-top:4px">Inicio</div><div style="font:400 13px/1.35 Roboto;color:#3D5940;margin-top:4px">Panel del clima</div></div>
+<div style="flex:1;min-width:120px;background:#F7F6F2;border:1px solid #DCDAD3;border-radius:12px;padding:14px;text-align:center"><span class="ms" style="font-size:28px;color:#4A4E47">map</span><div style="font:700 15px/1.2 Roboto;color:#1A1C19;margin-top:4px">Mapa</div><div style="font:400 13px/1.35 Roboto;color:#6B6F68;margin-top:4px">Capas y parcelas</div></div>
+<div style="flex:1;min-width:120px;background:#F7F6F2;border:1px solid #DCDAD3;border-radius:12px;padding:14px;text-align:center"><span class="ms" style="font-size:28px;color:#4A4E47">notifications</span><div style="font:700 15px/1.2 Roboto;color:#1A1C19;margin-top:4px">Alertas</div><div style="font:400 13px/1.35 Roboto;color:#6B6F68;margin-top:4px">Activas e historial</div></div>
+<div style="flex:1;min-width:120px;background:#F7F6F2;border:1px solid #DCDAD3;border-radius:12px;padding:14px;text-align:center"><span class="ms" style="font-size:28px;color:#4A4E47">bar_chart</span><div style="font:700 15px/1.2 Roboto;color:#1A1C19;margin-top:4px">Reportes</div><div style="font:400 13px/1.35 Roboto;color:#6B6F68;margin-top:4px">Resumen e historial</div></div>
+<div style="flex:1;min-width:120px;background:#F7F6F2;border:1px solid #DCDAD3;border-radius:12px;padding:14px;text-align:center"><span class="ms" style="font-size:28px;color:#4A4E47">person</span><div style="font:700 15px/1.2 Roboto;color:#1A1C19;margin-top:4px">Perfil</div><div style="font:400 13px/1.35 Roboto;color:#6B6F68;margin-top:4px">Cuenta y ayuda</div></div>
+</div>
+</div>
+
+</div>
+</section>
+</x-dc>
+</body>
+</html>
