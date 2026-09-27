@@ -29,4 +29,16 @@ flutter analyze && flutter test
 flutter build apk --release --dart-define-from-file=env/prod.json
 ```
 
-Funciones de la nube (`functions/`): ver `CLAUDE.md` §9.
+## Funciones de la nube y reglas (`functions/`)
+
+Requiere Node.js LTS y Firebase CLI (`npm install -g firebase-tools`, `firebase login`). Los emuladores
+necesitan Java: sirve el de Android Studio (`JAVA_HOME=C:\Program Files\Android\Android Studio\jbr`).
+
+```bash
+cd functions && npm install
+npm test                 # pruebas unitarias
+npm run test:reglas      # pruebas de firestore.rules con el emulador
+npm run emuladores       # auth, firestore y functions en local (UI en http://localhost:4000)
+```
+
+Publicar: `firebase deploy --only firestore:rules,firestore:indexes` y `firebase deploy --only functions`.

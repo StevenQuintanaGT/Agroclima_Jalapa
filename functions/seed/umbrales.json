@@ -1,0 +1,31 @@
+[
+  {"umbralId":"lluvia_general_preventiva","tipoRiesgo":"lluviaIntensa","variable":"precipitacionHora","cultivo":"","etapa":"","operador":"mayor","valor":15,"duracionDias":1,"nivel":"preventiva","fuente":"Monjo (2010)","vigente":true},
+  {"umbralId":"lluvia_general_critica","tipoRiesgo":"lluviaIntensa","variable":"precipitacionHora","cultivo":"","etapa":"","operador":"mayor","valor":30,"duracionDias":1,"nivel":"critica","fuente":"Monjo (2010)","vigente":true},
+
+  {"umbralId":"viento_general_preventiva","tipoRiesgo":"vientoFuerte","variable":"velocidadViento","cultivo":"","etapa":"","operador":"mayor","valor":15,"duracionDias":1,"nivel":"preventiva","fuente":"Moraga (2024)","vigente":true},
+  {"umbralId":"viento_general_critica","tipoRiesgo":"vientoFuerte","variable":"velocidadViento","cultivo":"","etapa":"","operador":"mayor","valor":30,"duracionDias":1,"nivel":"critica","fuente":"Moraga (2024)","vigente":true},
+
+  {"umbralId":"sequia_general_informativa","tipoRiesgo":"sequia","variable":"diasSecos","cultivo":"","etapa":"","operador":"mayorIgual","valor":5,"duracionDias":1,"nivel":"informativa","fuente":"MARN El Salvador (s.f.)","vigente":true},
+  {"umbralId":"sequia_general_preventiva","tipoRiesgo":"sequia","variable":"diasSecos","cultivo":"","etapa":"","operador":"mayorIgual","valor":11,"duracionDias":1,"nivel":"preventiva","fuente":"MARN El Salvador (s.f.)","vigente":true},
+  {"umbralId":"sequia_general_critica","tipoRiesgo":"sequia","variable":"diasSecos","cultivo":"","etapa":"","operador":"mayor","valor":15,"duracionDias":1,"nivel":"critica","fuente":"MARN El Salvador (s.f.)","vigente":true},
+  {"umbralId":"sequia_maiz_floracion_preventiva","tipoRiesgo":"sequia","variable":"diasSecos","cultivo":"maiz","etapa":"floracion","operador":"mayorIgual","valor":5,"duracionDias":1,"nivel":"preventiva","fuente":"Fuentes López (2002)","vigente":true},
+  {"umbralId":"sequia_maiz_floracion_critica","tipoRiesgo":"sequia","variable":"diasSecos","cultivo":"maiz","etapa":"floracion","operador":"mayor","valor":10,"duracionDias":1,"nivel":"critica","fuente":"Fuentes López (2002)","vigente":true},
+  {"umbralId":"sequia_frijol_floracion_preventiva","tipoRiesgo":"sequia","variable":"diasSecos","cultivo":"frijol","etapa":"floracion","operador":"mayorIgual","valor":5,"duracionDias":1,"nivel":"preventiva","fuente":"González (2021)","vigente":true},
+  {"umbralId":"sequia_frijol_floracion_critica","tipoRiesgo":"sequia","variable":"diasSecos","cultivo":"frijol","etapa":"floracion","operador":"mayor","valor":10,"duracionDias":1,"nivel":"critica","fuente":"González (2021)","vigente":true},
+  {"umbralId":"sequia_frijol_llenado_preventiva","tipoRiesgo":"sequia","variable":"diasSecos","cultivo":"frijol","etapa":"llenado","operador":"mayorIgual","valor":5,"duracionDias":1,"nivel":"preventiva","fuente":"González (2021)","vigente":true},
+  {"umbralId":"sequia_frijol_llenado_critica","tipoRiesgo":"sequia","variable":"diasSecos","cultivo":"frijol","etapa":"llenado","operador":"mayor","valor":10,"duracionDias":1,"nivel":"critica","fuente":"González (2021)","vigente":true},
+
+  {"umbralId":"tmin_general_critica","tipoRiesgo":"temperaturaBaja","variable":"temperaturaMinima","cultivo":"","etapa":"","operador":"menorIgual","valor":0,"duracionDias":1,"nivel":"critica","fuente":"Bardales Espinoza et al. (2019)","vigente":true},
+  {"umbralId":"tmin_cafe_preventiva","tipoRiesgo":"temperaturaBaja","variable":"temperaturaMinima","cultivo":"cafe","etapa":"","operador":"menor","valor":15,"duracionDias":1,"nivel":"preventiva","fuente":"Moraga (2024)","vigente":true},
+  {"umbralId":"tmin_frijol_preventiva","tipoRiesgo":"temperaturaBaja","variable":"temperaturaMinima","cultivo":"frijol","etapa":"","operador":"menor","valor":18,"duracionDias":1,"nivel":"preventiva","fuente":"González (2021)","vigente":true},
+
+  {"umbralId":"tmax_cafe_preventiva","tipoRiesgo":"temperaturaAlta","variable":"temperaturaMaxima","cultivo":"cafe","etapa":"","operador":"mayor","valor":30,"duracionDias":1,"nivel":"preventiva","fuente":"Moraga (2024)","vigente":true},
+  {"umbralId":"tmax_cafe_critica","tipoRiesgo":"temperaturaAlta","variable":"temperaturaMaxima","cultivo":"cafe","etapa":"","operador":"mayor","valor":30,"duracionDias":3,"nivel":"critica","fuente":"Moraga (2024); Bardales Espinoza et al. (2019)","vigente":true},
+  {"umbralId":"tmax_frijol_preventiva","tipoRiesgo":"temperaturaAlta","variable":"temperaturaMaxima","cultivo":"frijol","etapa":"","operador":"mayor","valor":28,"duracionDias":1,"nivel":"preventiva","fuente":"González (2021)","vigente":true},
+  {"umbralId":"tmax_frijol_critica","tipoRiesgo":"temperaturaAlta","variable":"temperaturaMaxima","cultivo":"frijol","etapa":"","operador":"mayor","valor":28,"duracionDias":3,"nivel":"critica","fuente":"González (2021); Bardales Espinoza et al. (2019)","vigente":true},
+  {"umbralId":"tmax_maiz_vegetativo_preventiva","tipoRiesgo":"temperaturaAlta","variable":"temperaturaMaxima","cultivo":"maiz","etapa":"desarrolloVegetativo","operador":"mayor","valor":35,"duracionDias":1,"nivel":"preventiva","fuente":"Fuentes López (2002)","vigente":true},
+  {"umbralId":"tmax_maiz_floracion_critica","tipoRiesgo":"temperaturaAlta","variable":"temperaturaMaxima","cultivo":"maiz","etapa":"floracion","operador":"mayor","valor":35,"duracionDias":1,"nivel":"critica","fuente":"Fuentes López (2002)","vigente":true},
+  {"umbralId":"tmax_maiz_llenado_critica","tipoRiesgo":"temperaturaAlta","variable":"temperaturaMaxima","cultivo":"maiz","etapa":"llenado","operador":"mayor","valor":35,"duracionDias":1,"nivel":"critica","fuente":"Fuentes López (2002)","vigente":true},
+
+  {"umbralId":"humedad_cafe_preventiva","tipoRiesgo":"humedadAlta","variable":"humedadRelativa","cultivo":"cafe","etapa":"","operador":"mayor","valor":85,"duracionDias":1,"nivel":"preventiva","fuente":"Moraga (2024)","vigente":true}
+]

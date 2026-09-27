@@ -1,0 +1,54 @@
+rules_version = '2';
+// Reglas de seguridad (Tabla 75, docs/MODELO_DATOS.md §5).
+// Las funciones de la nube usan Admin SDK y no pasan por estas reglas.
+service cloud.firestore {
+  match /databases/{db}/documents {
+
+    function autenticado() { return request.auth != null; }
+    function esUsuario(uid) { return autenticado() && request.auth.uid == uid; }
+    function duenoParcela(pid) {
+      return get(/databases/$(db)/documents/parcelas/$(pid)).data.usuarioId;
+    }
+
+    match /usuarios/{uid} {
+      allow read: if esUsuario(uid);
+      allow create: if esUsuario(uid) && request.resource.data.uid == uid;
+      allow update: if esUsuario(uid) && request.resource.data.uid == resource.data.uid;
+      allow delete: if false;                      // la cuenta se borra con una función (cascada)
+
+      match /preferencias/{tipo} {
+        allow read, write: if esUsuario(uid);
+      }
+    }
+
+    match /parcelas/{pid} {
+      allow read, delete: if esUsuario(resource.data.usuarioId);
+      allow create: if esUsuario(request.resource.data.usuarioId);
+      allow update: if esUsuario(resource.data.usuarioId)
+                    && request.resource.data.usuarioId == resource.data.usuarioId;
+
+      match /condiciones/{fecha} {
+        allow read: if esUsuario(duenoParcela(pid));
+        allow create, update: if esUsuario(duenoParcela(pid))
+                              && request.resource.data.origen == 'consulta';
+        allow delete: if false;
+      }
+      match /pronosticos/{fecha} {
+        allow read: if esUsuario(duenoParcela(pid));
+        allow write: if false;                     // solo funciones de la nube
+      }
+    }
+
+    match /alertas/{aid} {
+      allow read: if esUsuario(resource.data.usuarioId);
+      allow update: if esUsuario(resource.data.usuarioId)
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['leida', 'atendida']);
+      allow create, delete: if false;              // solo funciones de la nube
+    }
+
+    match /umbrales/{id} {
+      allow read: if autenticado();
+      allow write: if false;
+    }
+  }
+}
