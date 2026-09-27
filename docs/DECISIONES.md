@@ -29,6 +29,9 @@ Estado: ✅ decidida · ⏳ por confirmar con Steven.
 | D-21 | Supuestos técnicos del handoff de diseño | El README del diseño menciona One Call, WorkManager cada 3 h y Room/SQLite. Se sustituyen por la pila de la tesis: `/2.5` Free (D-09), ciclo en Cloud Functions (D-06) y persistencia sin conexión de Firestore + `shared_preferences` (D-12). | ✅ |
 | D-22 | Inicialización de Firebase | Como la app es solo Android, `Firebase.initializeApp()` toma las opciones de `android/app/google-services.json`; no se usa `firebase_options.dart` (queda ignorado por git si `flutterfire` lo genera). El plugin `google-services` de Gradle se aplica solo si existe el JSON, así el proyecto compila y pasa `flutter analyze` sin claves. | ✅ |
 | D-23 | Orden de la Etapa 1 | `plans/00` agrupa en HT-01 el tema, textos, rutas y componentes; `PLAN_DE_TRABAJO.md` los separa en su propia línea. Se sigue el plan de trabajo: HT-01 = dependencias, Android, secretos, estructura, entorno, utilidades y arranque. | ✅ |
+| D-24 | Íconos | El diseño usa **Material Symbols Outlined** (peso 400) con íconos que `Icons` de Flutter no trae (`rainy`, `humidity_percentage`, `partly_cloudy_day`, `cloud_alert`…). Se agrega el paquete `material_symbols_icons` (fuente, sin costo; en release solo quedan los íconos usados). | ✅ |
+| D-25 | Colores de PRECAUCIÓN (complementa D-04) | Se usan los tonos del diseño: borde #B26A00 (decorativo), texto **#4A2A00** e ícono **#8A4B00** sobre #FFF3D6; ambos superan 4.5:1 (hay prueba automática de contraste en `test/config/tema_test.dart`). En oscuro, #F6C453 sobre #3A2A08. | ✅ |
+| D-26 | Sesión provisional | Hasta HU-02 no hay pantallas de acceso: `main.dart` arranca con `haySesion = true` para mostrar el contenedor con la barra inferior. La guarda (sin sesión → `/bienvenida`) ya está hecha y probada; HU-02 conecta el estado real del `AuthRepositorio`. | ✅ |
 
 ## Pendientes a revisar al final (no bloquean)
 

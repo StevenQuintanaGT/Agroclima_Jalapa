@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'app.dart';
+import 'config/rutas.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,7 +12,10 @@ Future<void> main() async {
   await _iniciarFirebase();
   // Los repositorios y servicios se registran con MultiProvider a medida que
   // se construyen (HT-02 en adelante).
-  runApp(const AgroClimaApp());
+  // TODO(HU-02): reemplazar por el estado de sesión del AuthRepositorio.
+  // Provisional: aún no hay pantallas de acceso, se entra directo al contenedor.
+  final haySesion = ValueNotifier<bool>(true);
+  runApp(AgroClimaApp(enrutador: crearEnrutador(haySesion: haySesion)));
 }
 
 /// Solo Android: las opciones salen de android/app/google-services.json,

@@ -24,12 +24,12 @@ reglas de seguridad desplegadas y secretos fuera del repositorio.
       `POST_NOTIFICATIONS` (RNF-05); meta-data de la clave de Maps; canal de notificación por defecto.
 - [x] `.gitignore` con todo lo de `CLAUDE.md` §8; plantillas `env/dev.example.json` y `android/local.properties.example`.
 - [x] Estructura de carpetas vacía de `lib/` según `ESTRUCTURA_PROYECTO.md`.
-- [ ] `config/tema/`: colores (Tabla 71 + semáforo con D-04), tipografía (Tabla 73), `ThemeData` claro y
+- [x] `config/tema/`: colores (Tabla 71 + semáforo con D-04), tipografía (Tabla 73), `ThemeData` claro y
       oscuro con Material 3, botones de 56 dp, radios 8/16.
-- [ ] `config/textos.dart` con los textos de las pantallas de acceso.
-- [ ] `config/rutas.dart`: go_router con `StatefulShellRoute` para los 5 destinos y guarda de sesión
+- [x] `config/textos.dart` con los textos de las pantallas de acceso.
+- [x] `config/rutas.dart`: go_router con `StatefulShellRoute` para los 5 destinos y guarda de sesión
       (sin sesión → `/bienvenida`; con sesión → `/inicio`).
-- [ ] Componentes transversales base: `ChipSemaforo`, `BotonPrincipal`, `EsqueletoCarga`, `EstadoVacio`,
+- [x] Componentes transversales base: `ChipSemaforo`, `BotonPrincipal`, `EsqueletoCarga`, `EstadoVacio`,
       `EstadoError`, `AvisoNoVigente`, `AvisoApoyo`.
 - [x] `utilidades/unidades.dart` y `fechas.dart` con pruebas unitarias
       (1 mz = 0.6987 ha; °F = °C × 9/5 + 32; km/h = m/s × 3.6; id `yyyyMMdd` en UTC-6).
