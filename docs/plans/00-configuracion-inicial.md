@@ -17,13 +17,13 @@ reglas de seguridad desplegadas y secretos fuera del repositorio.
 7. Crear el repositorio en GitHub y hacer el primer commit.
 
 ## HT-01 — lo que hace Claude Code
-- [ ] `pubspec.yaml`: agregar dependencias de `ESTRUCTURA_PROYECTO.md` con `flutter pub add`.
-- [ ] `android/app/build.gradle(.kts)`: `minSdk = 26`, `applicationId = "gt.umg.agroclima_jalapa"`,
+- [x] `pubspec.yaml`: agregar dependencias de `ESTRUCTURA_PROYECTO.md` con `flutter pub add`.
+- [x] `android/app/build.gradle(.kts)`: `minSdk = 26`, `applicationId = "gt.umg.agroclima_jalapa"`,
       lectura de `MAPS_API_KEY` desde `local.properties` → `manifestPlaceholders`.
-- [ ] `AndroidManifest.xml`: permisos solo `INTERNET`, `ACCESS_FINE_LOCATION`, `ACCESS_COARSE_LOCATION`,
+- [x] `AndroidManifest.xml`: permisos solo `INTERNET`, `ACCESS_FINE_LOCATION`, `ACCESS_COARSE_LOCATION`,
       `POST_NOTIFICATIONS` (RNF-05); meta-data de la clave de Maps; canal de notificación por defecto.
-- [ ] `.gitignore` con todo lo de `CLAUDE.md` §8; plantillas `env/dev.example.json` y `android/local.properties.example`.
-- [ ] Estructura de carpetas vacía de `lib/` según `ESTRUCTURA_PROYECTO.md`.
+- [x] `.gitignore` con todo lo de `CLAUDE.md` §8; plantillas `env/dev.example.json` y `android/local.properties.example`.
+- [x] Estructura de carpetas vacía de `lib/` según `ESTRUCTURA_PROYECTO.md`.
 - [ ] `config/tema/`: colores (Tabla 71 + semáforo con D-04), tipografía (Tabla 73), `ThemeData` claro y
       oscuro con Material 3, botones de 56 dp, radios 8/16.
 - [ ] `config/textos.dart` con los textos de las pantallas de acceso.
@@ -31,10 +31,10 @@ reglas de seguridad desplegadas y secretos fuera del repositorio.
       (sin sesión → `/bienvenida`; con sesión → `/inicio`).
 - [ ] Componentes transversales base: `ChipSemaforo`, `BotonPrincipal`, `EsqueletoCarga`, `EstadoVacio`,
       `EstadoError`, `AvisoNoVigente`, `AvisoApoyo`.
-- [ ] `utilidades/unidades.dart` y `fechas.dart` con pruebas unitarias
+- [x] `utilidades/unidades.dart` y `fechas.dart` con pruebas unitarias
       (1 mz = 0.6987 ha; °F = °C × 9/5 + 32; km/h = m/s × 3.6; id `yyyyMMdd` en UTC-6).
-- [ ] `main.dart`: `Firebase.initializeApp`, persistencia de Firestore, `MultiProvider` con repositorios y servicios.
-- [ ] `README.md` con pasos para correr el proyecto.
+- [~] `main.dart` (falta `MultiProvider`, llega con los primeros repositorios): `Firebase.initializeApp`, persistencia de Firestore, `MultiProvider` con repositorios y servicios.
+- [x] `README.md` con pasos para correr el proyecto.
 
 ## HT-02 — lo que hace Claude Code
 - [ ] `firestore.rules` exactamente como `MODELO_DATOS.md` §5.
