@@ -44,6 +44,8 @@ agroclima_jalapa/
 │   │   └── tema/
 │   │       ├── colores.dart      # tokens de la Tabla 71 y semáforo Tabla 72
 │   │       ├── tipografia.dart   # escala de la Tabla 73
+│   │       ├── medidas.dart      # espaciado, radios y alturas táctiles
+│   │       ├── colores_semaforo.dart # ThemeExtension del semáforo (claro/oscuro)
 │   │       └── tema_app.dart     # ThemeData claro y oscuro (Material 3)
 │   │
 │   ├── modelos/                  # DTO del dominio: fromMap / toMap / copyWith
@@ -85,15 +87,18 @@ agroclima_jalapa/
 │   │   ├── alertas/              # MOD-04: centro_alertas, detalle_alerta, mis_avisos
 │   │   ├── reportes/             # MOD-05: reportes, historial, exportar_reporte
 │   │   ├── perfil/               # perfil, ajustes, ayuda_glosario, acerca_de
-│   │   └── shell/                # contenedor con la barra inferior de 5 destinos
+│   │   └── shell/                # contenedor con la barra inferior de 5 destinos + pantalla_en_construccion
 │   │
 │   ├── componentes/              # CO-18 transversales, reutilizables
 │   │   ├── chip_semaforo.dart    # color + ícono + palabra, siempre juntos
 │   │   ├── tarjeta_metrica.dart
-│   │   ├── boton_principal.dart  # 56 dp de alto, ancho completo
+│   │   ├── boton_principal.dart  # 60 dp de alto, ancho completo
+│   │   ├── boton_secundario.dart # 56 dp, neutro o destacado
 │   │   ├── barra_progreso_pasos.dart
 │   │   ├── esqueleto_carga.dart
-│   │   ├── aviso_no_vigente.dart # "Datos de hace X. Sin señal." + Intentar de nuevo
+│   │   ├── aviso_no_vigente.dart # banner "No hay internet"
+│   │   ├── marca_dato_guardado.dart # recuadro punteado "Datos del …"
+│   │   ├── marco_punteado.dart   # borde punteado (marcas e ilustraciones pendientes)
 │   │   ├── estado_vacio.dart
 │   │   ├── estado_error.dart
 │   │   └── aviso_apoyo.dart      # "Información de apoyo, no es aviso oficial" (RC-03)
