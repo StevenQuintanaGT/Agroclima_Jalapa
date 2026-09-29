@@ -3,6 +3,10 @@ import 'package:agroclima_jalapa/config/rutas.dart';
 import 'package:agroclima_jalapa/config/textos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
+import 'package:agroclima_jalapa/pantallas/acceso/registro_pantalla.dart';
+import 'package:agroclima_jalapa/servicios/cuenta_servicio.dart';
 
 Future<ValueNotifier<bool>> _abrir(
   WidgetTester tester, {
@@ -17,6 +21,8 @@ Future<ValueNotifier<bool>> _abrir(
 }
 
 void main() {
+  pruebasRegistro();
+
   group('Guarda de sesión', () {
     testWidgets('sin sesión va a bienvenida, sin barra inferior', (
       tester,
@@ -68,5 +74,25 @@ void main() {
       ),
       findsOneWidget,
     );
+  });
+}
+
+class _CuentaFalsa extends Mock implements CuentaServicio {}
+
+void pruebasRegistro() {
+  testWidgets('desde bienvenida "Crear cuenta" abre el registro', (
+    tester,
+  ) async {
+    final haySesion = ValueNotifier<bool>(false);
+    await tester.pumpWidget(
+      Provider<CuentaServicio>.value(
+        value: _CuentaFalsa(),
+        child: AgroClimaApp(enrutador: crearEnrutador(haySesion: haySesion)),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(Textos.crearCuenta));
+    await tester.pumpAndSettle();
+    expect(find.byType(RegistroPantalla), findsOneWidget);
   });
 }

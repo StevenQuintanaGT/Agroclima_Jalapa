@@ -42,3 +42,17 @@ npm run emuladores       # auth, firestore y functions en local (UI en http://lo
 ```
 
 Publicar: `firebase deploy --only firestore:rules,firestore:indexes` y `firebase deploy --only functions`.
+
+### Probar la app contra los emuladores (sin tocar producción)
+
+```bash
+cd functions && npm run emuladores
+```
+
+En otra terminal:
+
+```bash
+flutter run --dart-define-from-file=env/dev.json --dart-define=USAR_EMULADORES=true
+```
+
+Cuentas de prueba: `functions/seed/cuentas_prueba_emulador.json`. Datos en http://localhost:4000.

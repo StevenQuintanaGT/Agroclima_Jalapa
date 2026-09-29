@@ -33,6 +33,9 @@ Estado: ✅ decidida · ⏳ por confirmar con Steven.
 | D-25 | Colores de PRECAUCIÓN (complementa D-04) | Se usan los tonos del diseño: borde #B26A00 (decorativo), texto **#4A2A00** e ícono **#8A4B00** sobre #FFF3D6; ambos superan 4.5:1 (hay prueba automática de contraste en `test/config/tema_test.dart`). En oscuro, #F6C453 sobre #3A2A08. | ✅ |
 | D-26 | Sesión provisional | Hasta HU-02 no hay pantallas de acceso: `main.dart` arranca con `haySesion = true` para mostrar el contenedor con la barra inferior. La guarda (sin sesión → `/bienvenida`) ya está hecha y probada; HU-02 conecta el estado real del `AuthRepositorio`. | ✅ |
 | D-27 | Pruebas y emuladores de `functions/` | `npm test` corre las pruebas unitarias (sin emulador). Las reglas se prueban aparte con `npm run test:reglas`, que levanta el emulador de Firestore con `emulators:exec` (proyecto `demo-agroclima-reglas`, sin tocar producción). Java: se usa el JBR de Android Studio (`JAVA_HOME`), no hace falta instalar otro. Runtime de funciones: Node 22. | ✅ |
+| D-28 | Pruebas contra emuladores | `--dart-define=USAR_EMULADORES=true` conecta la app a los emuladores de auth y Firestore de la PC (10.0.2.2 desde el emulador de Android). Solo en depuración se permite HTTP hacia la PC (`src/debug/res/xml/red_emuladores.xml`). Las cuentas de prueba viven en `functions/seed/cuentas_prueba_emulador.json` y no existen en producción. | ✅ |
+| D-29 | Google en HU-02 | El diseño pone "Entrar con Google" en la pantalla de inicio de sesión (05), no en el registro (06). El acceso con Google se implementa en HU-02 junto con esa pantalla; requiere activar el proveedor y volver a descargar `google-services.json`. | ✅ |
+| D-30 | Prueba en teléfono físico | Por decisión de Steven se hace **al final del proyecto**, no por tarea. Las tareas se verifican en el emulador `AgroClima_API35` y se marcan terminadas al fusionarse; queda un solo pendiente general. | ✅ |
 
 ## Pendientes a revisar al final (no bloquean)
 

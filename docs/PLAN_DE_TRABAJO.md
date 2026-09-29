@@ -11,10 +11,10 @@ Al terminar cada etapa, generar un **APK de prueba** e instalarlo en un teléfon
 ---
 
 ## Etapa 1 — Base del proyecto y acceso · `plans/00`, `plans/01`
-- [~] **HT-01** Configuración inicial Flutter (dependencias, Android minSdk 26, secretos, estructura)
-- [~] Tema visual, componentes transversales base y navegación con barra inferior
+- [x] **HT-01** Configuración inicial Flutter (dependencias, Android minSdk 26, secretos, estructura)
+- [x] Tema visual, componentes transversales base y navegación con barra inferior
 - [x] **HT-02** Proyecto Firebase, reglas de seguridad e índices (con pruebas de reglas)
-- [ ] **HU-01** Registro de usuario
+- [x] **HU-01** Registro de usuario
 - [ ] **HU-02** Sesión persistente (+ recuperación de contraseña y pantallas de permisos)
 
 Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con los 5 destinos.
@@ -67,6 +67,10 @@ HU-07 → HU-13 ;  HU-13 + HU-14 → HU-16
 Se puede adelantar una tarea de una etapa posterior solo si sus dependencias ya están terminadas.
 
 ## Notas de avance
+
+- **Pendiente general:** prueba en teléfono físico Android ≥ 8.0 de gama media de todas las tareas (D-30).
+- HU-01: el foco del teclado pasaba al botón "Ver" en vez del siguiente campo; corregido y con prueba.
+- Sin señal, Firebase Auth puede responder `unknown` en vez de `network-request-failed`; se reconoce por el mensaje.
 
 (Espacio libre para anotar problemas encontrados — cuota, conectividad, comportamiento de algún teléfono —
 y lo que se decidió.)

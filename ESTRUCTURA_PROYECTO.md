@@ -70,6 +70,8 @@ agroclima_jalapa/
 │   │   └── historial_repositorio.dart       # condiciones pasadas por rango de fechas
 │   │
 │   ├── servicios/                # lógica de negocio; no conocen widgets
+│   │   ├── cuenta_servicio.dart             # registro: cuenta + perfil + preferencias
+│   │   ├── estado_sesion.dart               # ValueNotifier de sesión para la guarda del enrutador
 │   │   ├── openweather_cliente.dart         # FACHADA: arma peticiones, errores y traducción a dominio
 │   │   ├── validacion_geografica.dart       # punto en polígono → municipio o null
 │   │   ├── celda_clima.dart                 # coordenadas → id de celda
@@ -94,6 +96,7 @@ agroclima_jalapa/
 │   │   ├── tarjeta_metrica.dart
 │   │   ├── boton_principal.dart  # 60 dp de alto, ancho completo
 │   │   ├── boton_secundario.dart # 56 dp, neutro o destacado
+│   │   ├── campo_texto.dart      # etiqueta arriba, palomita si es válido, "Ver" en contraseñas
 │   │   ├── barra_progreso_pasos.dart
 │   │   ├── esqueleto_carga.dart
 │   │   ├── aviso_no_vigente.dart # banner "No hay internet"
