@@ -32,6 +32,7 @@ Estado: ✅ decidida · ⏳ por confirmar con Steven.
 | D-24 | Íconos | El diseño usa **Material Symbols Outlined** (peso 400) con íconos que `Icons` de Flutter no trae (`rainy`, `humidity_percentage`, `partly_cloudy_day`, `cloud_alert`…). Se agrega el paquete `material_symbols_icons` (fuente, sin costo; en release solo quedan los íconos usados). | ✅ |
 | D-25 | Colores de PRECAUCIÓN (complementa D-04) | Se usan los tonos del diseño: borde #B26A00 (decorativo), texto **#4A2A00** e ícono **#8A4B00** sobre #FFF3D6; ambos superan 4.5:1 (hay prueba automática de contraste en `test/config/tema_test.dart`). En oscuro, #F6C453 sobre #3A2A08. | ✅ |
 | D-26 | Sesión provisional | Hasta HU-02 no hay pantallas de acceso: `main.dart` arranca con `haySesion = true` para mostrar el contenedor con la barra inferior. La guarda (sin sesión → `/bienvenida`) ya está hecha y probada; HU-02 conecta el estado real del `AuthRepositorio`. | ✅ |
+| D-27 | Pruebas y emuladores de `functions/` | `npm test` corre las pruebas unitarias (sin emulador). Las reglas se prueban aparte con `npm run test:reglas`, que levanta el emulador de Firestore con `emulators:exec` (proyecto `demo-agroclima-reglas`, sin tocar producción). Java: se usa el JBR de Android Studio (`JAVA_HOME`), no hace falta instalar otro. Runtime de funciones: Node 22. | ✅ |
 
 ## Pendientes a revisar al final (no bloquean)
 

@@ -37,11 +37,11 @@ reglas de seguridad desplegadas y secretos fuera del repositorio.
 - [x] `README.md` con pasos para correr el proyecto.
 
 ## HT-02 — lo que hace Claude Code
-- [ ] `firestore.rules` exactamente como `MODELO_DATOS.md` §5.
-- [ ] `firestore.indexes.json` con los 2 índices de §4.
-- [ ] `functions/` inicializado en JavaScript, con `jest`, `config.js` y un `index.js` vacío exportable.
-- [ ] Pruebas de reglas con el emulador (`@firebase/rules-unit-testing`) para los 5 casos de §5.
-- [ ] `functions/scripts/sembrar-umbrales.js` + `seed/umbrales.json` (se ejecuta en HT-03, se deja listo).
+- [x] `firestore.rules` exactamente como `MODELO_DATOS.md` §5.
+- [x] `firestore.indexes.json` con los 2 índices de §4.
+- [x] `functions/` inicializado en JavaScript, con `jest`, `config.js` y un `index.js` vacío exportable.
+- [x] Pruebas de reglas con el emulador (`@firebase/rules-unit-testing`) para los 5 casos de §5.
+- [x] `functions/scripts/sembrar-umbrales.js` + `seed/umbrales.json` (se ejecuta en HT-03, se deja listo).
 
 ## Criterios de terminado
 - `flutter run` abre la app en teléfono físico con Android ≥ 8; `flutter analyze` limpio.

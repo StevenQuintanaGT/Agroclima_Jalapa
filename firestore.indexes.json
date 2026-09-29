@@ -1,0 +1,22 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "alertas",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "usuarioId", "order": "ASCENDING" },
+        { "fieldPath": "fechaGeneracion", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "alertas",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "parcelaId", "order": "ASCENDING" },
+        { "fieldPath": "tipoRiesgo", "order": "ASCENDING" },
+        { "fieldPath": "fechaEvento", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

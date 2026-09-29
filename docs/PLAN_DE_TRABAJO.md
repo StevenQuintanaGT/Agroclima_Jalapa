@@ -13,7 +13,7 @@ Al terminar cada etapa, generar un **APK de prueba** e instalarlo en un teléfon
 ## Etapa 1 — Base del proyecto y acceso · `plans/00`, `plans/01`
 - [~] **HT-01** Configuración inicial Flutter (dependencias, Android minSdk 26, secretos, estructura)
 - [~] Tema visual, componentes transversales base y navegación con barra inferior
-- [ ] **HT-02** Proyecto Firebase, reglas de seguridad e índices (con pruebas de reglas)
+- [x] **HT-02** Proyecto Firebase, reglas de seguridad e índices (con pruebas de reglas)
 - [ ] **HU-01** Registro de usuario
 - [ ] **HU-02** Sesión persistente (+ recuperación de contraseña y pantallas de permisos)
 
