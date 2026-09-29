@@ -1,0 +1,11 @@
+{
+  "_nota": "Solo para los emuladores locales de Firebase (USAR_EMULADORES). No existen en producción.",
+  "cuentas": [
+    {
+      "nombre": "Productor de Prueba",
+      "telefono": "5512 3456",
+      "correo": "prueba.registro@agroclima.test",
+      "contrasena": "Siembra2026x"
+    }
+  ]
+}

@@ -1,8 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
+import '../componentes/boton_principal.dart';
+import '../pantallas/acceso/registro_pantalla.dart';
+import '../pantallas/acceso/registro_vm.dart';
 import '../pantallas/shell/pantalla_en_construccion.dart';
 import '../pantallas/shell/shell_pantalla.dart';
+import '../servicios/cuenta_servicio.dart';
 import 'textos.dart';
 
 /// Rutas de la app (docs/DISENO_UI.md §8). Se agregan a medida que se
@@ -11,6 +16,7 @@ class Rutas {
   Rutas._();
 
   static const String bienvenida = '/bienvenida';
+  static const String registro = '/registro';
   static const String inicio = '/inicio';
   static const String mapa = '/mapa';
   static const String alertas = '/alertas';
@@ -18,13 +24,13 @@ class Rutas {
   static const String perfil = '/perfil';
 
   /// Rutas que se ven sin sesión (acceso e incorporación).
-  static const Set<String> publicas = {bienvenida};
+  static const Set<String> publicas = {bienvenida, registro};
 }
 
 /// Crea el enrutador con la guarda de sesión: sin sesión → [Rutas.bienvenida];
 /// con sesión, las rutas de acceso llevan a [Rutas.inicio].
 ///
-/// [haySesion] lo aporta el repositorio de autenticación (HU-02).
+/// [haySesion] lo aporta `EstadoSesion` (Firebase Auth).
 GoRouter crearEnrutador({required ValueListenable<bool> haySesion}) {
   return GoRouter(
     initialLocation: Rutas.inicio,
@@ -36,11 +42,23 @@ GoRouter crearEnrutador({required ValueListenable<bool> haySesion}) {
       return null;
     },
     routes: [
+      // TODO(HU-02): reemplazar por splash + onboarding + inicio de sesión.
       GoRoute(
         path: Rutas.bienvenida,
-        builder: (context, estado) => const PantallaEnConstruccion(
+        builder: (context, estado) => PantallaEnConstruccion(
           titulo: Textos.nombreApp,
           conBarra: false,
+          accion: BotonPrincipal(
+            texto: Textos.crearCuenta,
+            alPresionar: () => context.push(Rutas.registro),
+          ),
+        ),
+      ),
+      GoRoute(
+        path: Rutas.registro,
+        builder: (context, estado) => ChangeNotifierProvider(
+          create: (context) => RegistroVm(context.read<CuentaServicio>()),
+          child: const RegistroPantalla(),
         ),
       ),
       StatefulShellRoute.indexedStack(

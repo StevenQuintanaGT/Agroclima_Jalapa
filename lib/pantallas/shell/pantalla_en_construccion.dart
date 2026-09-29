@@ -11,20 +11,25 @@ class PantallaEnConstruccion extends StatelessWidget {
     super.key,
     required this.titulo,
     this.conBarra = true,
+    this.accion,
   });
 
   final String titulo;
   final bool conBarra;
 
+  /// Acción provisional al pie (p. ej. "Crear cuenta" en la bienvenida).
+  final Widget? accion;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: conBarra ? AppBar(title: Text(titulo)) : null,
-      body: const SafeArea(
+      body: SafeArea(
         child: EstadoVacio(
           icono: Symbols.agriculture,
           titulo: Textos.enConstruccionTitulo,
           detalle: Textos.enConstruccionDetalle,
+          accion: accion,
         ),
       ),
     );
