@@ -3,10 +3,26 @@
 class ErrorAcceso implements Exception {
   const ErrorAcceso(this.codigo);
 
+  /// El productor cerró la ventana de Google: no es un error que mostrar.
+  static const String cancelado = 'cancelado';
+
   final String codigo;
 
   @override
   String toString() => 'ErrorAcceso($codigo)';
+}
+
+/// Lo que se sabe del usuario al iniciar sesión.
+class DatosAcceso {
+  const DatosAcceso({
+    required this.uid,
+    required this.nombre,
+    required this.correo,
+  });
+
+  final String uid;
+  final String nombre;
+  final String correo;
 }
 
 /// Contrato de autenticación (CO-02). La app no conoce Firebase: solo este
@@ -26,6 +42,19 @@ abstract class AuthRepositorio {
     required String contrasena,
     required String nombre,
   });
+
+  /// Lanza [ErrorAcceso] si las credenciales no coinciden o no hay señal.
+  Future<DatosAcceso> iniciarSesionConCorreo({
+    required String correo,
+    required String contrasena,
+  });
+
+  /// Abre la ventana de cuentas de Google. Lanza [ErrorAcceso] con
+  /// [ErrorAcceso.cancelado] si el productor la cierra.
+  Future<DatosAcceso> iniciarSesionConGoogle();
+
+  /// Manda el enlace para poner una contraseña nueva.
+  Future<void> recuperarContrasena(String correo);
 
   Future<void> cerrarSesion();
 }

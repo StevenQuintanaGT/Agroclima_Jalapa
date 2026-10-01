@@ -34,6 +34,12 @@ class Colores {
   static const Color bannerSinConexion = Color(0xFF3D4139);
   static const Color fondoDatoGuardado = Color(0xFFEFEDE6);
 
+  // Fondos y bordes de las ilustraciones provisionales (bienvenida, permisos).
+  static const Color cieloClaro = Color(0xFFE1F1FA);
+  static const Color bordeIlustracionVerde = Color(0xFFA5C7A8);
+  static const Color bordeIlustracionCielo = Color(0xFF9CC4DC);
+  static const Color bordeIlustracionAmbar = Color(0xFFD9B77A);
+
   // ---------- Semáforo (Tabla 72) ----------
   // Color de borde/franja, fondo, texto e ícono por nivel. PRECAUCIÓN no usa
   // #B26A00 para texto (3.84:1, DECISIONES D-04): texto #4A2A00 e ícono #8A4B00.

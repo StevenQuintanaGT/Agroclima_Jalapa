@@ -14,6 +14,7 @@ class Errores {
     'weak-password' => Textos.errorContrasenaDebil,
     'network-request-failed' => Textos.errorSinSenal,
     'too-many-requests' => Textos.errorMuchosIntentos,
+    final otro when otro.startsWith('google-') => Textos.errorGoogle,
     _ => Textos.errorGenerico,
   };
 }
