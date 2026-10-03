@@ -52,11 +52,46 @@ class FirestoreParcelasRepositorio implements ParcelasRepositorio {
       );
 
   @override
+  Stream<Parcela?> observar(String parcelaId) =>
+      _parcelas.doc(parcelaId).snapshots().map((doc) {
+        final datos = doc.data();
+        return datos == null ? null : _desdeDoc(doc.id, datos);
+      });
+
+  @override
   Future<List<String>> nombres(String usuarioId) async {
     final consulta = await _parcelas
         .where('usuarioId', isEqualTo: usuarioId)
         .get();
     return [for (final doc in consulta.docs) doc.data()['nombre'] as String];
+  }
+
+  @override
+  Future<bool> actualizar(Parcela parcela) async {
+    var pendiente = false;
+    final datos = {
+      ...parcela.toMap(),
+      'ubicacion': GeoPoint(
+        _seisDecimales(parcela.latitud),
+        _seisDecimales(parcela.longitud),
+      ),
+      'fechaActualizacion': FieldValue.serverTimestamp(),
+    };
+    await _parcelas
+        .doc(parcela.parcelaId)
+        .update(datos)
+        .timeout(esperaConfirmacion, onTimeout: () => pendiente = true);
+    return pendiente;
+  }
+
+  @override
+  Future<bool> eliminar(String parcelaId) async {
+    var pendiente = false;
+    await _parcelas
+        .doc(parcelaId)
+        .delete()
+        .timeout(esperaConfirmacion, onTimeout: () => pendiente = true);
+    return pendiente;
   }
 
   static Parcela _desdeDoc(String id, Map<String, dynamic> datos) {

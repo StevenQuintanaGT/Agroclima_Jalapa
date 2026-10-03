@@ -15,6 +15,7 @@ class EstadoVacio extends StatelessWidget {
     this.colorIcono = Colores.primario,
     this.colorDisco = Colores.contenedorClaro,
     this.accion,
+    this.ilustracion,
   });
 
   final IconData icono;
@@ -25,6 +26,9 @@ class EstadoVacio extends StatelessWidget {
 
   /// Normalmente un [BotonPrincipal].
   final Widget? accion;
+
+  /// Reemplaza al disco con ícono (p. ej. el recuadro punteado de la 16).
+  final Widget? ilustracion;
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +43,16 @@ class EstadoVacio extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                        color: colorDisco,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(icono, size: 66, color: colorIcono),
-                    ),
+                    ilustracion ??
+                        Container(
+                          width: 130,
+                          height: 130,
+                          decoration: BoxDecoration(
+                            color: colorDisco,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(icono, size: 66, color: colorIcono),
+                        ),
                     const SizedBox(height: Medidas.espacioM),
                     Text(
                       titulo,

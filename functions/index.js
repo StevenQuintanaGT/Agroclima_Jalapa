@@ -11,4 +11,6 @@
  * - evaluación de umbrales, alertas y envío FCM (Etapa 4)
  * - limpieza de parcelas borradas y cuentas eliminadas (HU-06, Etapa 6)
  */
-module.exports = {};
+const { limpiarParcelasBorradas } = require('./src/limpieza');
+
+module.exports = { limpiarParcelasBorradas };

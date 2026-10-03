@@ -144,6 +144,14 @@ describe('Parcelas', () => {
     await assertSucceeds(deleteDoc(doc(db, 'parcelas', 'p-ana')));
   });
 
+  test('otro usuario no edita ni borra mi parcela (RN-03)', async () => {
+    const db = dbDe(BETO);
+    await assertFails(
+      updateDoc(doc(db, 'parcelas', 'p-ana'), { nombre: 'Mía' }),
+    );
+    await assertFails(deleteDoc(doc(db, 'parcelas', 'p-ana')));
+  });
+
   test('no se puede traspasar una parcela a otro usuario', async () => {
     await assertFails(
       updateDoc(doc(dbDe(ANA), 'parcelas', 'p-ana'), { usuarioId: BETO }),

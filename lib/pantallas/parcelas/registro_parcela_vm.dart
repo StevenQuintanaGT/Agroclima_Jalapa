@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../config/textos.dart';
 import '../../modelos/enums.dart';
+import '../../modelos/parcela.dart';
 import '../../servicios/busqueda_lugares_servicio.dart';
 import '../../servicios/parcelas_servicio.dart';
 import '../../servicios/ubicacion_servicio.dart';
@@ -11,15 +12,27 @@ enum ResultadoGuardado { guardada, guardadaSinSenal, error }
 
 /// Estado del registro de parcela en 4 pasos (pantallas 10–13; HU-03, HU-04
 /// y HU-05). Una decisión por paso (RNF-12).
+///
+/// Con [original] edita esa parcela (HU-06): arranca en la revisión (o en
+/// [pasoInicial]) con los datos cargados, y cada "Cambiar" vuelve a ella.
 class RegistroParcelaVm extends ChangeNotifier {
   RegistroParcelaVm({
     required this._parcelas,
     required this._ubicacion,
     required this._busqueda,
+    this._original,
+    int? pasoInicial,
   }) {
-    final centro = _parcelas.validacion.centro();
-    _latitud = centro.lat;
-    _longitud = centro.lon;
+    final original = _original;
+    if (original == null) {
+      final centro = _parcelas.validacion.centro();
+      _latitud = centro.lat;
+      _longitud = centro.lon;
+    } else {
+      _cargar(original);
+      _paso = (pasoInicial ?? totalPasos).clamp(1, totalPasos);
+      _volverARevision = _paso < totalPasos;
+    }
     _cargarNombres();
   }
 
@@ -28,6 +41,7 @@ class RegistroParcelaVm extends ChangeNotifier {
   final ParcelasServicio _parcelas;
   final UbicacionServicio _ubicacion;
   final BusquedaLugaresServicio _busqueda;
+  final Parcela? _original;
 
   int _paso = 1;
   bool _volverARevision = false;
@@ -64,6 +78,9 @@ class RegistroParcelaVm extends ChangeNotifier {
 
   // ---------- Lectura ----------
   int get paso => _paso;
+
+  /// `true` si se está editando una parcela que ya existe.
+  bool get esEdicion => _original != null;
   String get nombre => _nombre;
   Municipio? get municipio => _municipio;
   Cultivo? get cultivo => _cultivo;
@@ -151,6 +168,18 @@ class RegistroParcelaVm extends ChangeNotifier {
 
   void elegirMunicipio(Municipio valor) => _cambiar(() {
     _municipio = valor;
+    // Si el punto ya puesto queda en otro municipio, hay que ponerlo de nuevo
+    // (RN-02: el municipio guardado es el del punto).
+    if (_puntoPuesto &&
+        _parcelas.validacion.municipioDe(_latitud, _longitud) != valor) {
+      _puntoPuesto = false;
+      _avisoPunto = null;
+      _fueraDeJalapa = false;
+      if (_altitudDelGps) {
+        _altitudTexto = '';
+        _altitudDelGps = false;
+      }
+    }
     // Mientras no haya punto, el mapa se centra en el municipio elegido.
     if (!_puntoPuesto) {
       final centro = _parcelas.validacion.centro(valor);
@@ -255,7 +284,17 @@ class RegistroParcelaVm extends ChangeNotifier {
       return false;
     }
     _intentoAvanzar = false;
-    _paso = _volverARevision ? totalPasos : (_paso + 1).clamp(1, totalPasos);
+    if (_volverARevision) {
+      // Vuelve a la revisión, salvo que otro paso haya quedado pendiente
+      // (por ejemplo, el punto tras cambiar de municipio).
+      _paso = [
+        1,
+        2,
+        3,
+      ].firstWhere((paso) => !_pasoValido(paso), orElse: () => totalPasos);
+    } else {
+      _paso = (_paso + 1).clamp(1, totalPasos);
+    }
     if (_paso == totalPasos) _volverARevision = false;
     _avisar();
     return true;
@@ -263,6 +302,15 @@ class RegistroParcelaVm extends ChangeNotifier {
 
   /// "Atrás". Devuelve `false` si ya está en el primer paso (salir).
   bool atras() {
+    if (esEdicion) {
+      // Al editar, "atrás" desde un paso vuelve a la revisión y desde ahí sale.
+      if (_paso == totalPasos) return false;
+      _intentoAvanzar = false;
+      _volverARevision = false;
+      _paso = totalPasos;
+      _avisar();
+      return true;
+    }
     if (_paso == 1) return false;
     _intentoAvanzar = false;
     _volverARevision = false;
@@ -286,17 +334,34 @@ class RegistroParcelaVm extends ChangeNotifier {
     _errorGeneral = null;
     _avisar();
     try {
-      final guardada = await _parcelas.registrar(
-        nombre: _nombre,
-        latitud: _latitud,
-        longitud: _longitud,
-        cultivo: _sinSembrar ? null : _cultivo,
-        etapa: _sinSembrar ? null : _etapa,
-        altitud: altitud,
-        area: area,
-        unidadArea: _unidadArea,
-      );
-      return guardada.pendiente
+      final original = _original;
+      final bool pendiente;
+      if (original == null) {
+        final guardada = await _parcelas.registrar(
+          nombre: _nombre,
+          latitud: _latitud,
+          longitud: _longitud,
+          cultivo: _sinSembrar ? null : _cultivo,
+          etapa: _sinSembrar ? null : _etapa,
+          altitud: altitud,
+          area: area,
+          unidadArea: _unidadArea,
+        );
+        pendiente = guardada.pendiente;
+      } else {
+        pendiente = await _parcelas.actualizar(
+          original: original,
+          nombre: _nombre,
+          latitud: _latitud,
+          longitud: _longitud,
+          cultivo: _sinSembrar ? null : _cultivo,
+          etapa: _sinSembrar ? null : _etapa,
+          altitud: altitud,
+          area: area,
+          unidadArea: _unidadArea,
+        );
+      }
+      return pendiente
           ? ResultadoGuardado.guardadaSinSenal
           : ResultadoGuardado.guardada;
     } on ErrorParcela catch (error) {
@@ -324,9 +389,31 @@ class RegistroParcelaVm extends ChangeNotifier {
     }
   }
 
+  void _cargar(Parcela parcela) {
+    _nombre = parcela.nombre;
+    _municipio = parcela.municipio;
+    _cultivo = parcela.cultivo;
+    _etapa = parcela.etapa;
+    _sinSembrar = parcela.cultivo == null;
+    _latitud = parcela.latitud;
+    _longitud = parcela.longitud;
+    _puntoPuesto = true;
+    _altitudTexto = parcela.altitud?.toString() ?? '';
+    final area = parcela.area;
+    _areaTexto = area == null
+        ? ''
+        : (area == area.roundToDouble() ? area.toInt().toString() : '$area');
+    _unidadArea = parcela.unidadArea;
+  }
+
   Future<void> _cargarNombres() async {
     try {
-      _nombresUsados = await _parcelas.nombresUsados();
+      final usados = await _parcelas.nombresUsados();
+      // Al editar, su propio nombre no cuenta como repetido.
+      _nombresUsados = [
+        for (final usado in usados)
+          if (usado != _original?.nombre) usado,
+      ];
     } catch (error) {
       // Sin señal y sin copia local: se vuelve a revisar al guardar.
       debugPrint('No se cargaron los nombres de parcelas: $error');

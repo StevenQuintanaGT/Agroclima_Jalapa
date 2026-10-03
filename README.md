@@ -38,6 +38,7 @@ necesitan Java: sirve el de Android Studio (`JAVA_HOME=C:\Program Files\Android\
 cd functions && npm install
 npm test                 # pruebas unitarias
 npm run test:reglas      # pruebas de firestore.rules con el emulador
+npm run test:emulador    # reglas + limpieza de parcelas borradas (emulador)
 npm run emuladores       # auth y firestore en local (UI en http://localhost:4000)
 ```
 

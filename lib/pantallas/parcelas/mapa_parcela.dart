@@ -161,26 +161,44 @@ class _MapaParcelaState extends State<MapaParcela> {
             ),
           ],
         ),
-        // Cita de la fuente (la exige Esri), arriba del botón "Usar mi
-        // ubicación" para que no quede tapada.
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 8, bottom: 84),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.8),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                child: Text(
-                  Textos.fuenteMapa,
-                  style: TextStyle(fontSize: 11, color: Colores.texto),
+        // Cita de la fuente (la exige Esri). En el mapa grande va arriba del
+        // botón "Usar mi ubicación"; en las miniaturas, chica y abajo para no
+        // tapar el pin.
+        LayoutBuilder(
+          builder: (context, limites) {
+            final miniatura = limites.maxHeight < 300;
+            return Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 8,
+                  right: miniatura ? 4 : 8,
+                  bottom: miniatura ? 4 : 84,
+                ),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.8),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
+                    child: Text(
+                      Textos.fuenteMapa,
+                      maxLines: miniatura ? 1 : null,
+                      overflow: miniatura ? TextOverflow.ellipsis : null,
+                      style: TextStyle(
+                        fontSize: miniatura ? 9 : 11,
+                        color: Colores.texto,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ],
     );

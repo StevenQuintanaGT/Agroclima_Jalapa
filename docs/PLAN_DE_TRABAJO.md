@@ -24,7 +24,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 - [x] **HU-03** Ubicación de la parcela en el mapa
 - [x] **HU-04** Registro por ubicación del teléfono
 - [x] **HU-05** Nombre, cultivo y etapa (registro en 4 pasos)
-- [ ] **HU-06** Listado, edición y eliminación (+ función de borrado en cascada)
+- [x] **HU-06** Listado, edición y eliminación (+ función de borrado en cascada)
 
 ## Etapa 3 — Clima de la parcela · `plans/03`
 - [ ] Cliente OpenWeather (app y funciones)
@@ -75,6 +75,7 @@ Se puede adelantar una tarea de una etapa posterior solo si sus dependencias ya 
 - `MarcoPunteado` dibujaba el borde debajo del fondo y no se veía; corregido (afectaba ilustraciones, "Datos del…" y error de servicio).
 - HU-03: probado en el emulador con el mapa satelital de Esri (tocar, arrastrar el pin, búsqueda, "Usar mi ubicación", guardado en Firestore).
 - **D-37: sin plan Blaze.** Mapas con flutter_map + Esri; el ciclo automático correrá en GitHub Actions. Actualizar la tesis.
+- HU-06: probado en el emulador (lista, deslizar, editar cultivo, detalle, borrar con y sin señal, sincronización al volver la señal). La limpieza en cascada (`functions/src/limpieza.js`) ya está programada y probada con el emulador; se ejecutará sola cuando se cree la tarea de GitHub Actions (Etapa 3). Ver D-38.
 
 (Espacio libre para anotar problemas encontrados — cuota, conectividad, comportamiento de algún teléfono —
 y lo que se decidió.)

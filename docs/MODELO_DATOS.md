@@ -226,8 +226,9 @@ cambiar `mensaje` de una alerta → rechazo; marcar `leida` propia → permitido
 
 ## 6. Borrado en cascada
 
-- **Eliminar parcela** (desde la app se borra el documento): función `onDocumentDeleted('parcelas/{id}')`
-  borra `condiciones`, `pronosticos` y las `alertas` con ese `parcelaId`.
+- **Eliminar parcela** (desde la app se borra el documento): en la siguiente vuelta del ciclo de GitHub
+  Actions, `limpiarParcelasBorradas` (`functions/src/limpieza.js`) borra `condiciones`, `pronosticos` y las
+  `alertas` con ese `parcelaId` (D-37, D-38; reemplaza a `onDocumentDeleted`, que exige Blaze).
 - **Eliminar cuenta** (Tabla 76): función invocable `eliminarCuenta` borra perfil, preferencias, parcelas
   (con su cascada) y alertas, y luego el usuario de Auth, lo que cierra la sesión en todos los teléfonos.
 

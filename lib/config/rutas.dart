@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
-import '../componentes/boton_principal.dart';
 import '../pantallas/acceso/bienvenida_pantalla.dart';
 import '../pantallas/acceso/bienvenida_vm.dart';
 import '../pantallas/acceso/inicio_sesion_pantalla.dart';
@@ -15,6 +14,11 @@ import '../pantallas/acceso/recuperar_contrasena_vm.dart';
 import '../pantallas/acceso/registro_pantalla.dart';
 import '../pantallas/acceso/registro_vm.dart';
 import '../pantallas/acceso/splash_pantalla.dart';
+import '../modelos/parcela.dart';
+import '../pantallas/parcelas/detalle_parcela_pantalla.dart';
+import '../pantallas/parcelas/detalle_parcela_vm.dart';
+import '../pantallas/parcelas/mis_parcelas_pantalla.dart';
+import '../pantallas/parcelas/mis_parcelas_vm.dart';
 import '../pantallas/parcelas/registro_parcela_pantalla.dart';
 import '../pantallas/parcelas/registro_parcela_vm.dart';
 import '../pantallas/perfil/perfil_pantalla.dart';
@@ -48,6 +52,12 @@ class Rutas {
   static const String alertas = '/alertas';
   static const String reportes = '/reportes';
   static const String perfil = '/perfil';
+  static const String misParcelas = '/perfil/parcelas';
+
+  /// Detalle y edición van fuera de la barra inferior (pantalla 15).
+  static String detalleParcela(String parcelaId) => '/parcelas/$parcelaId';
+  static String editarParcela(String parcelaId, {int? paso}) =>
+      '/parcelas/$parcelaId/editar${paso == null ? '' : '?paso=$paso'}';
 
   /// Rutas que se ven sin sesión (acceso e incorporación).
   static const Set<String> publicas = {
@@ -183,22 +193,51 @@ GoRouter crearEnrutador({
           child: const RegistroParcelaPantalla(),
         ),
       ),
+      GoRoute(
+        path: '/parcelas/:parcelaId',
+        builder: (context, estado) => ChangeNotifierProvider(
+          create: (context) => DetalleParcelaVm(
+            context.read<ParcelasServicio>(),
+            estado.pathParameters['parcelaId']!,
+          ),
+          child: const DetalleParcelaPantalla(),
+        ),
+        routes: [
+          GoRoute(
+            path: 'editar',
+            // La parcela llega desde la lista o el detalle; sin ella, al detalle.
+            redirect: (context, estado) => estado.extra is Parcela
+                ? null
+                : Rutas.detalleParcela(estado.pathParameters['parcelaId']!),
+            builder: (context, estado) => ChangeNotifierProvider(
+              create: (context) => RegistroParcelaVm(
+                parcelas: context.read<ParcelasServicio>(),
+                ubicacion: context.read<UbicacionServicio>(),
+                busqueda: context.read<BusquedaLugaresServicio>(),
+                original: estado.extra! as Parcela,
+                pasoInicial: int.tryParse(
+                  estado.uri.queryParameters['paso'] ?? '',
+                ),
+              ),
+              child: const RegistroParcelaPantalla(),
+            ),
+          ),
+        ],
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, estado, navegacion) =>
             ShellPantalla(navegacion: navegacion),
         branches: [
-          // TODO(HU-07): panel principal. Mientras tanto, acceso al registro.
+          // TODO(HU-07): panel principal. Mientras tanto, Inicio muestra
+          // "Mis parcelas" (las pantallas 14 y 16 llevan Inicio marcado).
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: Rutas.inicio,
-                builder: (context, estado) => PantallaEnConstruccion(
-                  titulo: Textos.navInicio,
-                  accion: BotonPrincipal(
-                    texto: Textos.registrarParcela,
-                    icono: Symbols.add,
-                    alPresionar: () => context.push(Rutas.nuevaParcela),
-                  ),
+                builder: (context, estado) => ChangeNotifierProvider(
+                  create: (context) =>
+                      MisParcelasVm(context.read<ParcelasServicio>()),
+                  child: const MisParcelasPantalla(),
                 ),
               ),
             ],
@@ -214,6 +253,16 @@ GoRouter crearEnrutador({
                   create: (context) => PerfilVm(context.read<CuentaServicio>()),
                   child: const PerfilPantalla(),
                 ),
+                routes: [
+                  GoRoute(
+                    path: 'parcelas',
+                    builder: (context, estado) => ChangeNotifierProvider(
+                      create: (context) =>
+                          MisParcelasVm(context.read<ParcelasServicio>()),
+                      child: const MisParcelasPantalla(),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

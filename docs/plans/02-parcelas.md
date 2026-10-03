@@ -38,7 +38,7 @@ El guardado funciona sin señal (queda pendiente y se sincroniza) y avisa "Guard
 - Deslizar → Editar / Borrar. Editar reutiliza los pasos. Si cambian coordenadas se recalcula `celdaClima`;
   si cambia cultivo/etapa, el próximo ciclo evalúa con los nuevos umbrales (Tabla 45, mantenimiento).
 - Borrar: diálogo "Se borrará la parcela y todo su historial." · "Sí, borrar" / "No, quedarme".
-  La app borra el documento; la función `limpiarParcela` (onDocumentDeleted) borra subcolecciones y alertas.
+  La app borra el documento; el ciclo (`limpiarParcelasBorradas`, D-37/D-38) borra subcolecciones y alertas.
 - Vacío (16): ilustración + "Registre su primera parcela".
 
 ## Límites de Jalapa (D-11)
