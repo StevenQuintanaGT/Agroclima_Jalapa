@@ -5,6 +5,7 @@ class PreferenciasFalsas implements PreferenciasLocalesRepositorio {
   PreferenciasFalsas({
     this.bienvenidaVista = false,
     this.permisosOfrecidos = false,
+    this.parcelaSeleccionada,
   });
 
   @override
@@ -18,4 +19,11 @@ class PreferenciasFalsas implements PreferenciasLocalesRepositorio {
 
   @override
   Future<void> marcarPermisosOfrecidos() async => permisosOfrecidos = true;
+
+  @override
+  String? parcelaSeleccionada;
+
+  @override
+  Future<void> elegirParcela(String parcelaId) async =>
+      parcelaSeleccionada = parcelaId;
 }

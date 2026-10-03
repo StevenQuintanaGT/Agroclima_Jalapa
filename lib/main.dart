@@ -13,12 +13,17 @@ import 'repositorios/auth_repositorio.dart';
 import 'repositorios/firebase_auth_repositorio.dart';
 import 'repositorios/firestore_parcelas_repositorio.dart';
 import 'repositorios/firestore_usuario_repositorio.dart';
+import 'repositorios/cache_local.dart';
+import 'repositorios/clima_repositorio.dart';
+import 'repositorios/openweather_clima_repositorio.dart';
 import 'repositorios/parcelas_repositorio.dart';
 import 'repositorios/preferencias_locales_repositorio.dart';
 import 'repositorios/shared_preferences_locales_repositorio.dart';
 import 'repositorios/usuario_repositorio.dart';
 import 'servicios/cuenta_servicio.dart';
 import 'servicios/busqueda_lugares_servicio.dart';
+import 'servicios/clima_servicio.dart';
+import 'servicios/openweather_cliente.dart';
 import 'servicios/estado_sesion.dart';
 import 'servicios/notificaciones_servicio.dart';
 import 'servicios/parcelas_servicio.dart';
@@ -44,6 +49,10 @@ Future<void> main() async {
   final estadoSesion = EstadoSesion(auth);
   final validacion = await ValidacionGeografica.cargar(rootBundle);
   final ParcelasRepositorio parcelas = FirestoreParcelasRepositorio();
+  final ClimaRepositorio clima = OpenWeatherClimaRepositorio(
+    cliente: OpenWeatherCliente(clave: Entorno.openWeatherApiKey),
+    cache: SharedPreferencesCacheLocal(),
+  );
 
   runApp(
     MultiProvider(
@@ -63,6 +72,8 @@ Future<void> main() async {
           ),
         ),
         Provider(create: (_) => BusquedaLugaresServicio()),
+        Provider<ClimaRepositorio>.value(value: clima),
+        Provider(create: (_) => ClimaServicio(clima)),
         ChangeNotifierProvider<EstadoSesion>.value(value: estadoSesion),
       ],
       child: AgroClimaApp(

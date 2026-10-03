@@ -15,6 +15,8 @@ import '../pantallas/acceso/registro_pantalla.dart';
 import '../pantallas/acceso/registro_vm.dart';
 import '../pantallas/acceso/splash_pantalla.dart';
 import '../modelos/parcela.dart';
+import '../pantallas/clima/panel_pantalla.dart';
+import '../pantallas/clima/panel_vm.dart';
 import '../pantallas/parcelas/detalle_parcela_pantalla.dart';
 import '../pantallas/parcelas/detalle_parcela_vm.dart';
 import '../pantallas/parcelas/mis_parcelas_pantalla.dart';
@@ -27,6 +29,7 @@ import '../pantallas/shell/pantalla_en_construccion.dart';
 import '../pantallas/shell/shell_pantalla.dart';
 import '../repositorios/preferencias_locales_repositorio.dart';
 import '../servicios/busqueda_lugares_servicio.dart';
+import '../servicios/clima_servicio.dart';
 import '../servicios/cuenta_servicio.dart';
 import '../servicios/notificaciones_servicio.dart';
 import '../servicios/parcelas_servicio.dart';
@@ -228,16 +231,18 @@ GoRouter crearEnrutador({
         builder: (context, estado, navegacion) =>
             ShellPantalla(navegacion: navegacion),
         branches: [
-          // TODO(HU-07): panel principal. Mientras tanto, Inicio muestra
-          // "Mis parcelas" (las pantallas 14 y 16 llevan Inicio marcado).
+          // Inicio: panel del clima; sin parcelas, el estado vacío (16).
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: Rutas.inicio,
                 builder: (context, estado) => ChangeNotifierProvider(
-                  create: (context) =>
-                      MisParcelasVm(context.read<ParcelasServicio>()),
-                  child: const MisParcelasPantalla(),
+                  create: (context) => PanelVm(
+                    parcelas: context.read<ParcelasServicio>(),
+                    clima: context.read<ClimaServicio>(),
+                    preferencias: preferencias,
+                  ),
+                  child: const PanelPantalla(),
                 ),
               ),
             ],

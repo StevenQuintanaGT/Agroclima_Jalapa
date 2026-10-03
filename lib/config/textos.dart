@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 
 import '../modelos/enums.dart';
+import '../modelos/error_clima.dart';
 
 /// Todos los textos visibles de la app (RNF-13). Trato de usted, palabras del
 /// campo, sin anglicismos ni códigos de error (docs/DISENO_UI.md §6).
@@ -266,6 +267,87 @@ class Textos {
   static const String borradaSinSenal =
       'Borrada en su teléfono. Se terminará de borrar cuando haya señal.';
   static const String parcelaNoExiste = 'Esa parcela ya no existe.';
+
+  // ---------- Panel principal (pantallas 17, 18, 32–34; HU-07) ----------
+  /// Frase llana para el código de condición del proveedor.
+  static String fraseClima(int codigo, {required bool esDeDia}) =>
+      switch (codigo) {
+        >= 200 && < 300 => 'Tormenta',
+        >= 300 && < 400 => 'Llovizna',
+        500 => 'Lluvia ligera',
+        501 => 'Lluvia',
+        >= 502 && < 505 => 'Lluvia fuerte',
+        >= 520 && < 600 => 'Aguaceros',
+        >= 500 && < 600 => 'Lluvia',
+        >= 600 && < 700 => 'Granizo o nieve',
+        >= 700 && < 800 => 'Neblina',
+        800 => esDeDia ? 'Soleado' : 'Despejado',
+        801 => 'Poco nublado',
+        802 => 'Medio nublado',
+        _ => 'Nublado',
+      };
+
+  /// Rumbo del viento en 8 direcciones (de dónde viene).
+  static String rumbo(double grados) {
+    const rumbos = ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO'];
+    return rumbos[((grados % 360) / 45).round() % 8];
+  }
+
+  static String grados(double valor) => '${valor.round()}°';
+  static const String seSiente = 'Se siente';
+  static const String maxima = 'Máx';
+  static const String minima = 'Mín';
+  static const String humedad = 'Humedad';
+  static const String vientoKmH = 'Viento km/h';
+  static const String vaALlover = 'Va a llover';
+  static const String llovioHoy = 'Llovió hoy';
+  static const String saleElSol = 'Sale el sol';
+  static const String seOcultaElSol = 'Se oculta';
+  static const String sinDatoCorto = '—';
+  static String milimetros(double mm) =>
+      '${mm < 10 ? mm.toStringAsFixed(mm == mm.roundToDouble() ? 0 : 1) : mm.round()} mm';
+  static String porcentaje(double fraccion) => '${(fraccion * 100).round()}%';
+  static String horaCorta(DateTime local) {
+    final h = local.hour % 12 == 0 ? 12 : local.hour % 12;
+    final m = local.minute.toString().padLeft(2, '0');
+    return '$h:$m ${local.hour < 12 ? 'a.m.' : 'p.m.'}';
+  }
+
+  /// "12 de agosto, 6:00 a.m." (hora de pared de Guatemala).
+  static String fechaYHora(DateTime local) =>
+      '${DateFormat("d 'de' MMMM", 'es').format(local)}, ${horaCorta(local)}';
+
+  static String actualizadoHace(Duration tiempo) {
+    final minutos = tiempo.inMinutes;
+    final cuando = switch (minutos) {
+      < 1 => 'hace un momento',
+      1 => 'hace 1 minuto',
+      < 60 => 'hace $minutos minutos',
+      < 120 => 'hace 1 hora',
+      < 1440 => 'hace ${tiempo.inHours} horas',
+      _ => 'hace ${tiempo.inDays} ${tiempo.inDays == 1 ? 'día' : 'días'}',
+    };
+    return 'Datos de OpenWeather · actualizado $cuando';
+  }
+
+  static const String deslizaParaActualizar =
+      'Deslice hacia abajo para actualizar';
+  static const String elegirParcela = 'Elegir parcela';
+  static const String verMisParcelas = 'Ver mis parcelas';
+  static const String sinDatosClimaTitulo =
+      'Todavía no hay datos de esta parcela';
+  static const String noSeActualizoTitulo = 'No pudimos actualizar';
+
+  /// Causa probable en lenguaje llano (pantalla 34).
+  static String causaErrorClima(MotivoErrorClima motivo) => switch (motivo) {
+    MotivoErrorClima.sinConexion => 'No hay internet en este momento.',
+    MotivoErrorClima.tiempoAgotado =>
+      'La señal está muy débil. Intente otra vez en un momento.',
+    MotivoErrorClima.limiteAlcanzado || MotivoErrorClima.servicioCaido =>
+      'El servicio del clima está ocupado. Intente otra vez en un rato.',
+    MotivoErrorClima.claveInvalida || MotivoErrorClima.respuestaInvalida =>
+      'El servicio del clima no respondió bien. Intente más tarde.',
+  };
 
   // ---------- Sesión ----------
   static const String cerrarSesion = 'Cerrar sesión';

@@ -6,29 +6,12 @@ import 'package:http/http.dart' as http;
 
 import '../config/constantes.dart';
 import '../modelos/clima_actual.dart';
+import '../modelos/error_clima.dart';
 import '../modelos/franja_pronostico.dart';
 import '../utilidades/unidades.dart';
 import 'validacion_clima.dart';
 
-/// Por qué no se pudo traer el clima. La pantalla lo convierte en una causa
-/// probable en lenguaje llano (pantalla 34); nunca se muestra el código.
-enum MotivoErrorClima {
-  sinConexion,
-  tiempoAgotado,
-  claveInvalida,
-  limiteAlcanzado,
-  servicioCaido,
-  respuestaInvalida,
-}
-
-class ErrorClima implements Exception {
-  const ErrorClima(this.motivo);
-
-  final MotivoErrorClima motivo;
-
-  @override
-  String toString() => 'ErrorClima($motivo)';
-}
+export '../modelos/error_clima.dart';
 
 /// FACHADA del proveedor del clima (OpenWeather, plan gratuito; D-09). Arma
 /// las peticiones, traduce la respuesta al dominio y valida (VA-06, VA-07):
@@ -152,6 +135,7 @@ class OpenWeatherCliente {
       humedadRelativa: humedad,
       lluviaUltimaHora: lluvia,
       velocidadViento: kmPorHora,
+      direccionViento: (viento!['deg'] as num?)?.toDouble(),
       codigoClima: condicion.codigo,
       descripcion: condicion.descripcion,
       salidaSol: _instanteOpcional(sistema?['sunrise']),
