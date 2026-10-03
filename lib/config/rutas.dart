@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
+import '../componentes/boton_principal.dart';
 import '../pantallas/acceso/bienvenida_pantalla.dart';
 import '../pantallas/acceso/bienvenida_vm.dart';
 import '../pantallas/acceso/inicio_sesion_pantalla.dart';
@@ -14,13 +15,17 @@ import '../pantallas/acceso/recuperar_contrasena_vm.dart';
 import '../pantallas/acceso/registro_pantalla.dart';
 import '../pantallas/acceso/registro_vm.dart';
 import '../pantallas/acceso/splash_pantalla.dart';
+import '../pantallas/parcelas/registro_parcela_pantalla.dart';
+import '../pantallas/parcelas/registro_parcela_vm.dart';
 import '../pantallas/perfil/perfil_pantalla.dart';
 import '../pantallas/perfil/perfil_vm.dart';
 import '../pantallas/shell/pantalla_en_construccion.dart';
 import '../pantallas/shell/shell_pantalla.dart';
 import '../repositorios/preferencias_locales_repositorio.dart';
+import '../servicios/busqueda_lugares_servicio.dart';
 import '../servicios/cuenta_servicio.dart';
 import '../servicios/notificaciones_servicio.dart';
+import '../servicios/parcelas_servicio.dart';
 import '../servicios/ubicacion_servicio.dart';
 import 'tema/colores.dart';
 import 'textos.dart';
@@ -37,6 +42,7 @@ class Rutas {
   static const String recuperar = '/entrar/recuperar';
   static const String permisoUbicacion = '/permisos/ubicacion';
   static const String permisoAvisos = '/permisos/avisos';
+  static const String nuevaParcela = '/parcelas/nueva';
   static const String inicio = '/inicio';
   static const String mapa = '/mapa';
   static const String alertas = '/alertas';
@@ -161,16 +167,42 @@ GoRouter crearEnrutador({
             titulo: Textos.permisoAvisosTitulo,
             detalle: Textos.permisoAvisosDetalle,
             textoPermitir: Textos.permitirAvisos,
-            // TODO(HU-05): seguir al registro de la primera parcela.
-            alTerminar: () => context.go(Rutas.inicio),
+            // Primer uso: después de los permisos, la primera parcela.
+            alTerminar: () => context.go(Rutas.nuevaParcela),
           ),
+        ),
+      ),
+      GoRoute(
+        path: Rutas.nuevaParcela,
+        builder: (context, estado) => ChangeNotifierProvider(
+          create: (context) => RegistroParcelaVm(
+            parcelas: context.read<ParcelasServicio>(),
+            ubicacion: context.read<UbicacionServicio>(),
+            busqueda: context.read<BusquedaLugaresServicio>(),
+          ),
+          child: const RegistroParcelaPantalla(),
         ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, estado, navegacion) =>
             ShellPantalla(navegacion: navegacion),
         branches: [
-          _rama(Rutas.inicio, Textos.navInicio),
+          // TODO(HU-07): panel principal. Mientras tanto, acceso al registro.
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Rutas.inicio,
+                builder: (context, estado) => PantallaEnConstruccion(
+                  titulo: Textos.navInicio,
+                  accion: BotonPrincipal(
+                    texto: Textos.registrarParcela,
+                    icono: Symbols.add,
+                    alPresionar: () => context.push(Rutas.nuevaParcela),
+                  ),
+                ),
+              ),
+            ],
+          ),
           _rama(Rutas.mapa, Textos.navMapa),
           _rama(Rutas.alertas, Textos.navAlertas),
           _rama(Rutas.reportes, Textos.navReportes),

@@ -1,5 +1,10 @@
 # Plan 02 — Gestión geoespacial de parcelas (MOD-02 · EP-02) · Etapa 2
 
+> **Actualización D-37 (2026-10-03):** sin plan Blaze. Mapas con `flutter_map` + Esri (sin clave); el ciclo
+> de `functions/` lo ejecuta GitHub Actions cada 3 h con `firebase-admin` (no Cloud Functions, Cloud Scheduler
+> ni Secret Manager). Donde este plan diga `onSchedule`, `onDocumentDeleted`, `defineSecret`, "desplegar
+> funciones" o Google Maps, aplicar `DECISIONES.md` D-37.
+
 Historias: **HU-03** Mapa (8) · **HU-04** Ubicación del teléfono (3) · **HU-05** Nombre, cultivo y etapa (5) ·
 **HU-06** Listado, edición y eliminación (5).
 Pantallas: 10–13 registro en 4 pasos, 14 mis parcelas, 15 detalle/borrar, 16 vacío.

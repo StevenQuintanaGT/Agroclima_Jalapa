@@ -1,5 +1,10 @@
 # Plan 00 — Configuración inicial (HT-01, HT-02) · Etapa 1
 
+> **Actualización D-37 (2026-10-03):** sin plan Blaze. Mapas con `flutter_map` + Esri (sin clave); el ciclo
+> de `functions/` lo ejecuta GitHub Actions cada 3 h con `firebase-admin` (no Cloud Functions, Cloud Scheduler
+> ni Secret Manager). Donde este plan diga `onSchedule`, `onDocumentDeleted`, `defineSecret`, "desplegar
+> funciones" o Google Maps, aplicar `DECISIONES.md` D-37.
+
 ## Objetivo
 Proyecto Flutter compilando en Android 8.0+, conectado a Firebase, con tema, navegación base,
 reglas de seguridad desplegadas y secretos fuera del repositorio.

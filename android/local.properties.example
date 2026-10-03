@@ -1,5 +1,4 @@
 # Copie este archivo como local.properties (no se sube a git).
-sdk.dir=C:\Users\<usuario>\AppData\Local\Android\sdk
-flutter.sdk=C:\src\flutter\flutter
-# Clave de Google Maps SDK for Android, restringida a gt.umg.agroclima_jalapa + huella SHA-1.
-MAPS_API_KEY=
+# En Windows las barras invertidas van dobles.
+sdk.dir=C:\\Users\\<usuario>\\AppData\\Local\\Android\\sdk
+flutter.sdk=C:\\src\\flutter\\flutter

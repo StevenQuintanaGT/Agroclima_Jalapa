@@ -28,11 +28,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Clave de Google Maps: MAPS_API_KEY en android/local.properties -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}"/>
-
         <!-- Canal por defecto para avisos de FCM que lleguen sin canal (plans/04). -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"

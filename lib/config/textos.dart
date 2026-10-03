@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import '../modelos/enums.dart';
 
 /// Todos los textos visibles de la app (RNF-13). Trato de usted, palabras del
@@ -136,6 +138,101 @@ class Textos {
   static const String errorGenerico = 'No se pudo completar. Intente de nuevo.';
   static const String errorGoogle =
       'No se pudo entrar con Google. Intente de nuevo o use su correo.';
+
+  // ---------- Enumeraciones (MODELO_DATOS §2, D-01, D-02) ----------
+  static String municipio(Municipio m) => switch (m) {
+    Municipio.jalapa => 'Jalapa',
+    Municipio.sanPedroPinula => 'San Pedro Pinula',
+    Municipio.sanLuisJilotepeque => 'San Luis Jilotepeque',
+    Municipio.sanManuelChaparron => 'San Manuel Chaparrón',
+    Municipio.sanCarlosAlzatate => 'San Carlos Alzatate',
+    Municipio.monjas => 'Monjas',
+    Municipio.mataquescuintla => 'Mataquescuintla',
+  };
+
+  static String cultivo(Cultivo c) => switch (c) {
+    Cultivo.maiz => 'Maíz',
+    Cultivo.frijol => 'Frijol',
+    Cultivo.cafe => 'Café',
+    Cultivo.hortalizas => 'Hortalizas',
+  };
+
+  static String etapa(Etapa e) => switch (e) {
+    Etapa.siembra => 'Siembra',
+    Etapa.desarrolloVegetativo => 'Creciendo',
+    Etapa.floracion => 'Floreando',
+    Etapa.llenado => 'Llenando el grano',
+    Etapa.cosecha => 'Cosecha',
+  };
+
+  // ---------- Registro de parcela (pantallas 10–13) ----------
+  static const String nuevaParcela = 'Nueva parcela';
+  static String pasoDe(int paso, int total) => 'Paso $paso de $total';
+  static const String pregNombreParcela = '¿Cómo le llama a su parcela?';
+  static const String ayudaNombreParcela = 'Un nombre que usted reconozca.';
+  static const String pregMunicipio = '¿En qué municipio queda?';
+  static const String pregCultivo = '¿Qué siembra ahí?';
+  static const String pregEtapa = '¿Cómo va el cultivo?';
+  static const String sinSembrar = 'Todavía no he sembrado';
+  static const String ayudaSinSembrar =
+      'Le avisaremos de helada, lluvia fuerte, viento y días sin lluvia.';
+  static const String tituloPaso3 = 'Ponga el punto';
+  static const String buscarLugar = 'Buscar aldea o lugar';
+  static const String sinResultados =
+      'No encontramos ese lugar. Mueva el pin hasta su terreno.';
+  static const String arrastrePin = 'Arrastre el pin';
+  static const String fuenteMapa =
+      'Imágenes: Esri, Maxar, Earthstar Geographics y la comunidad GIS';
+  static const String usarMiUbicacion = 'Usar mi ubicación';
+  static const String buscandoUbicacion = 'Buscando dónde está…';
+  static const String coordenadas = 'Coordenadas';
+  static const String altura = 'Altura';
+  static String msnm(int metros) => '${_miles.format(metros)} msnm';
+  static final NumberFormat _miles = NumberFormat('#,##0', 'en_US');
+  static const String alturaVacia = 'Escriba la altura (opcional)';
+  static const String pregTamano = '¿Cuánto mide? (aproximado)';
+  static const String manzanas = 'manzanas';
+  static const String hectareasCorto = 'ha';
+  static const String tituloPaso4 = 'Revise los datos';
+  static const String etiquetaNombre = 'Nombre';
+  static const String etiquetaMunicipio = 'Municipio';
+  static const String etiquetaCultivo = 'Cultivo';
+  static const String etiquetaTamanoAltura = 'Tamaño y altura';
+  static const String cambiar = 'Cambiar';
+  static const String sinDato = 'Sin dato';
+  static const String guardarParcela = 'Guardar parcela';
+  static const String guardandoParcela = 'Guardando…';
+  static const String guardadaSinSenal =
+      'Guardada. Se enviará cuando haya señal.';
+
+  // Validaciones de parcela (VA-01, VA-02, VA-03)
+  static const String errorNombreParcelaVacio =
+      'Escriba un nombre para su parcela.';
+  static const String errorNombreParcelaLargo =
+      'Use un nombre más corto (hasta 40 letras).';
+  static const String errorNombreParcelaRepetido =
+      'Ya tiene una parcela con ese nombre. Use otro.';
+  static const String errorFueraDeJalapa =
+      'Ese punto queda fuera del departamento de Jalapa. Mueva el pin hasta su '
+      'terreno.';
+  static String avisoOtroMunicipio(String municipio) =>
+      'Ese punto queda en $municipio. Lo cambiamos por usted.';
+  static const String errorArea = 'Escriba un número mayor que cero.';
+  static const String errorElijaMunicipio = 'Elija el municipio.';
+  static const String errorElijaCultivo =
+      'Elija lo que siembra, o "Todavía no he sembrado".';
+  static const String errorElijaEtapa = 'Elija cómo va el cultivo.';
+  static const String errorMuevaPin =
+      'Mueva el pin hasta su terreno, busque el lugar o use su ubicación.';
+  static const String errorAltura = 'Escriba la altura en números.';
+  static const String sinPermisoUbicacion =
+      'Sin permiso de ubicación no podemos saber dónde está. Puede mover el pin '
+      'en el mapa.';
+  static const String ubicacionApagada =
+      'La ubicación del teléfono está apagada. Enciéndala o mueva el pin.';
+  static const String sinUbicacion =
+      'No pudimos saber dónde está. Mueva el pin en el mapa.';
+  static const String registrarParcela = 'Registrar mi parcela';
 
   // ---------- Sesión ----------
   static const String cerrarSesion = 'Cerrar sesión';

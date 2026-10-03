@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
@@ -11,13 +9,6 @@ plugins {
 if (file("google-services.json").exists()) {
     apply(plugin = "com.google.gms.google-services")
 }
-
-// Clave de Google Maps desde android/local.properties (ver local.properties.example).
-val propiedadesLocales =
-    Properties().apply {
-        val archivo = rootProject.file("local.properties")
-        if (archivo.exists()) archivo.inputStream().use { load(it) }
-    }
 
 android {
     namespace = "gt.umg.agroclima_jalapa"
@@ -39,7 +30,6 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        manifestPlaceholders["MAPS_API_KEY"] = propiedadesLocales.getProperty("MAPS_API_KEY", "")
     }
 
     buildTypes {
