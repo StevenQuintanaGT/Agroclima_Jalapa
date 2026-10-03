@@ -8,6 +8,7 @@ import '../../modelos/franja_pronostico.dart';
 import '../../modelos/parcela.dart';
 import '../../modelos/pronostico_dia.dart';
 import '../../modelos/resultado.dart';
+import '../../modelos/resumen_dia.dart';
 import '../../repositorios/preferencias_locales_repositorio.dart';
 import '../../servicios/clima_servicio.dart';
 import '../../servicios/parcelas_servicio.dart';
@@ -78,6 +79,20 @@ class PanelVm extends ChangeNotifier {
     ahora: _reloj().toUtc(),
     actual: clima,
   );
+
+  /// "Los próximos días" (HU-08), de hoy en adelante.
+  List<ResumenDia> get dias => ClimaServicio.dias(
+    franjas: franjas,
+    guardados: _dias,
+    ahora: _reloj().toUtc(),
+    actual: clima,
+  );
+
+  /// "Hoy, hora por hora": las franjas de las próximas 21 horas.
+  List<FranjaPronostico> get proximasHoras {
+    final ahora = _reloj().toUtc();
+    return franjas.where((f) => f.fechaHora.isAfter(ahora)).take(7).toList();
+  }
 
   double? get probabilidadLluvia =>
       ClimaServicio.probabilidadLluvia(franjas, _reloj().toUtc());

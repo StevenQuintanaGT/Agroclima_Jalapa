@@ -169,11 +169,13 @@ void main() {
     await abrir(tester, const [_guayabal]);
     expect(find.text('El Guayabal'), findsOneWidget);
     expect(find.text('Jalapa · 1,380 msnm'), findsOneWidget);
-    expect(find.text('24°'), findsOneWidget);
+    expect(find.text('24°'), findsWidgets);
     expect(find.text('Soleado'), findsOneWidget);
     expect(find.text('68%'), findsOneWidget);
     expect(find.text('18 NE'), findsOneWidget);
-    expect(find.text('30%'), findsOneWidget); // va a llover, próximas 12 h
+    expect(find.text('30%'), findsWidgets); // va a llover, próximas 12 h
+    expect(find.text(Textos.horaPorHora), findsOneWidget);
+    expect(find.text(Textos.ahora), findsOneWidget);
     expect(find.text('0 mm'), findsOneWidget);
     expect(find.text('5:52 a.m.'), findsOneWidget);
     expect(find.text('5:48 p.m.'), findsOneWidget);
@@ -200,7 +202,7 @@ void main() {
       find.text(Textos.datosDel('12 de agosto, 6:00 a.m.')),
       findsOneWidget,
     );
-    expect(find.text('24°'), findsOneWidget);
+    expect(find.text('24°'), findsWidgets);
     await tester.tap(find.text(Textos.intentarDeNuevo));
     await tester.pump();
     verify(() => clima.actual(_guayabal, forzar: true)).called(1);

@@ -4,6 +4,7 @@ import '../modelos/franja_pronostico.dart';
 import '../modelos/parcela.dart';
 import '../modelos/pronostico_dia.dart';
 import '../modelos/resultado.dart';
+import '../modelos/resumen_dia.dart';
 import '../repositorios/clima_repositorio.dart';
 import '../utilidades/fechas.dart';
 import 'pronostico_diario.dart';
@@ -85,4 +86,86 @@ class ClimaServicio {
         .map((f) => f.probabilidadLluvia)
         .reduce((a, b) => a > b ? a : b);
   }
+
+  /// Días para "Los próximos días" y el detalle (HU-08): con las franjas del
+  /// teléfono (traen ícono y probabilidad) o, si no hay, con lo que guardó el
+  /// ciclo. Solo de hoy en adelante.
+  static List<ResumenDia> dias({
+    required List<FranjaPronostico> franjas,
+    required List<PronosticoDia> guardados,
+    required DateTime ahora,
+    ClimaActual? actual,
+  }) {
+    final idHoy = Fechas.idDiario(ahora);
+    // Hoy: la temperatura de ahora también cuenta, como en el panel.
+    final hoyAjustado = hoy(
+      guardados: const [],
+      franjas: franjas,
+      ahora: ahora,
+      actual: actual,
+    );
+    final calculados = [
+      for (final dia in PronosticoDiario.agrupar(franjas))
+        dia.fecha == idHoy && hoyAjustado != null ? hoyAjustado : dia,
+    ];
+    if (calculados.isNotEmpty) {
+      return [
+        for (final dia in calculados)
+          if (dia.fecha.compareTo(idHoy) >= 0)
+            _resumen(
+              dia,
+              franjas
+                  .where((f) => Fechas.idDiario(f.fechaHora) == dia.fecha)
+                  .toList(),
+            ),
+      ];
+    }
+    return [
+      for (final dia in guardados)
+        if (dia.fecha.compareTo(idHoy) >= 0) _resumen(dia, const []),
+    ];
+  }
+
+  static ResumenDia _resumen(
+    PronosticoDia dia,
+    List<FranjaPronostico> franjas,
+  ) {
+    final fecha = DateTime.utc(
+      int.parse(dia.fecha.substring(0, 4)),
+      int.parse(dia.fecha.substring(4, 6)),
+      int.parse(dia.fecha.substring(6, 8)),
+    );
+    return ResumenDia(
+      fecha: dia.fecha,
+      dia: fecha,
+      temperaturaMinima: dia.temperaturaMinima,
+      temperaturaMaxima: dia.temperaturaMaxima,
+      acumuladoDia: dia.acumuladoDia,
+      precipitacionHora: dia.precipitacionHora,
+      velocidadViento: dia.velocidadViento,
+      humedadRelativa: dia.humedadRelativa,
+      codigoClima: franjas.isEmpty
+          ? null
+          : franjas
+                .map((f) => f.codigoClima)
+                .reduce((a, b) => _peso(a) >= _peso(b) ? a : b),
+      probabilidadLluvia: franjas.isEmpty
+          ? null
+          : franjas
+                .map((f) => f.probabilidadLluvia)
+                .reduce((a, b) => a > b ? a : b),
+      franjas: franjas,
+    );
+  }
+
+  /// Qué tiempo manda en el ícono del día: lo más fuerte.
+  static int _peso(int codigo) => switch (codigo) {
+    >= 200 && < 300 => 6,
+    >= 500 && < 700 => 5,
+    >= 300 && < 400 => 4,
+    803 || 804 => 3,
+    801 || 802 => 2,
+    >= 700 && < 800 => 1,
+    _ => 0,
+  };
 }
