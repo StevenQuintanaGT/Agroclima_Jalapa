@@ -51,6 +51,7 @@ class RegistroParcelaVm extends ChangeNotifier {
   bool _fueraDeJalapa = false;
   String? _avisoPunto;
   String _altitudTexto = '';
+  bool _altitudDelGps = false;
   String _areaTexto = '';
   String _unidadArea = 'manzana';
   bool _ubicando = false;
@@ -175,6 +176,11 @@ class RegistroParcelaVm extends ChangeNotifier {
   // ---------- Paso 3 ----------
   /// El productor tocó el mapa o soltó el pin.
   void moverPin(double latitud, double longitud) => _cambiar(() {
+    // Una altura del GPS ya no vale si el pin se va a otro lugar.
+    if (_altitudDelGps) {
+      _altitudTexto = '';
+      _altitudDelGps = false;
+    }
     _latitud = latitud;
     _longitud = longitud;
     _puntoPuesto = true;
@@ -205,6 +211,7 @@ class RegistroParcelaVm extends ChangeNotifier {
         moverPin(latitud, longitud);
         if (altitud != null && _altitudTexto.trim().isEmpty) {
           _altitudTexto = '$altitud';
+          _altitudDelGps = true;
         }
       case UbicacionSinPermiso():
         _mensajeUbicacion = Textos.sinPermisoUbicacion;
@@ -232,7 +239,10 @@ class RegistroParcelaVm extends ChangeNotifier {
     }
   }
 
-  void cambiarAltitud(String valor) => _cambiar(() => _altitudTexto = valor);
+  void cambiarAltitud(String valor) => _cambiar(() {
+    _altitudTexto = valor;
+    _altitudDelGps = false;
+  });
   void cambiarArea(String valor) => _cambiar(() => _areaTexto = valor);
   void elegirUnidad(String unidad) => _cambiar(() => _unidadArea = unidad);
 

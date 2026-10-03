@@ -17,6 +17,8 @@ class _UbicacionFalsa extends Mock implements UbicacionServicio {}
 class _BusquedaFalsa extends Mock implements BusquedaLugaresServicio {}
 
 void main() {
+  group('altura del GPS', pruebasAlturaGps);
+
   late _ParcelasFalsas parcelas;
   late _UbicacionFalsa ubicacion;
   late _BusquedaFalsa busqueda;
@@ -282,5 +284,36 @@ void main() {
     expect(vm.paso, 2);
     vm.atras();
     expect(vm.atras(), isFalse);
+  });
+}
+
+void pruebasAlturaGps() {
+  test('la altura del GPS se borra si el pin se mueve a otro lugar', () async {
+    final parcelas = _ParcelasFalsas();
+    final ubicacion = _UbicacionFalsa();
+    when(() => parcelas.validacion).thenReturn(limitesReales());
+    when(() => parcelas.nombresUsados()).thenAnswer((_) async => const []);
+    when(() => ubicacion.posicionActual()).thenAnswer(
+      (_) async => UbicacionEncontrada(
+        latitud: cabeceraJalapa.lat,
+        longitud: cabeceraJalapa.lon,
+        altitud: 1362,
+      ),
+    );
+    final vm = RegistroParcelaVm(
+      parcelas: parcelas,
+      ubicacion: ubicacion,
+      busqueda: _BusquedaFalsa(),
+    );
+    await vm.usarMiUbicacion();
+    expect(vm.altitud, 1362);
+    vm.moverPin(cabeceraMonjas.lat, cabeceraMonjas.lon);
+    expect(vm.altitud, isNull);
+
+    // La que escribe el productor se respeta.
+    vm
+      ..cambiarAltitud('1400')
+      ..moverPin(cabeceraJalapa.lat, cabeceraJalapa.lon);
+    expect(vm.altitud, 1400);
   });
 }

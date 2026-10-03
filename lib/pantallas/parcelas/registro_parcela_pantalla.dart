@@ -32,7 +32,9 @@ class RegistroParcelaPantalla extends StatelessWidget {
   };
 
   void _atras(BuildContext context, RegistroParcelaVm vm) {
-    if (!vm.atras() && context.canPop()) context.pop();
+    if (vm.atras()) return;
+    // Desde los permisos se llega con go(): no hay a dónde volver.
+    context.canPop() ? context.pop() : context.go(Rutas.inicio);
   }
 
   Future<void> _guardar(BuildContext context, RegistroParcelaVm vm) async {

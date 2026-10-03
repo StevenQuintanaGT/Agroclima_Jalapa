@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import '../modelos/enums.dart';
 
 /// Todos los textos visibles de la app (RNF-13). Trato de usted, palabras del
@@ -183,7 +185,8 @@ class Textos {
   static const String buscandoUbicacion = 'Buscando dónde está…';
   static const String coordenadas = 'Coordenadas';
   static const String altura = 'Altura';
-  static String msnm(int metros) => '$metros msnm';
+  static String msnm(int metros) => '${_miles.format(metros)} msnm';
+  static final NumberFormat _miles = NumberFormat('#,##0', 'en_US');
   static const String alturaVacia = 'Escriba la altura (opcional)';
   static const String pregTamano = '¿Cuánto mide? (aproximado)';
   static const String manzanas = 'manzanas';

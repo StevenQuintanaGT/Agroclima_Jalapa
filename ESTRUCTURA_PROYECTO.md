@@ -75,6 +75,8 @@ agroclima_jalapa/
 │   │   ├── estado_sesion.dart               # ValueNotifier de sesión para la guarda del enrutador
 │   │   ├── openweather_cliente.dart         # FACHADA: arma peticiones, errores y traducción a dominio
 │   │   ├── validacion_geografica.dart       # punto en polígono → municipio o null
+│   │   ├── busqueda_lugares_servicio.dart   # "Buscar aldea o lugar" con el geocodificador del teléfono
+│   │   ├── parcelas_servicio.dart           # registrar parcela (VA-01, VA-02, celda, dueño)
 │   │   ├── celda_clima.dart                 # coordenadas → id de celda
 │   │   ├── vigencia_servicio.dart           # ¿el dato guardado sigue vigente?
 │   │   ├── conectividad_servicio.dart       # estado y cambios de conexión
@@ -98,6 +100,8 @@ agroclima_jalapa/
 │   │   ├── boton_principal.dart  # 60 dp de alto, ancho completo
 │   │   ├── boton_secundario.dart # 56 dp, neutro o destacado
 │   │   ├── campo_texto.dart      # etiqueta arriba, palomita si es válido, "Ver" en contraseñas
+│   │   ├── chip_seleccion.dart   # opción en píldora (municipios, etapas, unidades)
+│   │   ├── tarjeta_opcion.dart   # tarjeta grande con ícono (cultivos)
 │   │   ├── aviso_error.dart      # error general de formulario (ícono + color + palabras)
 │   │   ├── ilustracion_provisional.dart # recuadro punteado hasta tener las ilustraciones
 │   │   ├── logo_app.dart         # logotipo provisional

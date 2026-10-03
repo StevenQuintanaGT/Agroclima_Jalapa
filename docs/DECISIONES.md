@@ -39,6 +39,9 @@ Estado: ✅ decidida · ⏳ por confirmar con Steven.
 | D-31 | Flujo de primer uso | Splash → bienvenida (3) → **crear cuenta** (con "atrás" a entrar) → permisos (ubicación, avisos) → Inicio. La bienvenida y los permisos se recuerdan en el teléfono (`shared_preferences`): "Ahora no" también cuenta como ofrecido y no se vuelve a preguntar al entrar (RNF-05). Tras los permisos se irá al registro de la primera parcela cuando exista (HU-05). | ✅ |
 | D-32 | Cerrar sesión | Quita el token de avisos de `tokensFcm`, borra el token local, cierra la sesión y borra la copia local de Firestore (`terminate` + `clearPersistence`). Mientras se construye el Perfil (Etapa 6), el botón está en su pantalla provisional. | ✅ |
 | D-33 | Ícono de la app | La pantalla de arranque usa el verde del splash, pero Android 12+ muestra el ícono de la app, que sigue siendo el de Flutter: el logotipo definitivo está pendiente en el diseño ("Logotipo ⚠ Provisional"). | ⏳ logo |
+| D-34 | "Buscar aldea o lugar" (pantalla 12) | Elegido por Steven: geocodificador del teléfono con el paquete `geocoding` (gratis, sin clave; se agrega "Jalapa, Guatemala" a la búsqueda). Si no encuentra, el productor mueve el pin. No se usa Google Places (de pago). | ✅ |
+| D-35 | Punto de la parcela | El pin arranca en el centro del municipio elegido, pero hay que **moverlo, buscar un lugar o usar la ubicación** para seguir: así nadie guarda la parcela en el centro del pueblo por error. La altura del GPS se borra si luego se mueve el pin; la escrita a mano se respeta. El municipio guardado es el del punto (RN-02), con aviso si difiere del elegido. | ✅ |
+| D-36 | Clave de Google Maps | El mapa (HU-03) usa `MAPS_API_KEY` en `android/local.properties`. Sin clave el mapa sale gris pero el registro funciona (búsqueda y "Usar mi ubicación"). La verificación visual del mapa queda pendiente de la clave. | ⏳ clave |
 
 ## Pendientes a revisar al final (no bloquean)
 

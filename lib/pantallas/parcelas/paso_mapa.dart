@@ -26,10 +26,36 @@ class PasoMapa extends StatefulWidget {
 
 class _PasoMapaState extends State<PasoMapa> {
   final _busqueda = TextEditingController();
+  late final TextEditingController _altura;
+  late final TextEditingController _area;
+
+  @override
+  void initState() {
+    super.initState();
+    final vm = context.read<RegistroParcelaVm>();
+    _altura = TextEditingController(text: vm.altitudTexto);
+    _area = TextEditingController(text: vm.areaTexto);
+    _vm = vm..addListener(_alCambiarVm);
+  }
+
+  late final RegistroParcelaVm _vm;
+
+  void _alCambiarVm() {
+    _sincronizar(_altura, _vm.altitudTexto);
+    _sincronizar(_area, _vm.areaTexto);
+  }
+
+  /// Si el VM cambia el valor (p. ej. la altura del GPS), el campo lo muestra.
+  static void _sincronizar(TextEditingController campo, String valor) {
+    if (campo.text != valor) campo.text = valor;
+  }
 
   @override
   void dispose() {
+    _vm.removeListener(_alCambiarVm);
     _busqueda.dispose();
+    _altura.dispose();
+    _area.dispose();
     super.dispose();
   }
 
@@ -85,7 +111,7 @@ class _PasoMapaState extends State<PasoMapa> {
             color: esquema.surface,
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-              child: _DatosDelPunto(vm: vm),
+              child: _DatosDelPunto(vm: vm, altura: _altura, area: _area),
             ),
           ),
         ),
@@ -238,9 +264,15 @@ class _BotonUbicacion extends StatelessWidget {
 }
 
 class _DatosDelPunto extends StatelessWidget {
-  const _DatosDelPunto({required this.vm});
+  const _DatosDelPunto({
+    required this.vm,
+    required this.altura,
+    required this.area,
+  });
 
   final RegistroParcelaVm vm;
+  final TextEditingController altura;
+  final TextEditingController area;
 
   @override
   Widget build(BuildContext context) {
@@ -285,7 +317,7 @@ class _DatosDelPunto extends StatelessWidget {
               width: 150,
               child: TextFormField(
                 key: const ValueKey('altura'),
-                initialValue: vm.altitudTexto,
+                controller: altura,
                 onChanged: vm.cambiarAltitud,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -318,7 +350,7 @@ class _DatosDelPunto extends StatelessWidget {
             Expanded(
               child: TextFormField(
                 key: const ValueKey('area'),
-                initialValue: vm.areaTexto,
+                controller: area,
                 onChanged: vm.cambiarArea,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,

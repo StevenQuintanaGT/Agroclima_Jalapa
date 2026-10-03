@@ -1,5 +1,6 @@
 import 'package:agroclima_jalapa/config/tema/tema_app.dart';
 import 'package:agroclima_jalapa/config/textos.dart';
+import 'package:agroclima_jalapa/modelos/enums.dart';
 import 'package:agroclima_jalapa/pantallas/parcelas/registro_parcela_pantalla.dart';
 import 'package:agroclima_jalapa/pantallas/parcelas/registro_parcela_vm.dart';
 import 'package:agroclima_jalapa/servicios/busqueda_lugares_servicio.dart';
@@ -62,6 +63,8 @@ Future<void> _siguiente(WidgetTester tester) async {
 }
 
 void main() {
+  group('altura', pruebasAltura);
+
   testWidgets('paso 1 muestra los 7 municipios a la vez', (tester) async {
     await _abrir(tester);
     expect(find.text(Textos.pasoDe(1, 4)), findsOneWidget);
@@ -142,4 +145,31 @@ Future<void> tocar(WidgetTester tester, String texto) async {
   await tester.pumpAndSettle();
   await tester.tap(objetivo.first);
   await tester.pumpAndSettle();
+}
+
+void pruebasAltura() {
+  testWidgets('la altura del GPS aparece en el campo (HU-04)', (tester) async {
+    final vm = await _abrir(tester);
+    vm
+      ..cambiarNombre('El Guayabal')
+      ..elegirMunicipio(Municipio.jalapa)
+      ..siguiente()
+      ..elegirSinSembrar()
+      ..siguiente();
+    await tester.pumpAndSettle();
+    vm.cambiarAltitud('1362');
+    await tester.pumpAndSettle();
+    final campo = tester.widget<TextField>(
+      find.descendant(
+        of: find.byKey(const ValueKey('altura')),
+        matching: find.byType(TextField),
+      ),
+    );
+    expect(campo.controller!.text, '1362');
+  });
+
+  test('la altura se muestra con separador de miles', () {
+    expect(Textos.msnm(1362), '1,362 msnm');
+    expect(Textos.msnm(980), '980 msnm');
+  });
 }
