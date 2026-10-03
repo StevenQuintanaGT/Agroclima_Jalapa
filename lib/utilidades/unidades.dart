@@ -19,5 +19,5 @@ class Unidades {
 
   /// OpenWeather entrega el viento en m/s con `units=metric`.
   static double metrosPorSegundoAKmPorHora(double metrosPorSegundo) =>
-      metrosPorSegundo * 3.6;
+      (metrosPorSegundo * 360).round() / 100;
 }
