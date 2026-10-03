@@ -132,6 +132,9 @@ agroclima_jalapa/
 │   │   ├── openweather.js        # cliente (fachada) del ciclo
 │   │   ├── adquisicion.js        # CMP-08: recorre parcelas, agrupa por celda, guarda pronósticos/condiciones
 │   │   ├── validacion.js         # VA-06..VA-08
+│   │   ├── lluvia_del_dia.js     # lluvia acumulada del día desde las franjas (D-40)
+│   │   ├── pronostico_diario.js  # franjas de 3 h → días (D-10)
+│   │   ├── fechas.js             # id diario yyyyMMdd en hora de Guatemala
 │   │   ├── motor/
 │   │   │   ├── evaluador.js      # CMP-09: aplica reglas y devuelve nivel por tipo de riesgo
 │   │   │   └── reglas/           # ESTRATEGIA: una regla por tipo de riesgo

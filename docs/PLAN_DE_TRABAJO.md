@@ -28,7 +28,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 
 ## Etapa 3 — Clima de la parcela · `plans/03`
 - [x] Cliente OpenWeather (app y funciones)
-- [ ] Función `adquirirClima` (guarda `pronosticos` y `condiciones` por celda)
+- [x] Función `adquirirClima` (guarda `pronosticos` y `condiciones` por celda)
 - [ ] **HU-07** Condiciones actuales (panel principal)
 - [ ] **HU-15** Consulta sin conexión (caché primero)
 - [ ] **HU-08** Pronóstico de los próximos días (+ detalle de pronóstico)
@@ -77,6 +77,7 @@ Se puede adelantar una tarea de una etapa posterior solo si sus dependencias ya 
 - **D-37: sin plan Blaze.** Mapas con flutter_map + Esri; el ciclo automático correrá en GitHub Actions. Actualizar la tesis.
 - HU-06: probado en el emulador (lista, deslizar, editar cultivo, detalle, borrar con y sin señal, sincronización al volver la señal). La limpieza en cascada (`functions/src/limpieza.js`) ya está programada y probada con el emulador; se ejecutará sola cuando se cree la tarea de GitHub Actions (Etapa 3). Ver D-38.
 - Cliente OpenWeather (D-39): probado con respuestas de ejemplo en Dart y en JavaScript; **falta probarlo con una clave real** (no hay `OPENWEATHER_API_KEY` en `env/dev.json`).
+- `adquirirClima` y la tarea de GitHub Actions (D-40, D-41): probados con el emulador y un clima falso. Para que corra en la nube faltan los secretos `OPENWEATHER_KEY` y `FIREBASE_SERVICE_ACCOUNT` en GitHub.
 
 (Espacio libre para anotar problemas encontrados — cuota, conectividad, comportamiento de algún teléfono —
 y lo que se decidió.)
