@@ -20,7 +20,7 @@ Al terminar cada etapa, generar un **APK de prueba** e instalarlo en un teléfon
 Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con los 5 destinos.
 
 ## Etapa 2 — Parcelas · `plans/02`
-- [ ] Archivo de límites de Jalapa y validador geográfico (D-11)
+- [x] Archivo de límites de Jalapa y validador geográfico (D-11)
 - [ ] **HU-03** Ubicación de la parcela en el mapa
 - [ ] **HU-04** Registro por ubicación del teléfono
 - [ ] **HU-05** Nombre, cultivo y etapa (registro en 4 pasos)
