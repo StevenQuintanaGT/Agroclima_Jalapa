@@ -1,7 +1,29 @@
 /// Enumeraciones del dominio. `valor` es exactamente lo que se guarda en
 /// Firestore (docs/MODELO_DATOS.md §2); las etiquetas viven en textos.dart.
 ///
-/// Municipio, Cultivo y Etapa se agregan con sus historias.
+/// Los 7 municipios del departamento de Jalapa (MODELO_DATOS §2).
+enum Municipio {
+  jalapa('jalapa'),
+  sanPedroPinula('sanPedroPinula'),
+  sanLuisJilotepeque('sanLuisJilotepeque'),
+  sanManuelChaparron('sanManuelChaparron'),
+  sanCarlosAlzatate('sanCarlosAlzatate'),
+  monjas('monjas'),
+  mataquescuintla('mataquescuintla');
+
+  const Municipio(this.valor);
+
+  final String valor;
+
+  static Municipio? desdeValor(String? valor) {
+    for (final municipio in values) {
+      if (municipio.valor == valor) return municipio;
+    }
+    return null;
+  }
+}
+
+/// Cultivo y Etapa se agregan con HU-05.
 enum TipoRiesgo {
   lluviaIntensa('lluviaIntensa'),
   vientoFuerte('vientoFuerte'),
