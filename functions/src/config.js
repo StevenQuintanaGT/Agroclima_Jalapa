@@ -18,6 +18,10 @@ module.exports = Object.freeze({
   ESPERA_CLIMA_MS: 5000,
   REINTENTOS_CLIMA: 3,
 
+  // Pausa entre celdas: 2 llamadas por celda cada 2.4 s = 50/min, por debajo
+  // del límite de 60/min del plan gratuito.
+  PAUSA_ENTRE_CELDAS_MS: 2400,
+
   // Días de pronóstico que evalúa el motor (hoy + 4).
   DIAS_PRONOSTICO: 5,
 

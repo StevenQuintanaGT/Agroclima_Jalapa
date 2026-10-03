@@ -1,0 +1,61 @@
+# Ciclo automático de AgroClima Jalapa (DECISIONES D-37): cada 3 horas
+# consulta el clima de las parcelas y lo guarda en Firestore. Gratis con
+# GitHub Actions; Firebase sigue en el plan Spark.
+#
+# Secretos del repositorio (Settings → Secrets and variables → Actions):
+#   OPENWEATHER_KEY           clave de OpenWeather (plan gratuito)
+#   FIREBASE_SERVICE_ACCOUNT  JSON de la cuenta de servicio de Firebase
+name: Ciclo del clima
+
+on:
+  schedule:
+    # Cada 3 horas (en UTC: 00, 03, 06… = 18, 21, 00… hora de Guatemala).
+    - cron: '0 */3 * * *'
+  workflow_dispatch: {}
+
+concurrency:
+  group: ciclo-clima
+  cancel-in-progress: false
+
+jobs:
+  ciclo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: functions
+    steps:
+      - name: Revisar que existan los secretos
+        id: secretos
+        env:
+          OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        working-directory: .
+        run: |
+          if [ -z "$OPENWEATHER_KEY" ] || [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "::warning::Faltan los secretos OPENWEATHER_KEY o FIREBASE_SERVICE_ACCOUNT; el ciclo no se ejecuta."
+            echo "listos=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "listos=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.secretos.outputs.listos == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.secretos.outputs.listos == 'true'
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+
+      - name: Instalar dependencias
+        if: steps.secretos.outputs.listos == 'true'
+        run: npm ci --omit=dev
+
+      - name: Ejecutar el ciclo
+        if: steps.secretos.outputs.listos == 'true'
+        env:
+          OPENWEATHER_KEY: ${{ secrets.OPENWEATHER_KEY }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node index.js

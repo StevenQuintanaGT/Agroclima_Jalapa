@@ -101,6 +101,8 @@ Las preferencias **filtran el envío, no la generación**: la alerta se registra
 | velocidadViento | double | sí | — | km/h |
 | origen | string | sí | `ciclo` | `ciclo` o `consulta` |
 | vigente | bool | sí | true | Dentro de su intervalo de validez |
+| lluviaPrevista | map | no | {} | Apoyo del ciclo (D-40): `{inicio de franja: mm}` aún sin sumar |
+| franjasContadas | array<string> | no | [] | Apoyo del ciclo (D-40): franjas ya sumadas a `precipitacion` |
 
 ### parcelas/{id}/pronosticos/{yyyyMMdd}  (Tabla 68) — único insumo del motor
 | Campo | Tipo | Oblig. | Defecto | Descripción |
