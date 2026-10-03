@@ -159,4 +159,104 @@ void main() {
       'activa': true,
     });
   });
+
+  group('editar y borrar (HU-06)', () {
+    final original = Parcela(
+      parcelaId: 'p1',
+      usuarioId: 'u1',
+      nombre: 'El Guayabal',
+      municipio: Municipio.jalapa,
+      cultivo: Cultivo.maiz,
+      etapa: Etapa.floracion,
+      latitud: cabeceraJalapa.lat,
+      longitud: cabeceraJalapa.lon,
+      celdaClima: '14.65_-90.00',
+    );
+
+    setUp(() {
+      when(() => repo.nombres('u1'))
+          .thenAnswer((_) async => ['El Guayabal', 'La Joya']);
+      when(() => repo.actualizar(any())).thenAnswer((_) async => false);
+    });
+
+    test('conserva id y dueño, y recalcula municipio y celda', () async {
+      await servicio.actualizar(
+        original: original,
+        nombre: 'El Guayabal',
+        latitud: cabeceraMonjas.lat,
+        longitud: cabeceraMonjas.lon,
+        cultivo: Cultivo.frijol,
+        etapa: Etapa.cosecha,
+      );
+      final parcela =
+          verify(() => repo.actualizar(captureAny())).captured.single
+              as Parcela;
+      expect(parcela.parcelaId, 'p1');
+      expect(parcela.usuarioId, 'u1');
+      expect(parcela.municipio, Municipio.monjas);
+      expect(parcela.celdaClima, '14.50_-89.85');
+      expect(parcela.cultivo, Cultivo.frijol);
+      expect(parcela.etapa, Etapa.cosecha);
+    });
+
+    test('el nombre de otra parcela no se puede usar (VA-02)', () async {
+      expect(
+        () => servicio.actualizar(
+          original: original,
+          nombre: 'LA JOYA',
+          latitud: cabeceraJalapa.lat,
+          longitud: cabeceraJalapa.lon,
+        ),
+        throwsA(
+          isA<ErrorParcela>().having(
+            (e) => e.motivo,
+            'motivo',
+            MotivoErrorParcela.nombreRepetido,
+          ),
+        ),
+      );
+    });
+
+    test('fuera de Jalapa no se guarda (VA-01)', () async {
+      expect(
+        () => servicio.actualizar(
+          original: original,
+          nombre: 'El Guayabal',
+          latitud: 14.6349,
+          longitud: -90.5069,
+        ),
+        throwsA(
+          isA<ErrorParcela>().having(
+            (e) => e.motivo,
+            'motivo',
+            MotivoErrorParcela.fueraDeJalapa,
+          ),
+        ),
+      );
+      verifyNever(() => repo.actualizar(any()));
+    });
+
+    test('no deja editar la parcela de otra cuenta (RN-03)', () async {
+      when(() => auth.uidActual).thenReturn('otro');
+      expect(
+        () => servicio.actualizar(
+          original: original,
+          nombre: 'El Guayabal',
+          latitud: cabeceraJalapa.lat,
+          longitud: cabeceraJalapa.lon,
+        ),
+        throwsA(isA<ErrorParcela>()),
+      );
+    });
+
+    test('borrar pasa el id al repositorio', () async {
+      when(() => repo.eliminar('p1')).thenAnswer((_) async => true);
+      expect(await servicio.eliminar('p1'), isTrue);
+    });
+
+    test('sin sesión la lista está vacía', () async {
+      when(() => auth.uidActual).thenReturn(null);
+      expect(await servicio.misParcelas().first, isEmpty);
+    });
+  });
 }

@@ -7,6 +7,7 @@ import 'package:agroclima_jalapa/pantallas/acceso/registro_pantalla.dart';
 import 'package:agroclima_jalapa/pantallas/acceso/splash_pantalla.dart';
 import 'package:agroclima_jalapa/servicios/cuenta_servicio.dart';
 import 'package:agroclima_jalapa/servicios/notificaciones_servicio.dart';
+import 'package:agroclima_jalapa/servicios/parcelas_servicio.dart';
 import 'package:agroclima_jalapa/servicios/ubicacion_servicio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,6 +22,14 @@ class _UbicacionFalsa extends Mock implements UbicacionServicio {}
 
 class _AvisosFalsos extends Mock implements NotificacionesServicio {}
 
+class _ParcelasFalsas extends Mock implements ParcelasServicio {}
+
+ParcelasServicio _sinParcelas() {
+  final parcelas = _ParcelasFalsas();
+  when(parcelas.misParcelas).thenAnswer((_) => Stream.value(const []));
+  return parcelas;
+}
+
 Future<ValueNotifier<bool>> _abrir(
   WidgetTester tester, {
   required bool sesion,
@@ -33,6 +42,7 @@ Future<ValueNotifier<bool>> _abrir(
         Provider<CuentaServicio>.value(value: _CuentaFalsa()),
         Provider<UbicacionServicio>.value(value: _UbicacionFalsa()),
         Provider<NotificacionesServicio>.value(value: _AvisosFalsos()),
+        Provider<ParcelasServicio>.value(value: _sinParcelas()),
       ],
       child: AgroClimaApp(
         enrutador: crearEnrutador(

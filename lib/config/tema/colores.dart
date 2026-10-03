@@ -40,6 +40,10 @@ class Colores {
   static const Color bordeIlustracionCielo = Color(0xFF9CC4DC);
   static const Color bordeIlustracionAmbar = Color(0xFFD9B77A);
 
+  /// Miniatura de mapa de las tarjetas de parcela (pantallas 14 y 15).
+  static const Color fondoMiniMapa = Color(0xFFDDE6D6);
+  static const Color fondoMiniMapaOscuro = Color(0xFF26301F);
+
   // ---------- Semáforo (Tabla 72) ----------
   // Color de borde/franja, fondo, texto e ícono por nivel. PRECAUCIÓN no usa
   // #B26A00 para texto (3.84:1, DECISIONES D-04): texto #4A2A00 e ícono #8A4B00.

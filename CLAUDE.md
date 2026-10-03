@@ -149,6 +149,7 @@ flutter build apk --release --dart-define-from-file=env/prod.json   # entrega po
 
 cd functions && npm install && npm test
 npm run test:reglas                              # reglas de Firestore con el emulador
+npm run test:emulador                            # reglas + limpieza de parcelas borradas
 firebase emulators:start --only auth,firestore
 firebase deploy --only firestore:rules,firestore:indexes   # funciona con el plan Spark
 node functions/scripts/sembrar-umbrales.js      # carga el catálogo de umbrales

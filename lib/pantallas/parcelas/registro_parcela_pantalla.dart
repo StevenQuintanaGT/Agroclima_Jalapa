@@ -25,10 +25,10 @@ class RegistroParcelaPantalla extends StatelessWidget {
 
   final ConstructorMapa constructorMapa;
 
-  static String _titulo(int paso) => switch (paso) {
+  static String _titulo(RegistroParcelaVm vm) => switch (vm.paso) {
     3 => Textos.tituloPaso3,
-    4 => Textos.tituloPaso4,
-    _ => Textos.nuevaParcela,
+    4 => vm.esEdicion ? Textos.editarParcela : Textos.tituloPaso4,
+    _ => vm.esEdicion ? Textos.editarParcela : Textos.nuevaParcela,
   };
 
   void _atras(BuildContext context, RegistroParcelaVm vm) {
@@ -45,9 +45,14 @@ class RegistroParcelaPantalla extends StatelessWidget {
       mensajero.showSnackBar(
         const SnackBar(content: Text(Textos.guardadaSinSenal)),
       );
+    } else if (vm.esEdicion) {
+      mensajero.showSnackBar(
+        const SnackBar(content: Text(Textos.cambiosGuardados)),
+      );
     }
-    // TODO(HU-06): ir a "Mis parcelas" con la nueva parcela.
-    context.go(Rutas.inicio);
+    // Vuelve a donde se abrió (Mis parcelas o el detalle). En el primer uso
+    // se llega con go() desde los permisos: no hay a dónde volver.
+    context.canPop() ? context.pop() : context.go(Rutas.inicio);
   }
 
   @override
@@ -55,7 +60,7 @@ class RegistroParcelaPantalla extends StatelessWidget {
     final vm = context.watch<RegistroParcelaVm>();
     final esUltimo = vm.paso == RegistroParcelaVm.totalPasos;
     return PopScope(
-      canPop: vm.paso == 1,
+      canPop: vm.paso == (vm.esEdicion ? RegistroParcelaVm.totalPasos : 1),
       onPopInvokedWithResult: (salio, _) {
         if (!salio) vm.atras();
       },
@@ -66,7 +71,7 @@ class RegistroParcelaPantalla extends StatelessWidget {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(_titulo(vm.paso)),
+              Text(_titulo(vm)),
               Text(
                 Textos.pasoDe(vm.paso, RegistroParcelaVm.totalPasos),
                 style: Tipografia.cuerpoChico.copyWith(
@@ -97,7 +102,9 @@ class RegistroParcelaPantalla extends StatelessWidget {
         ),
         bottomNavigationBar: _Pie(
           child: BotonPrincipal(
-            texto: esUltimo ? Textos.guardarParcela : Textos.siguiente,
+            texto: esUltimo
+                ? (vm.esEdicion ? Textos.guardarCambios : Textos.guardarParcela)
+                : Textos.siguiente,
             textoCargando: Textos.guardandoParcela,
             cargando: vm.guardando,
             alPresionar: () {

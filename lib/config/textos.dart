@@ -234,6 +234,39 @@ class Textos {
       'No pudimos saber dónde está. Mueva el pin en el mapa.';
   static const String registrarParcela = 'Registrar mi parcela';
 
+  // ---------- Mis parcelas (pantallas 14–16, HU-06) ----------
+  static const String misParcelas = 'Mis parcelas';
+  static String terrenosRegistrados(int cantidad) =>
+      cantidad == 1 ? '1 terreno registrado' : '$cantidad terrenos registrados';
+  static const String agregarParcela = 'Agregar parcela';
+  static const String vacioParcelasTitulo =
+      'Todavía no ha registrado su parcela';
+  static const String vacioParcelasDetalle =
+      'Marque su terreno en el mapa y empiece a recibir el clima y los avisos.';
+  static const String errorParcelasTitulo = 'No pudimos traer sus parcelas';
+  static const String errorParcelasDetalle =
+      'Puede ser la señal. Intente otra vez en un momento.';
+  static const String editar = 'Editar';
+  static const String borrar = 'Borrar';
+  static String accionesDeParcela(String nombre) =>
+      '$nombre. Deslice a la izquierda para editar o borrar.';
+  static const String editarParcela = 'Editar parcela';
+  static const String guardarCambios = 'Guardar cambios';
+  static const String cambiosGuardados = 'Cambios guardados.';
+  static const String etiquetaCultivoFase = 'Cultivo y fase';
+  static const String borrarParcela = 'Borrar parcela';
+  static const String borrandoParcela = 'Borrando…';
+  static String preguntaBorrar(String nombre) => '¿Borrar $nombre?';
+  static const String detalleBorrar =
+      'Se pierde su historial de clima y ya no recibirá avisos de este '
+      'terreno.';
+  static const String siBorrar = 'Sí, borrar';
+  static const String noQuedarme = 'No, quedarme';
+  static const String parcelaBorrada = 'Se borró la parcela.';
+  static const String borradaSinSenal =
+      'Borrada en su teléfono. Se terminará de borrar cuando haya señal.';
+  static const String parcelaNoExiste = 'Esa parcela ya no existe.';
+
   // ---------- Sesión ----------
   static const String cerrarSesion = 'Cerrar sesión';
   static const String cerrandoSesion = 'Cerrando sesión…';
