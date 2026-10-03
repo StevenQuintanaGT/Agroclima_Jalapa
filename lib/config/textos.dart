@@ -181,6 +181,8 @@ class Textos {
   static const String sinResultados =
       'No encontramos ese lugar. Mueva el pin hasta su terreno.';
   static const String arrastrePin = 'Arrastre el pin';
+  static const String fuenteMapa =
+      'Imágenes: Esri, Maxar, Earthstar Geographics y la comunidad GIS';
   static const String usarMiUbicacion = 'Usar mi ubicación';
   static const String buscandoUbicacion = 'Buscando dónde está…';
   static const String coordenadas = 'Coordenadas';

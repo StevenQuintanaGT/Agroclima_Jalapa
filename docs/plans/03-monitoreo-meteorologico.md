@@ -1,5 +1,10 @@
 # Plan 03 — Monitoreo meteorológico (MOD-03 · EP-03) · Etapas 3 y 5
 
+> **Actualización D-37 (2026-10-03):** sin plan Blaze. Mapas con `flutter_map` + Esri (sin clave); el ciclo
+> de `functions/` lo ejecuta GitHub Actions cada 3 h con `firebase-admin` (no Cloud Functions, Cloud Scheduler
+> ni Secret Manager). Donde este plan diga `onSchedule`, `onDocumentDeleted`, `defineSecret`, "desplegar
+> funciones" o Google Maps, aplicar `DECISIONES.md` D-37.
+
 Historias: **HU-07** Condiciones actuales (5) · **HU-15** Sin conexión (8) · **HU-08** Pronóstico (5) —
 Etapa 3 · **HU-09** Capa de precipitación (8) — Etapa 5.
 Pantallas: 17/18 panel principal, 19 detalle de pronóstico, 20 mapa del clima, 32 sin conexión, 33 carga, 34 error.

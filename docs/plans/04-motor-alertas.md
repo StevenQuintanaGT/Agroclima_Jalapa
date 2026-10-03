@@ -1,5 +1,10 @@
 # Plan 04 — Motor de alertas (MOD-04 · EP-04) · Etapa 4
 
+> **Actualización D-37 (2026-10-03):** sin plan Blaze. Mapas con `flutter_map` + Esri (sin clave); el ciclo
+> de `functions/` lo ejecuta GitHub Actions cada 3 h con `firebase-admin` (no Cloud Functions, Cloud Scheduler
+> ni Secret Manager). Donde este plan diga `onSchedule`, `onDocumentDeleted`, `defineSecret`, "desplegar
+> funciones" o Google Maps, aplicar `DECISIONES.md` D-37.
+
 Historias: **HT-03** Catálogo de umbrales (5) · **HT-04** Evaluación periódica (8) · **HU-10** Notificación (13) ·
 **HU-11** Detalle (5) · **HU-12** Preferencias (3).
 Pantallas: 21 centro de alertas, 22 detalle, 23 mis avisos, 24 notificación, 35 sin alertas.

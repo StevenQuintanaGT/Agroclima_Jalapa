@@ -21,7 +21,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 
 ## Etapa 2 — Parcelas · `plans/02`
 - [x] Archivo de límites de Jalapa y validador geográfico (D-11)
-- [~] **HU-03** Ubicación de la parcela en el mapa
+- [x] **HU-03** Ubicación de la parcela en el mapa
 - [x] **HU-04** Registro por ubicación del teléfono
 - [x] **HU-05** Nombre, cultivo y etapa (registro en 4 pasos)
 - [ ] **HU-06** Listado, edición y eliminación (+ función de borrado en cascada)
@@ -73,7 +73,8 @@ Se puede adelantar una tarea de una etapa posterior solo si sus dependencias ya 
 - Sin señal, Firebase Auth puede responder `unknown` en vez de `network-request-failed`; se reconoce por el mensaje.
 - HU-02: todo verificado en el emulador salvo **entrar con Google** (programado y con pruebas, pero falta activar el proveedor Google y volver a descargar `google-services.json`).
 - `MarcoPunteado` dibujaba el borde debajo del fondo y no se veía; corregido (afectaba ilustraciones, "Datos del…" y error de servicio).
-- HU-03: registro probado en el emulador (búsqueda, "Usar mi ubicación", guardado en Firestore); falta ver el mapa con la clave de Google Maps (D-36).
+- HU-03: probado en el emulador con el mapa satelital de Esri (tocar, arrastrar el pin, búsqueda, "Usar mi ubicación", guardado en Firestore).
+- **D-37: sin plan Blaze.** Mapas con flutter_map + Esri; el ciclo automático correrá en GitHub Actions. Actualizar la tesis.
 
 (Espacio libre para anotar problemas encontrados — cuota, conectividad, comportamiento de algún teléfono —
 y lo que se decidió.)

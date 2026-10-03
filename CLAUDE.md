@@ -30,16 +30,17 @@ poca costumbre con aplicaciones especializadas. **Esto manda sobre cualquier dec
 | Estado y dependencias | `provider` (MVVM: pantalla + ViewModel `ChangeNotifier`) |
 | Autenticación | Firebase Authentication (correo/contraseña y Google) |
 | Base de datos | Cloud Firestore con persistencia sin conexión |
-| Ciclo automático | Cloud Functions for Firebase (**JavaScript**, Node LTS), funciones programadas |
+| Ciclo automático | Código **JavaScript** (Node LTS) en `functions/`, con `firebase-admin`, ejecutado cada 3 h por **GitHub Actions** (tarea programada gratuita). Sin Cloud Functions (D-37) |
 | Notificaciones | Firebase Cloud Messaging + `flutter_local_notifications` (canales) |
 | Clima | OpenWeather, **plan gratuito**: Current Weather (2.5), 5 day / 3 hour Forecast (2.5), Weather Maps (teselas) |
-| Mapas | `google_maps_flutter` (Google Maps para Android) |
-| Ubicación | `geolocator` + `permission_handler` |
+| Mapas | `flutter_map` + `latlong2` con teselas satelitales y de nombres de **Esri** (sin clave; se cita la fuente). Sin Google Maps (D-37) |
+| Ubicación | `geolocator` + `permission_handler`; búsqueda de lugares con `geocoding` (D-34) |
 | Control de versiones | Git + GitHub |
 
 Restricciones duras:
-- **Costo cero.** Ningún servicio de pago. Única excepción aceptada: plan Blaze de Firebase
-  (necesario para funciones programadas y secretos), manteniéndose dentro de la cuota gratuita.
+- **Costo cero, sin excepciones.** Firebase se queda en el plan gratuito **Spark**: nada que exija
+  Blaze ni cuenta de facturación (Cloud Functions, Cloud Scheduler, Secret Manager, Google Maps).
+  Decisión de Steven por presupuesto (D-37).
 - **No usar One Call 3.0** de OpenWeather (pide tarjeta). Solo los endpoints del plan Free.
 - Cuota OpenWeather Free: 60 llamadas/min y 1 000 000/mes. El ciclo agrupa parcelas por celda (ver
   `docs/plans/03-monitoreo-meteorologico.md`).
@@ -61,7 +62,9 @@ Acceso a datos (repositorios: ÚNICOS que tocan Firestore, OpenWeather o almacen
 - Política **caché primero** en repositorios: se lee lo local, se evalúa vigencia, solo si caducó
   se va a la red; ante fallo se devuelve el último dato con aviso de "no vigente" (RNF-08).
 - El **ciclo automático** (adquisición → evaluación de umbrales → alerta → envío FCM) vive en
-  `functions/`, se ejecuta en la nube cada 3 horas y **no depende de que la app esté abierta**.
+  `functions/`, lo ejecuta GitHub Actions cada 3 horas y **no depende de que la app esté abierta**.
+  Usa el SDK de administración de Firebase, que funciona con el plan Spark. Las limpiezas
+  (borrar parcela en cascada, eliminar cuenta) también las hace ese ciclo (D-37).
 - Patrones: MVVM, Repositorio, Proveedor de dependencias, Observador (streams), Estrategia
   (reglas del motor), Fachada (cliente OpenWeather), Caché primero, DTO (modelos `fromMap/toMap`).
 
@@ -118,20 +121,22 @@ Un elemento está terminado solo si cumple las seis:
 - Fechas: se guardan en UTC (`Timestamp`); los ids diarios `yyyyMMdd` se calculan en hora de
   Guatemala (`America/Guatemala`, UTC-6).
 - Pruebas: unitarias para servicios, validadores, conversiones y reglas del motor; de widget para
-  pantallas clave. Mocks con `mocktail`. En `functions/`, pruebas con el emulador de Firebase.
+  pantallas clave. Mocks con `mocktail`. En `functions/`, pruebas con jest y el emulador de Firestore.
 
 ## 8. Secretos y configuración (RNF-04)
 
 Nunca subir al repositorio:
 - `android/app/google-services.json`, `lib/firebase_options.dart`
 - `env/*.json` (claves para `--dart-define-from-file`), `android/local.properties`, `android/key.properties`, `*.jks`
-- `functions/.env*`, `functions/.secret.local`
+- `functions/.env*`, `functions/.secret.local`, cualquier llave de cuenta de servicio (`*.json` de
+  Firebase Admin)
 
 Claves:
 - **OpenWeather (app)**: `OPENWEATHER_API_KEY` en `env/dev.json`, se lee con `String.fromEnvironment`.
-- **OpenWeather (funciones)**: secreto `OPENWEATHER_KEY` con `defineSecret` (Secret Manager).
-- **Google Maps**: `MAPS_API_KEY` en `android/local.properties` → `manifestPlaceholders`; en Google
-  Cloud se restringe al paquete `gt.umg.agroclima_jalapa` y a la huella SHA-1.
+- **Ciclo en GitHub Actions**: secretos del repositorio en GitHub (Settings → Secrets and variables →
+  Actions): `OPENWEATHER_KEY` y `FIREBASE_SERVICE_ACCOUNT` (JSON de la cuenta de servicio de
+  Firebase). En local, `functions/.env` (ignorado por git).
+- **Mapas**: no llevan clave (teselas de Esri; D-37).
 - Se incluyen plantillas versionadas: `env/dev.example.json`, `android/local.properties.example`.
 
 ## 9. Comandos
@@ -143,10 +148,11 @@ flutter analyze && flutter test
 flutter build apk --release --dart-define-from-file=env/prod.json   # entrega por APK (RNF-25), ≤ 50 MB (RNF-09)
 
 cd functions && npm install && npm test
-firebase emulators:start --only auth,firestore,functions
-firebase deploy --only firestore:rules,firestore:indexes
-firebase deploy --only functions
+npm run test:reglas                              # reglas de Firestore con el emulador
+firebase emulators:start --only auth,firestore
+firebase deploy --only firestore:rules,firestore:indexes   # funciona con el plan Spark
 node functions/scripts/sembrar-umbrales.js      # carga el catálogo de umbrales
+# El ciclo se ejecuta solo en GitHub Actions (.github/workflows/); a mano: Actions → Run workflow
 ```
 
 ## 10. Cosas que NO se hacen

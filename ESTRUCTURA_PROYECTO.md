@@ -122,9 +122,11 @@ agroclima_jalapa/
 │
 ├── test/                         # espejo de lib/ (unit + widget)
 │
-├── functions/                    # Cloud Functions (JavaScript, Node LTS)
-│   ├── package.json              # firebase-functions, firebase-admin; jest para pruebas
-│   ├── index.js                  # exporta las funciones
+├── .github/workflows/ciclo-clima.yml  # tarea programada (cada 3 h) que ejecuta el ciclo (D-37)
+│
+├── functions/                    # ciclo automático en JavaScript (Node LTS), lo ejecuta GitHub Actions
+│   ├── package.json              # firebase-admin; jest para pruebas
+│   ├── index.js                  # punto de entrada del ciclo (lo llama el workflow)
 │   ├── src/
 │   │   ├── config.js             # periodicidad, tamaño de celda, ventana de duplicados, rangos VA-07
 │   │   ├── openweather.js        # cliente (fachada) del ciclo
@@ -175,7 +177,9 @@ Agregarlas con `flutter pub add <paquete>` para obtener la versión vigente comp
 | google_sign_in | Acceso con cuenta de Google |
 | provider | Estado (MVVM) e inyección de dependencias |
 | go_router | Navegación, guardas de sesión, barra inferior |
-| google_maps_flutter | Mapa de parcelas y capas |
+| flutter_map, latlong2 | Mapa de parcelas y capas (teselas de Esri, sin clave; D-37) |
+| geocoding | "Buscar aldea o lugar" con el geocodificador del teléfono (D-34) |
+| material_symbols_icons | Íconos Material Symbols del diseño (D-24) |
 | geolocator, permission_handler | Ubicación y permisos |
 | http | Cliente OpenWeather |
 | connectivity_plus | Detección de conexión |
@@ -189,5 +193,6 @@ Agregarlas con `flutter pub add <paquete>` para obtener la versión vigente comp
 
 ## Dependencias de `functions/`
 
-`firebase-functions` (API v2: `onSchedule`, `onDocumentDeleted`, `defineSecret`), `firebase-admin`,
-y `jest` para pruebas. HTTP con `fetch` nativo de Node.
+`firebase-admin` (Firestore, Auth y FCM con una cuenta de servicio; funciona con el plan Spark),
+`jest` y `@firebase/rules-unit-testing` para pruebas. HTTP con `fetch` nativo de Node.
+No se usa `firebase-functions`: el ciclo lo ejecuta GitHub Actions (D-37).

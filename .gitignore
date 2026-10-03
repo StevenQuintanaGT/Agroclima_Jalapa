@@ -115,3 +115,8 @@ $RECYCLE.BIN/
 .buildlog/
 .svn/
 .swiftpm/
+
+# Llaves de cuenta de servicio de Firebase (ciclo en GitHub Actions, D-37)
+*service-account*.json
+*cuenta-servicio*.json
+*-firebase-adminsdk-*.json
