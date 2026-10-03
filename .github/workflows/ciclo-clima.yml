@@ -39,10 +39,10 @@ jobs:
             echo "listos=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         if: steps.secretos.outputs.listos == 'true'
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         if: steps.secretos.outputs.listos == 'true'
         with:
           node-version: 22

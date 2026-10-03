@@ -94,7 +94,8 @@ function crearCliente({ clave, pedirHttp = fetch, esperar = dormir } = {}) {
 
 const numero = (valor) => (typeof valor === 'number' && Number.isFinite(valor) ? valor : null);
 const instante = (segundos) => new Date(segundos * 1000);
-const kmPorHora = (metrosPorSegundo) => metrosPorSegundo * 3.6;
+// Dos decimales: evita guardar ruido de punto flotante (2.7720000000000002).
+const kmPorHora = (metrosPorSegundo) => Math.round(metrosPorSegundo * 360) / 100;
 
 function condicion(json) {
   const primera = Array.isArray(json.weather) ? json.weather[0] : null;
