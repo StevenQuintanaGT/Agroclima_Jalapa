@@ -27,7 +27,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 - [x] **HU-06** Listado, edición y eliminación (+ función de borrado en cascada)
 
 ## Etapa 3 — Clima de la parcela · `plans/03`
-- [ ] Cliente OpenWeather (app y funciones)
+- [x] Cliente OpenWeather (app y funciones)
 - [ ] Función `adquirirClima` (guarda `pronosticos` y `condiciones` por celda)
 - [ ] **HU-07** Condiciones actuales (panel principal)
 - [ ] **HU-15** Consulta sin conexión (caché primero)
@@ -76,6 +76,7 @@ Se puede adelantar una tarea de una etapa posterior solo si sus dependencias ya 
 - HU-03: probado en el emulador con el mapa satelital de Esri (tocar, arrastrar el pin, búsqueda, "Usar mi ubicación", guardado en Firestore).
 - **D-37: sin plan Blaze.** Mapas con flutter_map + Esri; el ciclo automático correrá en GitHub Actions. Actualizar la tesis.
 - HU-06: probado en el emulador (lista, deslizar, editar cultivo, detalle, borrar con y sin señal, sincronización al volver la señal). La limpieza en cascada (`functions/src/limpieza.js`) ya está programada y probada con el emulador; se ejecutará sola cuando se cree la tarea de GitHub Actions (Etapa 3). Ver D-38.
+- Cliente OpenWeather (D-39): probado con respuestas de ejemplo en Dart y en JavaScript; **falta probarlo con una clave real** (no hay `OPENWEATHER_API_KEY` en `env/dev.json`).
 
 (Espacio libre para anotar problemas encontrados — cuota, conectividad, comportamiento de algún teléfono —
 y lo que se decidió.)
