@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
+
 import '../modelos/enums.dart';
 
 /// Un anillo de un polígono: lista de puntos (longitud, latitud), como en
@@ -61,6 +63,13 @@ class ValidacionGeografica {
     }
     return ValidacionGeografica(limites);
   }
+
+  /// Ruta del archivo de límites dentro de la app.
+  static const String rutaLimites = 'assets/geo/jalapa_municipios.geojson';
+
+  /// Carga los límites incluidos en la app (no necesita señal).
+  static Future<ValidacionGeografica> cargar(AssetBundle assets) async =>
+      ValidacionGeografica.desdeGeoJson(await assets.loadString(rutaLimites));
 
   final Map<Municipio, List<Poligono>> _limites;
 

@@ -25,7 +25,7 @@ agroclima_jalapa/
 │   └── dev.json                  # real, IGNORADO por git
 │
 ├── assets/
-│   ├── geo/jalapa_municipios.geojson   # límites de los 7 municipios (validación RN-02)
+│   ├── geo/jalapa_municipios.geojson   # límites de los 7 municipios (validación RN-02), geoBoundaries CC BY 3.0 IGO
 │   ├── img/                            # logo, ilustraciones de onboarding y estados vacíos
 │   └── fonts/                          # Roboto (si no se usa la del sistema)
 │
