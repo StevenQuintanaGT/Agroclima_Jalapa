@@ -9,6 +9,7 @@ class SharedPreferencesLocalesRepositorio
 
   static const _claveBienvenida = 'bienvenidaVista';
   static const _clavePermisos = 'permisosOfrecidos';
+  static const _claveParcela = 'parcelaSeleccionada';
 
   final SharedPreferencesWithCache _prefs;
 
@@ -16,7 +17,7 @@ class SharedPreferencesLocalesRepositorio
   static Future<SharedPreferencesLocalesRepositorio> crear() async {
     final prefs = await SharedPreferencesWithCache.create(
       cacheOptions: const SharedPreferencesWithCacheOptions(
-        allowList: {_claveBienvenida, _clavePermisos},
+        allowList: {_claveBienvenida, _clavePermisos, _claveParcela},
       ),
     );
     return SharedPreferencesLocalesRepositorio._(prefs);
@@ -35,4 +36,11 @@ class SharedPreferencesLocalesRepositorio
   @override
   Future<void> marcarPermisosOfrecidos() =>
       _prefs.setBool(_clavePermisos, true);
+
+  @override
+  String? get parcelaSeleccionada => _prefs.getString(_claveParcela);
+
+  @override
+  Future<void> elegirParcela(String parcelaId) =>
+      _prefs.setString(_claveParcela, parcelaId);
 }

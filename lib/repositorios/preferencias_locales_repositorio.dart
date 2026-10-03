@@ -10,4 +10,8 @@ abstract class PreferenciasLocalesRepositorio {
   /// "Ahora no" también cuenta: no se vuelven a ofrecer al entrar (RNF-05).
   bool get permisosOfrecidos;
   Future<void> marcarPermisosOfrecidos();
+
+  /// Última parcela vista en el panel; `null` si nunca eligió.
+  String? get parcelaSeleccionada;
+  Future<void> elegirParcela(String parcelaId);
 }
