@@ -14,6 +14,10 @@ module.exports = Object.freeze({
   // Celda climática: coordenadas redondeadas a 0.05° (DECISIONES D-07).
   TAMANO_CELDA_GRADOS: 0.05,
 
+  // Tiempo máximo por consulta a OpenWeather (RNF-07) y reintentos del ciclo.
+  ESPERA_CLIMA_MS: 5000,
+  REINTENTOS_CLIMA: 3,
+
   // Días de pronóstico que evalúa el motor (hoy + 4).
   DIAS_PRONOSTICO: 5,
 

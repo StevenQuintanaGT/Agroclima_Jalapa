@@ -8,6 +8,12 @@ class Constantes {
   static const Duration vigenciaCondicionesAhorroDatos = Duration(minutes: 180);
   static const Duration vigenciaPronostico = Duration(hours: 3);
 
+  // Pronóstico: días que se muestran y que evalúa el motor (hoy + 4).
+  static const int diasPronostico = 5;
+
+  // Tiempo máximo de una consulta al proveedor del clima (RNF-07).
+  static const Duration esperaClima = Duration(seconds: 5);
+
   // Celda climática: coordenadas redondeadas a 0.05° (DECISIONES D-07).
   static const double tamanoCeldaGrados = 0.05;
 
