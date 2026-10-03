@@ -31,7 +31,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 - [x] Función `adquirirClima` (guarda `pronosticos` y `condiciones` por celda)
 - [x] **HU-07** Condiciones actuales (panel principal)
 - [ ] **HU-15** Consulta sin conexión (caché primero)
-- [ ] **HU-08** Pronóstico de los próximos días (+ detalle de pronóstico)
+- [x] **HU-08** Pronóstico de los próximos días (+ detalle de pronóstico)
 
 ## Etapa 4 — Motor de alertas · `plans/04`
 - [ ] **HT-03** Catálogo de umbrales (semilla en Firestore)
@@ -78,6 +78,7 @@ Se puede adelantar una tarea de una etapa posterior solo si sus dependencias ya 
 - HU-06: probado en el emulador (lista, deslizar, editar cultivo, detalle, borrar con y sin señal, sincronización al volver la señal). La limpieza en cascada (`functions/src/limpieza.js`) ya está programada y probada con el emulador; se ejecutará sola cuando se cree la tarea de GitHub Actions (Etapa 3). Ver D-38.
 - Cliente OpenWeather (D-39): probado con respuestas de ejemplo en Dart y en JavaScript; probado también con la clave real (2026-10-03).
 - HU-07 (D-42): probado en el emulador con OpenWeather real (clima de la parcela, caché al reabrir sin nueva consulta, deslizar sin internet → aviso y dato guardado). El aspecto de "dato vencido" (más de 60 min sin señal) está cubierto por pruebas de widget.
+- HU-08 (D-43): probado en el emulador con OpenWeather real (hora por hora, 5 días, detalle con curva, lluvia y resumen).
 - `adquirirClima` y la tarea de GitHub Actions (D-40, D-41): probados con el emulador y un clima falso. Secretos creados en GitHub (2026-10-03): la tarea corrió en la nube y se conectó a Firestore (0 parcelas en producción); con OpenWeather real contra el emulador guardó condiciones y 5 días de pronóstico de 2 celdas.
 
 (Espacio libre para anotar problemas encontrados — cuota, conectividad, comportamiento de algún teléfono —

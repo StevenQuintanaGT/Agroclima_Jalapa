@@ -15,6 +15,8 @@ import '../pantallas/acceso/registro_pantalla.dart';
 import '../pantallas/acceso/registro_vm.dart';
 import '../pantallas/acceso/splash_pantalla.dart';
 import '../modelos/parcela.dart';
+import '../pantallas/clima/detalle_pronostico_pantalla.dart';
+import '../pantallas/clima/detalle_pronostico_vm.dart';
 import '../pantallas/clima/panel_pantalla.dart';
 import '../pantallas/clima/panel_vm.dart';
 import '../pantallas/parcelas/detalle_parcela_pantalla.dart';
@@ -59,6 +61,11 @@ class Rutas {
 
   /// Detalle y edición van fuera de la barra inferior (pantalla 15).
   static String detalleParcela(String parcelaId) => '/parcelas/$parcelaId';
+
+  /// Pantalla 19, fuera de la barra inferior como el detalle de parcela.
+  static String detallePronostico(String parcelaId, {String? dia}) =>
+      '/pronostico/$parcelaId'
+      '${dia == null ? '' : '?dia=$dia'}';
   static String editarParcela(String parcelaId, {int? paso}) =>
       '/parcelas/$parcelaId/editar${paso == null ? '' : '?paso=$paso'}';
 
@@ -226,6 +233,18 @@ GoRouter crearEnrutador({
             ),
           ),
         ],
+      ),
+      GoRoute(
+        path: '/pronostico/:parcelaId',
+        builder: (context, estado) => ChangeNotifierProvider(
+          create: (context) => DetallePronosticoVm(
+            parcelas: context.read<ParcelasServicio>(),
+            clima: context.read<ClimaServicio>(),
+            parcelaId: estado.pathParameters['parcelaId']!,
+            diaInicial: estado.uri.queryParameters['dia'],
+          ),
+          child: const DetallePronosticoPantalla(),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, estado, navegacion) =>

@@ -23,6 +23,7 @@ import '../../modelos/error_clima.dart';
 import '../../modelos/parcela.dart';
 import '../../utilidades/fechas.dart';
 import 'panel_vm.dart';
+import 'pronostico_panel.dart';
 
 /// Pantallas 17/18 · Panel principal (HU-07) con los estados 32 (sin
 /// conexión), 33 (cargando) y 34 (error). Orden fijo de plans/03 §5; el
@@ -186,6 +187,12 @@ class _Contenido extends StatelessWidget {
   final PanelVm vm;
   final ClimaActual clima;
 
+  void _abrirDetalle(BuildContext context, PanelVm vm, {String? dia}) {
+    final parcela = vm.parcela;
+    if (parcela == null) return;
+    context.push(Rutas.detallePronostico(parcela.parcelaId, dia: dia));
+  }
+
   @override
   Widget build(BuildContext context) {
     final esquema = Theme.of(context).colorScheme;
@@ -225,6 +232,7 @@ class _Contenido extends StatelessWidget {
                     ],
                   ),
                 ),
+                // Con dato vencido, la acción útil va justo debajo (32).
                 if (!vm.vigente) ...[
                   const SizedBox(height: Medidas.espacioS),
                   BotonSecundario(
@@ -234,6 +242,26 @@ class _Contenido extends StatelessWidget {
                     alPresionar: vm.actualizando ? null : vm.actualizar,
                   ),
                 ],
+                _Apagado(
+                  apagado: !vm.vigente,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (vm.proximasHoras.isNotEmpty)
+                        PorHoras(
+                          actual: clima,
+                          franjas: vm.proximasHoras,
+                          alTocar: () => _abrirDetalle(context, vm),
+                        ),
+                      if (vm.dias.isNotEmpty)
+                        ProximosDias(
+                          dias: vm.dias,
+                          alTocar: (dia) =>
+                              _abrirDetalle(context, vm, dia: dia.fecha),
+                        ),
+                    ],
+                  ),
+                ),
                 const SizedBox(height: Medidas.espacioS),
                 if (vm.vigente && error != null) ...[
                   Text(

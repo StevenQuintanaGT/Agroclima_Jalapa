@@ -349,6 +349,74 @@ class Textos {
       'El servicio del clima no respondió bien. Intente más tarde.',
   };
 
+  // ---------- Pronóstico (panel y pantalla 19, HU-08) ----------
+  static const String horaPorHora = 'Hoy, hora por hora';
+  static String proximosDias(int cantidad) => 'Los próximos $cantidad días';
+  static const String ahora = 'Ahora';
+  static const String hoy = 'Hoy';
+  static const String pronosticoDetallado = 'Pronóstico detallado';
+  static const String verDetalle = 'Ver el detalle';
+
+  /// "8 a.m.", "12 p.m.".
+  static String horaSinMinutos(DateTime local) {
+    final h = local.hour % 12 == 0 ? 12 : local.hour % 12;
+    return '$h ${local.hour < 12 ? 'a.m.' : 'p.m.'}';
+  }
+
+  /// "Miércoles".
+  static String nombreDia(DateTime dia) {
+    final nombre = DateFormat('EEEE', 'es').format(dia);
+    return nombre[0].toUpperCase() + nombre.substring(1);
+  }
+
+  /// "13 ago".
+  static String diaCorto(DateTime dia) =>
+      DateFormat('d MMM', 'es').format(dia).replaceAll('.', '');
+
+  static const String comoCambiaTemperatura = 'Cómo cambia la temperatura';
+
+  /// "a las 5 de la mañana", "a la 1 de la tarde", "a las 12 del mediodía".
+  static String aLaHora(DateTime local) {
+    final hora = local.hour;
+    if (hora == 0) return 'a la medianoche';
+    if (hora == 12) return 'a las 12 del mediodía';
+    final h = hora % 12;
+    final parte = switch (hora) {
+      < 12 => 'de la mañana',
+      < 19 => 'de la tarde',
+      _ => 'de la noche',
+    };
+    return '${h == 1 ? 'a la' : 'a las'} $h $parte';
+  }
+
+  static String loMasFrio(DateTime local) =>
+      'Lo más frío será ${aLaHora(local)}';
+  static const String cuantaLluvia = 'Cuánta lluvia caerá';
+
+  /// Interpreta la intensidad en mm/h (plans/03 §6).
+  static String intensidadLluvia(double mmHora) => switch (mmHora) {
+    < 2.5 => 'lluvia ligera',
+    <= 15 => 'lluvia moderada',
+    _ => 'lluvia fuerte',
+  };
+
+  static String totalEsperado({
+    required bool esHoy,
+    required double mm,
+    required double mmHora,
+  }) => mm < 0.1
+      ? 'No se espera lluvia ${esHoy ? 'hoy' : 'ese día'}'
+      : 'Total esperado ${esHoy ? 'hoy' : 'ese día'}: ${milimetros(mm)} — ${intensidadLluvia(mmHora)}';
+
+  static const String madrugada = 'madrugada';
+  static const String manana = 'mañana';
+  static const String tarde = 'tarde';
+  static const String noche = 'noche';
+  static const String vientoMasFuerte = 'Viento más fuerte';
+  static const String humedadDelAire = 'Humedad del aire';
+  static const String saleYSePone = 'Sale y se pone el sol';
+  static String kmPorHora(double valor) => '${valor.round()} km/h';
+
   // ---------- Sesión ----------
   static const String cerrarSesion = 'Cerrar sesión';
   static const String cerrandoSesion = 'Cerrando sesión…';
