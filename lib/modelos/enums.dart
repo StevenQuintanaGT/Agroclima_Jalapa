@@ -23,7 +23,46 @@ enum Municipio {
   }
 }
 
-/// Cultivo y Etapa se agregan con HU-05.
+/// Cultivos con umbrales propios (DECISIONES D-01). Sin cultivo = solo
+/// alertas generales (RN-05); en Firestore se guarda "".
+enum Cultivo {
+  maiz('maiz'),
+  frijol('frijol'),
+  cafe('cafe'),
+  hortalizas('hortalizas');
+
+  const Cultivo(this.valor);
+
+  final String valor;
+
+  static Cultivo? desdeValor(String? valor) {
+    for (final cultivo in values) {
+      if (cultivo.valor == valor) return cultivo;
+    }
+    return null;
+  }
+}
+
+/// Etapas del cultivo (DECISIONES D-02). Sin etapa = "" en Firestore.
+enum Etapa {
+  siembra('siembra'),
+  desarrolloVegetativo('desarrolloVegetativo'),
+  floracion('floracion'),
+  llenado('llenado'),
+  cosecha('cosecha');
+
+  const Etapa(this.valor);
+
+  final String valor;
+
+  static Etapa? desdeValor(String? valor) {
+    for (final etapa in values) {
+      if (etapa.valor == valor) return etapa;
+    }
+    return null;
+  }
+}
+
 enum TipoRiesgo {
   lluviaIntensa('lluviaIntensa'),
   vientoFuerte('vientoFuerte'),

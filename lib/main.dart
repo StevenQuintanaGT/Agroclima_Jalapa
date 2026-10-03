@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
@@ -10,14 +11,19 @@ import 'config/entorno.dart';
 import 'config/rutas.dart';
 import 'repositorios/auth_repositorio.dart';
 import 'repositorios/firebase_auth_repositorio.dart';
+import 'repositorios/firestore_parcelas_repositorio.dart';
 import 'repositorios/firestore_usuario_repositorio.dart';
+import 'repositorios/parcelas_repositorio.dart';
 import 'repositorios/preferencias_locales_repositorio.dart';
 import 'repositorios/shared_preferences_locales_repositorio.dart';
 import 'repositorios/usuario_repositorio.dart';
 import 'servicios/cuenta_servicio.dart';
+import 'servicios/busqueda_lugares_servicio.dart';
 import 'servicios/estado_sesion.dart';
 import 'servicios/notificaciones_servicio.dart';
+import 'servicios/parcelas_servicio.dart';
 import 'servicios/ubicacion_servicio.dart';
+import 'servicios/validacion_geografica.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +42,8 @@ Future<void> main() async {
     notificaciones: notificaciones,
   )..vigilarTokenDeAvisos();
   final estadoSesion = EstadoSesion(auth);
+  final validacion = await ValidacionGeografica.cargar(rootBundle);
+  final ParcelasRepositorio parcelas = FirestoreParcelasRepositorio();
 
   runApp(
     MultiProvider(
@@ -46,6 +54,15 @@ Future<void> main() async {
         Provider.value(value: notificaciones),
         Provider(create: (_) => UbicacionServicio()),
         Provider.value(value: cuenta),
+        Provider<ParcelasRepositorio>.value(value: parcelas),
+        Provider(
+          create: (_) => ParcelasServicio(
+            repositorio: parcelas,
+            auth: auth,
+            validacion: validacion,
+          ),
+        ),
+        Provider(create: (_) => BusquedaLugaresServicio()),
         ChangeNotifierProvider<EstadoSesion>.value(value: estadoSesion),
       ],
       child: AgroClimaApp(

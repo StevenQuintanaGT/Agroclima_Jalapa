@@ -88,6 +88,30 @@ class ValidacionGeografica {
 
   bool estaEnJalapa(double lat, double lon) => municipioDe(lat, lon) != null;
 
+  /// Centro aproximado (del rectángulo que lo encierra) de un municipio, o
+  /// de todo el departamento si [municipio] es `null`. Sirve para centrar el
+  /// mapa (HU-03: "carga centrado en el departamento de Jalapa").
+  ({double lat, double lon}) centro([Municipio? municipio]) {
+    final poligonos = municipio == null
+        ? _limites.values.expand((p) => p)
+        : _limites[municipio] ?? const <Poligono>[];
+    var minLat = double.infinity, maxLat = -double.infinity;
+    var minLon = double.infinity, maxLon = -double.infinity;
+    for (final poligono in poligonos) {
+      for (final punto in poligono.exterior) {
+        if (punto.lat < minLat) minLat = punto.lat;
+        if (punto.lat > maxLat) maxLat = punto.lat;
+        if (punto.lon < minLon) minLon = punto.lon;
+        if (punto.lon > maxLon) maxLon = punto.lon;
+      }
+    }
+    if (minLat == double.infinity) return centroJalapa;
+    return (lat: (minLat + maxLat) / 2, lon: (minLon + maxLon) / 2);
+  }
+
+  /// Cabecera de Jalapa: respaldo si no hay límites cargados.
+  static const centroJalapa = (lat: 14.6339, lon: -89.9889);
+
   static List<Poligono> _poligonosDe(Map<String, dynamic> geometria) {
     final coordenadas = geometria['coordinates'] as List;
     return switch (geometria['type']) {
