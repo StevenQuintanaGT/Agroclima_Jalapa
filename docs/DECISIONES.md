@@ -36,6 +36,9 @@ Estado: ✅ decidida · ⏳ por confirmar con Steven.
 | D-28 | Pruebas contra emuladores | `--dart-define=USAR_EMULADORES=true` conecta la app a los emuladores de auth y Firestore de la PC (10.0.2.2 desde el emulador de Android). Solo en depuración se permite HTTP hacia la PC (`src/debug/res/xml/red_emuladores.xml`). Las cuentas de prueba viven en `functions/seed/cuentas_prueba_emulador.json` y no existen en producción. | ✅ |
 | D-29 | Google en HU-02 | El diseño pone "Entrar con Google" en la pantalla de inicio de sesión (05), no en el registro (06). El acceso con Google se implementa en HU-02 junto con esa pantalla; requiere activar el proveedor y volver a descargar `google-services.json`. | ✅ |
 | D-30 | Prueba en teléfono físico | Por decisión de Steven se hace **al final del proyecto**, no por tarea. Las tareas se verifican en el emulador `AgroClima_API35` y se marcan terminadas al fusionarse; queda un solo pendiente general. | ✅ |
+| D-31 | Flujo de primer uso | Splash → bienvenida (3) → **crear cuenta** (con "atrás" a entrar) → permisos (ubicación, avisos) → Inicio. La bienvenida y los permisos se recuerdan en el teléfono (`shared_preferences`): "Ahora no" también cuenta como ofrecido y no se vuelve a preguntar al entrar (RNF-05). Tras los permisos se irá al registro de la primera parcela cuando exista (HU-05). | ✅ |
+| D-32 | Cerrar sesión | Quita el token de avisos de `tokensFcm`, borra el token local, cierra la sesión y borra la copia local de Firestore (`terminate` + `clearPersistence`). Mientras se construye el Perfil (Etapa 6), el botón está en su pantalla provisional. | ✅ |
+| D-33 | Ícono de la app | La pantalla de arranque usa el verde del splash, pero Android 12+ muestra el ícono de la app, que sigue siendo el de Flutter: el logotipo definitivo está pendiente en el diseño ("Logotipo ⚠ Provisional"). | ⏳ logo |
 
 ## Pendientes a revisar al final (no bloquean)
 

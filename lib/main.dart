@@ -11,9 +11,13 @@ import 'config/rutas.dart';
 import 'repositorios/auth_repositorio.dart';
 import 'repositorios/firebase_auth_repositorio.dart';
 import 'repositorios/firestore_usuario_repositorio.dart';
+import 'repositorios/preferencias_locales_repositorio.dart';
+import 'repositorios/shared_preferences_locales_repositorio.dart';
 import 'repositorios/usuario_repositorio.dart';
 import 'servicios/cuenta_servicio.dart';
 import 'servicios/estado_sesion.dart';
+import 'servicios/notificaciones_servicio.dart';
+import 'servicios/ubicacion_servicio.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +27,14 @@ Future<void> main() async {
   // Proveedor de dependencias: las pantallas solo ven contratos (RNF-20).
   final AuthRepositorio auth = FirebaseAuthRepositorio();
   final UsuarioRepositorio usuarios = FirestoreUsuarioRepositorio();
+  final PreferenciasLocalesRepositorio preferencias =
+      await SharedPreferencesLocalesRepositorio.crear();
+  final notificaciones = NotificacionesServicio();
+  final cuenta = CuentaServicio(
+    auth: auth,
+    usuarios: usuarios,
+    notificaciones: notificaciones,
+  )..vigilarTokenDeAvisos();
   final estadoSesion = EstadoSesion(auth);
 
   runApp(
@@ -30,12 +42,18 @@ Future<void> main() async {
       providers: [
         Provider<AuthRepositorio>.value(value: auth),
         Provider<UsuarioRepositorio>.value(value: usuarios),
-        Provider(
-          create: (_) => CuentaServicio(auth: auth, usuarios: usuarios),
-        ),
+        Provider<PreferenciasLocalesRepositorio>.value(value: preferencias),
+        Provider.value(value: notificaciones),
+        Provider(create: (_) => UbicacionServicio()),
+        Provider.value(value: cuenta),
         ChangeNotifierProvider<EstadoSesion>.value(value: estadoSesion),
       ],
-      child: AgroClimaApp(enrutador: crearEnrutador(haySesion: estadoSesion)),
+      child: AgroClimaApp(
+        enrutador: crearEnrutador(
+          haySesion: estadoSesion,
+          preferencias: preferencias,
+        ),
+      ),
     ),
   );
 }

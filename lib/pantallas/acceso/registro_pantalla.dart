@@ -3,14 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
+import '../../componentes/aviso_error.dart';
 import '../../componentes/boton_principal.dart';
 import '../../componentes/campo_texto.dart';
 import '../../config/tema/colores.dart';
-import '../../config/tema/colores_semaforo.dart';
 import '../../config/tema/medidas.dart';
 import '../../config/tema/tipografia.dart';
 import '../../config/textos.dart';
-import '../../modelos/enums.dart';
 import 'registro_vm.dart';
 
 /// Pantalla 06 · Crear cuenta (HU-01).
@@ -84,7 +83,7 @@ class RegistroPantalla extends StatelessWidget {
               ),
               if (vm.errorGeneral != null) ...[
                 const SizedBox(height: Medidas.espacioS),
-                _AvisoError(texto: vm.errorGeneral!),
+                AvisoError(texto: vm.errorGeneral!),
               ],
               const SizedBox(height: Medidas.espacioM),
               BotonPrincipal(
@@ -180,42 +179,6 @@ class _CasillaTerminos extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Error general en lenguaje llano, con ícono y color de PELIGRO.
-class _AvisoError extends StatelessWidget {
-  const _AvisoError({required this.texto});
-
-  final String texto;
-
-  @override
-  Widget build(BuildContext context) {
-    final tono = ColoresSemaforo.of(context).de(NivelSeveridad.critica);
-    return Semantics(
-      liveRegion: true,
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: tono.fondo,
-          borderRadius: BorderRadius.circular(Medidas.radioCampo),
-          border: Border.all(color: tono.borde, width: 2),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(Symbols.error, size: 24, color: tono.icono),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                texto,
-                style: Tipografia.cuerpo.copyWith(color: tono.texto),
-              ),
-            ),
-          ],
         ),
       ),
     );

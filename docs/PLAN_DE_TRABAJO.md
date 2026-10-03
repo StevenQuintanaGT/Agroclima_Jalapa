@@ -15,7 +15,7 @@ Al terminar cada etapa, generar un **APK de prueba** e instalarlo en un teléfon
 - [x] Tema visual, componentes transversales base y navegación con barra inferior
 - [x] **HT-02** Proyecto Firebase, reglas de seguridad e índices (con pruebas de reglas)
 - [x] **HU-01** Registro de usuario
-- [ ] **HU-02** Sesión persistente (+ recuperación de contraseña y pantallas de permisos)
+- [~] **HU-02** Sesión persistente (+ recuperación de contraseña y pantallas de permisos)
 
 Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con los 5 destinos.
 
@@ -71,6 +71,8 @@ Se puede adelantar una tarea de una etapa posterior solo si sus dependencias ya 
 - **Pendiente general:** prueba en teléfono físico Android ≥ 8.0 de gama media de todas las tareas (D-30).
 - HU-01: el foco del teclado pasaba al botón "Ver" en vez del siguiente campo; corregido y con prueba.
 - Sin señal, Firebase Auth puede responder `unknown` en vez de `network-request-failed`; se reconoce por el mensaje.
+- HU-02: todo verificado en el emulador salvo **entrar con Google** (programado y con pruebas, pero falta activar el proveedor Google y volver a descargar `google-services.json`).
+- `MarcoPunteado` dibujaba el borde debajo del fondo y no se veía; corregido (afectaba ilustraciones, "Datos del…" y error de servicio).
 
 (Espacio libre para anotar problemas encontrados — cuota, conectividad, comportamiento de algún teléfono —
 y lo que se decidió.)

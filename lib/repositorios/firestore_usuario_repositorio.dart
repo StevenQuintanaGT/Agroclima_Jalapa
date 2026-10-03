@@ -47,4 +47,26 @@ class FirestoreUsuarioRepositorio implements UsuarioRepositorio {
       fecha: (valor) => valor is Timestamp ? valor.toDate() : null,
     );
   }
+
+  @override
+  Future<void> agregarTokenAvisos(String uid, String token) =>
+      _perfil(uid)
+          .update({
+            'tokensFcm': FieldValue.arrayUnion([token]),
+          })
+          .timeout(esperaConfirmacion, onTimeout: () {});
+
+  @override
+  Future<void> quitarTokenAvisos(String uid, String token) =>
+      _perfil(uid)
+          .update({
+            'tokensFcm': FieldValue.arrayRemove([token]),
+          })
+          .timeout(esperaConfirmacion, onTimeout: () {});
+
+  @override
+  Future<void> borrarDatosLocales() async {
+    await _db.terminate();
+    await _db.clearPersistence();
+  }
 }

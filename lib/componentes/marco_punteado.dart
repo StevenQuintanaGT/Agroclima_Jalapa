@@ -24,8 +24,13 @@ class MarcoPunteado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Encima del fondo: si se pinta debajo, el color de fondo lo tapa.
     return CustomPaint(
-      painter: _PintorPunteado(color: colorBorde, radio: radio, grosor: grosor),
+      foregroundPainter: _PintorPunteado(
+        color: colorBorde,
+        radio: radio,
+        grosor: grosor,
+      ),
       child: Container(
         padding: padding,
         decoration: BoxDecoration(

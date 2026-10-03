@@ -1,15 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'auth_repositorio.dart';
 
-/// [AuthRepositorio] con Firebase Authentication. Firebase guarda solo el
-/// token de sesión; la contraseña nunca se guarda en el teléfono (RNF-01).
+/// [AuthRepositorio] con Firebase Authentication y Google. Firebase guarda
+/// solo el token de sesión; la contraseña nunca se guarda en el teléfono (RNF-01).
 class FirebaseAuthRepositorio implements AuthRepositorio {
-  FirebaseAuthRepositorio({FirebaseAuth? auth})
-    : _auth = auth ?? FirebaseAuth.instance;
+  FirebaseAuthRepositorio({FirebaseAuth? auth, GoogleSignIn? google})
+    : _auth = auth ?? FirebaseAuth.instance,
+      _google = google ?? GoogleSignIn.instance;
 
   final FirebaseAuth _auth;
+  final GoogleSignIn _google;
+  Future<void>? _googleListo;
 
   @override
   String? get uidActual => _auth.currentUser?.uid;
@@ -23,23 +27,79 @@ class FirebaseAuthRepositorio implements AuthRepositorio {
     required String correo,
     required String contrasena,
     required String nombre,
-  }) async {
+  }) => _traducir(() async {
+    final credencial = await _auth.createUserWithEmailAndPassword(
+      email: correo,
+      password: contrasena,
+    );
+    final usuario = credencial.user!;
+    await usuario.updateDisplayName(nombre);
+    return usuario.uid;
+  });
+
+  @override
+  Future<DatosAcceso> iniciarSesionConCorreo({
+    required String correo,
+    required String contrasena,
+  }) => _traducir(() async {
+    final credencial = await _auth.signInWithEmailAndPassword(
+      email: correo,
+      password: contrasena,
+    );
+    return _datos(credencial.user!);
+  });
+
+  @override
+  Future<DatosAcceso> iniciarSesionConGoogle() => _traducir(() async {
+    _googleListo ??= _google.initialize();
+    await _googleListo;
+    final GoogleSignInAccount cuenta;
     try {
-      final credencial = await _auth.createUserWithEmailAndPassword(
-        email: correo,
-        password: contrasena,
+      cuenta = await _google.authenticate();
+    } on GoogleSignInException catch (error) {
+      debugPrint('Google ${error.code}: ${error.description}');
+      throw ErrorAcceso(
+        error.code == GoogleSignInExceptionCode.canceled
+            ? ErrorAcceso.cancelado
+            : 'google-${error.code.name}',
       );
-      final usuario = credencial.user!;
-      await usuario.updateDisplayName(nombre);
-      return usuario.uid;
+    }
+    final credencial = await _auth.signInWithCredential(
+      GoogleAuthProvider.credential(idToken: cuenta.authentication.idToken),
+    );
+    return _datos(credencial.user!);
+  });
+
+  @override
+  Future<void> recuperarContrasena(String correo) =>
+      _traducir(() => _auth.sendPasswordResetEmail(email: correo));
+
+  @override
+  Future<void> cerrarSesion() async {
+    if (_googleListo != null) {
+      try {
+        await _google.signOut();
+      } catch (error) {
+        debugPrint('Google signOut: $error');
+      }
+    }
+    await _auth.signOut();
+  }
+
+  DatosAcceso _datos(User usuario) => DatosAcceso(
+    uid: usuario.uid,
+    nombre: usuario.displayName ?? '',
+    correo: usuario.email ?? '',
+  );
+
+  Future<T> _traducir<T>(Future<T> Function() accion) async {
+    try {
+      return await accion();
     } on FirebaseAuthException catch (error) {
       debugPrint('FirebaseAuth ${error.code}: ${error.message}');
       throw ErrorAcceso(codigoDeAcceso(error.code, error.message));
     }
   }
-
-  @override
-  Future<void> cerrarSesion() => _auth.signOut();
 }
 
 final RegExp _pareceSinSenal = RegExp(

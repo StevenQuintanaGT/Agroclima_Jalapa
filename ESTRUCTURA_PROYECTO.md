@@ -67,7 +67,8 @@ agroclima_jalapa/
 │   │   ├── clima_repositorio.dart           # caché primero
 │   │   ├── alertas_repositorio.dart
 │   │   ├── umbrales_repositorio.dart        # solo lectura
-│   │   └── historial_repositorio.dart       # condiciones pasadas por rango de fechas
+│   │   ├── historial_repositorio.dart       # condiciones pasadas por rango de fechas
+│   │   └── preferencias_locales_repositorio.dart # marcas del teléfono (bienvenida vista, permisos ofrecidos)
 │   │
 │   ├── servicios/                # lógica de negocio; no conocen widgets
 │   │   ├── cuenta_servicio.dart             # registro: cuenta + perfil + preferencias
@@ -97,6 +98,9 @@ agroclima_jalapa/
 │   │   ├── boton_principal.dart  # 60 dp de alto, ancho completo
 │   │   ├── boton_secundario.dart # 56 dp, neutro o destacado
 │   │   ├── campo_texto.dart      # etiqueta arriba, palomita si es válido, "Ver" en contraseñas
+│   │   ├── aviso_error.dart      # error general de formulario (ícono + color + palabras)
+│   │   ├── ilustracion_provisional.dart # recuadro punteado hasta tener las ilustraciones
+│   │   ├── logo_app.dart         # logotipo provisional
 │   │   ├── barra_progreso_pasos.dart
 │   │   ├── esqueleto_carga.dart
 │   │   ├── aviso_no_vigente.dart # banner "No hay internet"

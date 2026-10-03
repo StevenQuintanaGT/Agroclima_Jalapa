@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,6 +30,14 @@ class AgroClimaApp extends StatelessWidget {
       supportedLocales: const [Locale('es', 'GT'), Locale('es')],
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       routerConfig: enrutador,
+      // Íconos oscuros en la barra de estado sobre fondo claro; las pantallas
+      // con barra superior verde (AppBar) y el splash ponen los suyos.
+      builder: (context, hijo) => AnnotatedRegion<SystemUiOverlayStyle>(
+        value: modoTema == ThemeMode.dark
+            ? SystemUiOverlayStyle.light
+            : SystemUiOverlayStyle.dark,
+        child: hijo!,
+      ),
     );
   }
 }

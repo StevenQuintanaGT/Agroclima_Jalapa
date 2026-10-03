@@ -116,6 +116,7 @@ class Textos {
   static const String errorContrasenasDistintas =
       'Las dos contraseñas no son iguales.';
   static const String errorNombreVacio = 'Escriba su nombre.';
+  static const String errorContrasenaVacia = 'Escriba su contraseña.';
   static const String errorTelefono =
       'Escriba los 8 números de su teléfono, o déjelo vacío.';
   static const String errorTerminos =
@@ -133,4 +134,11 @@ class Textos {
   static const String errorMuchosIntentos =
       'Hubo muchos intentos. Espere un momento y vuelva a probar.';
   static const String errorGenerico = 'No se pudo completar. Intente de nuevo.';
+  static const String errorGoogle =
+      'No se pudo entrar con Google. Intente de nuevo o use su correo.';
+
+  // ---------- Sesión ----------
+  static const String cerrarSesion = 'Cerrar sesión';
+  static const String cerrandoSesion = 'Cerrando sesión…';
+  static const String enviandoEnlace = 'Enviando…';
 }
