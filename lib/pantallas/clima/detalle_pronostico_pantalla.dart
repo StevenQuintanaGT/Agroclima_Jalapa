@@ -90,7 +90,7 @@ class _SelectorDias extends StatelessWidget {
         itemBuilder: (context, i) {
           final dia = dias[i];
           final elegido = dia.fecha == vm.dia?.fecha;
-          final segunda = i == 0 ? Textos.hoy : Textos.diaCorto(dia.dia);
+          final segunda = dia.esHoy ? Textos.hoy : Textos.diaCorto(dia.dia);
           return Semantics(
             selected: elegido,
             button: true,

@@ -11,17 +11,31 @@ import '../../modelos/resultado.dart';
 import '../../modelos/resumen_dia.dart';
 import '../../repositorios/preferencias_locales_repositorio.dart';
 import '../../servicios/clima_servicio.dart';
+import '../../servicios/conectividad_servicio.dart';
 import '../../servicios/parcelas_servicio.dart';
 
 /// Panel principal (pantallas 17 y 18, HU-07): clima de la parcela elegida,
-/// con caché primero y aviso de "no vigente" (HU-15).
+/// con caché primero y aviso de "no vigente". Sin conexión muestra lo
+/// guardado y, al volver la señal o la app, se actualiza solo (HU-15).
 class PanelVm extends ChangeNotifier {
   PanelVm({
     required this._parcelas,
     required this._clima,
     required this._preferencias,
+    this._conectividad,
     DateTime Function()? reloj,
   }) : _reloj = reloj ?? DateTime.now {
+    final conectividad = _conectividad;
+    if (conectividad != null) {
+      conectividad.hayRed().then((hay) {
+        _enLinea = hay;
+        _avisar();
+      }, onError: (Object e) => debugPrint('Conectividad: $e'));
+      _suscripcionRed = conectividad.cambios.listen(
+        _alCambiarRed,
+        onError: (Object e) => debugPrint('Conectividad: $e'),
+      );
+    }
     _suscripcionParcelas = _parcelas.misParcelas().listen(
       _alCambiarParcelas,
       onError: (Object error) {
@@ -35,11 +49,13 @@ class PanelVm extends ChangeNotifier {
   final ParcelasServicio _parcelas;
   final ClimaServicio _clima;
   final PreferenciasLocalesRepositorio _preferencias;
+  final ConectividadServicio? _conectividad;
   final DateTime Function() _reloj;
 
   late final StreamSubscription<List<Parcela>> _suscripcionParcelas;
   StreamSubscription<Condicion?>? _suscripcionCondicion;
   StreamSubscription<List<PronosticoDia>>? _suscripcionDias;
+  StreamSubscription<bool>? _suscripcionRed;
   bool _descartado = false;
 
   /// Evita mostrar el clima de una parcela que ya no está elegida.
@@ -54,6 +70,7 @@ class PanelVm extends ChangeNotifier {
   Condicion? _condicionHoy;
   List<PronosticoDia> _dias = const [];
   bool _cargandoClima = false;
+  bool _enLinea = true;
 
   // ---------- Lectura ----------
   List<Parcela> get parcelas => _lista;
@@ -70,6 +87,9 @@ class PanelVm extends ChangeNotifier {
   Resultado<ClimaActual>? get actual => _actual;
   ClimaActual? get clima => _actual?.dato;
   bool get vigente => _actual?.vigente ?? false;
+
+  /// `false` si el teléfono no tiene ninguna red (banner de la pantalla 32).
+  bool get enLinea => _enLinea;
   List<FranjaPronostico> get franjas => _horas?.dato ?? const [];
   List<PronosticoDia> get proximosDias => _dias;
 
@@ -117,7 +137,25 @@ class PanelVm extends ChangeNotifier {
   /// guardado siga vigente.
   Future<void> actualizar() => _cargar(forzar: true);
 
+  /// La app vuelve a primer plano: se revisa la vigencia (caché primero; no
+  /// gasta consultas si el dato sigue vigente).
+  Future<void> alVolverALaApp() async {
+    if (_parcela != null && !_cargandoClima) await _cargar();
+  }
+
   // ---------- Interno ----------
+  void _alCambiarRed(bool hayRed) {
+    final volvio = hayRed && !_enLinea;
+    _enLinea = hayRed;
+    _avisar();
+    // Al volver la señal se actualiza solo lo que quedó vencido o con error.
+    final pendiente =
+        !vigente || _actual?.error != null || _horas?.vigente == false;
+    if (volvio && pendiente && _parcela != null && !_cargandoClima) {
+      _cargar();
+    }
+  }
+
   void _alCambiarParcelas(List<Parcela> lista) {
     _lista = lista;
     _cargandoParcelas = false;
@@ -192,6 +230,7 @@ class PanelVm extends ChangeNotifier {
     _suscripcionParcelas.cancel();
     _suscripcionCondicion?.cancel();
     _suscripcionDias?.cancel();
+    _suscripcionRed?.cancel();
     super.dispose();
   }
 }

@@ -23,6 +23,7 @@ import 'repositorios/usuario_repositorio.dart';
 import 'servicios/cuenta_servicio.dart';
 import 'servicios/busqueda_lugares_servicio.dart';
 import 'servicios/clima_servicio.dart';
+import 'servicios/conectividad_servicio.dart';
 import 'servicios/openweather_cliente.dart';
 import 'servicios/estado_sesion.dart';
 import 'servicios/notificaciones_servicio.dart';
@@ -74,6 +75,7 @@ Future<void> main() async {
         Provider(create: (_) => BusquedaLugaresServicio()),
         Provider<ClimaRepositorio>.value(value: clima),
         Provider(create: (_) => ClimaServicio(clima)),
+        Provider(create: (_) => ConectividadServicio()),
         ChangeNotifierProvider<EstadoSesion>.value(value: estadoSesion),
       ],
       child: AgroClimaApp(

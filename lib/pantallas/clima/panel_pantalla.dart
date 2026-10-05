@@ -80,50 +80,85 @@ class PanelPantalla extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = context.watch<PanelVm>();
     final parcela = vm.parcela;
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: parcela == null ? null : 72,
-        title: parcela == null
-            ? const Text(Textos.misParcelas)
-            : _Encabezado(
-                parcela: parcela,
-                alTocar: () => _elegirParcela(context, vm),
-              ),
-      ),
-      body: SafeArea(
-        child: switch (vm) {
-          PanelVm(cargandoParcelas: true) ||
-          PanelVm(cargandoClima: true) => const _Cargando(),
-          PanelVm(sinParcelas: true) => EstadoVacio(
-            icono: Symbols.agriculture,
-            titulo: Textos.vacioParcelasTitulo,
-            detalle: Textos.vacioParcelasDetalle,
-            ilustracion: const IlustracionProvisional(
+    return _AlVolverALaApp(
+      alVolver: vm.alVolverALaApp,
+      child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: parcela == null ? null : 72,
+          title: parcela == null
+              ? const Text(Textos.misParcelas)
+              : _Encabezado(
+                  parcela: parcela,
+                  alTocar: () => _elegirParcela(context, vm),
+                ),
+        ),
+        body: SafeArea(
+          child: switch (vm) {
+            PanelVm(cargandoParcelas: true) ||
+            PanelVm(cargandoClima: true) => const _Cargando(),
+            PanelVm(sinParcelas: true) => EstadoVacio(
               icono: Symbols.agriculture,
-              colorIcono: Colores.primario,
-              colorFondo: Colores.contenedorClaro,
-              colorBorde: Colores.bordeIlustracionVerde,
-              ancho: 190,
-              alto: 170,
+              titulo: Textos.vacioParcelasTitulo,
+              detalle: Textos.vacioParcelasDetalle,
+              ilustracion: const IlustracionProvisional(
+                icono: Symbols.agriculture,
+                colorIcono: Colores.primario,
+                colorFondo: Colores.contenedorClaro,
+                colorBorde: Colores.bordeIlustracionVerde,
+                ancho: 190,
+                alto: 170,
+              ),
+              accion: BotonPrincipal(
+                texto: Textos.registrarParcela,
+                icono: Symbols.add,
+                alPresionar: () => context.push(Rutas.nuevaParcela),
+              ),
             ),
-            accion: BotonPrincipal(
-              texto: Textos.registrarParcela,
-              icono: Symbols.add,
-              alPresionar: () => context.push(Rutas.nuevaParcela),
+            PanelVm(clima: null) => EstadoError(
+              titulo: Textos.sinDatosClimaTitulo,
+              detalle: Textos.causaErrorClima(
+                vm.actual?.error ?? MotivoErrorClima.servicioCaido,
+              ),
+              alReintentar: vm.actualizar,
             ),
-          ),
-          PanelVm(clima: null) => EstadoError(
-            titulo: Textos.sinDatosClimaTitulo,
-            detalle: Textos.causaErrorClima(
-              vm.actual?.error ?? MotivoErrorClima.servicioCaido,
-            ),
-            alReintentar: vm.actualizar,
-          ),
-          _ => _Contenido(vm: vm, clima: vm.clima!),
-        },
+            _ => _Contenido(vm: vm, clima: vm.clima!),
+          },
+        ),
       ),
     );
   }
+}
+
+/// Avisa cuando la app vuelve a primer plano (HU-15: revisar la vigencia).
+class _AlVolverALaApp extends StatefulWidget {
+  const _AlVolverALaApp({required this.alVolver, required this.child});
+
+  final VoidCallback alVolver;
+  final Widget child;
+
+  @override
+  State<_AlVolverALaApp> createState() => _AlVolverALaAppState();
+}
+
+class _AlVolverALaAppState extends State<_AlVolverALaApp> {
+  late final AppLifecycleListener _escucha = AppLifecycleListener(
+    onResume: () => widget.alVolver(),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _escucha;
+  }
+
+  @override
+  void dispose() {
+    _escucha.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }
 
 class _Encabezado extends StatelessWidget {
@@ -204,7 +239,10 @@ class _Contenido extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.only(bottom: Medidas.espacioM),
         children: [
-          if (sinInternet && !vm.vigente) const AvisoNoVigente(),
+          // Banner de la pantalla 32: sin red en el teléfono, o si la última
+          // consulta falló por falta de internet y el dato ya venció.
+          if (!vm.enLinea || (sinInternet && !vm.vigente))
+            const AvisoNoVigente(),
           Padding(
             padding: const EdgeInsets.fromLTRB(
               Medidas.margenPantalla,

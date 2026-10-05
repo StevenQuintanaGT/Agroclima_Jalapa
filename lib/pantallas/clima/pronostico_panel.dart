@@ -155,7 +155,7 @@ class ProximosDias extends StatelessWidget {
                 if (i > 0) const Divider(height: 1),
                 _FilaDia(
                   dia: dias[i],
-                  esHoy: i == 0,
+                  esHoy: dias[i].esHoy,
                   alTocar: () => alTocar(dias[i]),
                 ),
               ],

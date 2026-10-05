@@ -114,6 +114,7 @@ class ClimaServicio {
           if (dia.fecha.compareTo(idHoy) >= 0)
             _resumen(
               dia,
+              idHoy,
               franjas
                   .where((f) => Fechas.idDiario(f.fechaHora) == dia.fecha)
                   .toList(),
@@ -122,12 +123,13 @@ class ClimaServicio {
     }
     return [
       for (final dia in guardados)
-        if (dia.fecha.compareTo(idHoy) >= 0) _resumen(dia, const []),
+        if (dia.fecha.compareTo(idHoy) >= 0) _resumen(dia, idHoy, const []),
     ];
   }
 
   static ResumenDia _resumen(
     PronosticoDia dia,
+    String idHoy,
     List<FranjaPronostico> franjas,
   ) {
     final fecha = DateTime.utc(
@@ -144,6 +146,7 @@ class ClimaServicio {
       precipitacionHora: dia.precipitacionHora,
       velocidadViento: dia.velocidadViento,
       humedadRelativa: dia.humedadRelativa,
+      esHoy: dia.fecha == idHoy,
       codigoClima: franjas.isEmpty
           ? null
           : franjas
