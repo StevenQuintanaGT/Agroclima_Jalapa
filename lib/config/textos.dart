@@ -593,4 +593,47 @@ class Textos {
       '${palabraNivel(a.nivel)}. ${tituloAlerta(a)}. '
       '${parcelaYCultivo(a.parcelaNombre, a.cultivo)}. '
       '${cuandoAlerta(a, ahora)}.${a.leida ? '' : ' $nuevo.'}';
+
+  // ---------- Mis avisos (pantalla 23, HU-12) ----------
+  static const String misAvisos = 'Mis avisos';
+  static const String deQueAvisamos = '¿De qué le avisamos?';
+  static const String avisarmeDesde = 'Avisarme desde';
+  static const String noSonarDeNoche = 'No sonar de noche';
+  static const String peligroSiSuena = 'Los avisos de PELIGRO sí suenan';
+  static const String aunqueApague =
+      'Aunque apague un aviso, lo verá en Alertas.';
+  static const String loQueAguanta = 'Lo que aguanta su cultivo';
+  static const String loQueAguantaDetalle =
+      'Son los límites con que le avisamos. Vienen de estudios para cada '
+      'cultivo.';
+  static const String sinCultivoAguanta = 'Parcelas sin cultivo';
+
+  /// Nombre de cada tipo en el interruptor.
+  static String tipoAviso(TipoRiesgo tipo) => switch (tipo) {
+    TipoRiesgo.temperaturaBaja => 'Frío y helada',
+    TipoRiesgo.lluviaIntensa => 'Lluvia fuerte',
+    TipoRiesgo.sequia => 'Días sin lluvia',
+    TipoRiesgo.vientoFuerte => 'Viento fuerte',
+    TipoRiesgo.temperaturaAlta => 'Mucho calor',
+    TipoRiesgo.humedadAlta => 'Mucha humedad',
+  };
+
+  /// Opciones de "Avisarme desde".
+  static String nivelMinimo(NivelSeveridad nivel) => switch (nivel) {
+    NivelSeveridad.informativa => 'Todo',
+    NivelSeveridad.preventiva => 'Precaución',
+    NivelSeveridad.critica => 'Solo peligro',
+  };
+
+  /// "De 10:00 p.m. a 5:00 a.m." (horas `HH:mm` de la base).
+  static String horarioSilencio(String desde, String hasta) =>
+      'De ${_horaDe(desde)} a ${_horaDe(hasta)}';
+
+  static String _horaDe(String hhmm) {
+    final partes = hhmm.split(':');
+    final hora = int.tryParse(partes.first) ?? 0;
+    final minutos = partes.length > 1 ? partes[1] : '00';
+    final h = hora % 12 == 0 ? 12 : hora % 12;
+    return '$h:$minutos ${hora < 12 ? 'a.m.' : 'p.m.'}';
+  }
 }

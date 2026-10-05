@@ -27,6 +27,7 @@ import 'repositorios/preferencias_locales_repositorio.dart';
 import 'repositorios/shared_preferences_locales_repositorio.dart';
 import 'repositorios/usuario_repositorio.dart';
 import 'servicios/alertas_servicio.dart';
+import 'servicios/avisos_servicio.dart';
 import 'servicios/compartir_servicio.dart';
 import 'servicios/cuenta_servicio.dart';
 import 'servicios/busqueda_lugares_servicio.dart';
@@ -99,6 +100,13 @@ Future<void> main() async {
           ),
         ),
         Provider(create: (_) => CompartirServicio()),
+        Provider(
+          create: (context) => AvisosServicio(
+            usuarios: usuarios,
+            auth: auth,
+            umbrales: context.read<UmbralesRepositorio>(),
+          ),
+        ),
         ChangeNotifierProvider<EstadoSesion>.value(value: estadoSesion),
       ],
       child: AgroClimaApp(

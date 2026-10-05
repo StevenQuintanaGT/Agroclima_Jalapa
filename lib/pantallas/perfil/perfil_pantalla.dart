@@ -11,7 +11,7 @@ import '../shell/pantalla_en_construccion.dart';
 import 'perfil_vm.dart';
 
 /// Pantalla 28 · Perfil (provisional): mientras se construye, lleva a "Mis
-/// parcelas" (HU-06) y ofrece "Cerrar sesión" para cambiar de cuenta (HU-02).
+/// parcelas" (HU-06) y a "Mis avisos" (HU-12) y ofrece "Cerrar sesión" para cambiar de cuenta (HU-02).
 class PerfilPantalla extends StatelessWidget {
   const PerfilPantalla({super.key});
 
@@ -27,6 +27,12 @@ class PerfilPantalla extends StatelessWidget {
             texto: Textos.misParcelas,
             icono: Symbols.agriculture,
             alPresionar: () => context.push(Rutas.misParcelas),
+          ),
+          const SizedBox(height: Medidas.espacioXs),
+          BotonSecundario(
+            texto: Textos.misAvisos,
+            icono: Symbols.notifications_active,
+            alPresionar: () => context.push(Rutas.misAvisos),
           ),
           const SizedBox(height: Medidas.espacioXs),
           BotonSecundario(

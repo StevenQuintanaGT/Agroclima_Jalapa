@@ -10,6 +10,8 @@ import '../pantallas/alertas/centro_alertas_vm.dart';
 import '../pantallas/alertas/contador_avisos.dart';
 import '../pantallas/alertas/detalle_alerta_pantalla.dart';
 import '../pantallas/alertas/detalle_alerta_vm.dart';
+import '../pantallas/alertas/mis_avisos_pantalla.dart';
+import '../pantallas/alertas/mis_avisos_vm.dart';
 import '../pantallas/acceso/bienvenida_vm.dart';
 import '../pantallas/acceso/inicio_sesion_pantalla.dart';
 import '../pantallas/acceso/inicio_sesion_vm.dart';
@@ -37,6 +39,7 @@ import '../pantallas/shell/pantalla_en_construccion.dart';
 import '../pantallas/shell/shell_pantalla.dart';
 import '../repositorios/preferencias_locales_repositorio.dart';
 import '../servicios/alertas_servicio.dart';
+import '../servicios/avisos_servicio.dart';
 import '../servicios/busqueda_lugares_servicio.dart';
 import '../servicios/clima_servicio.dart';
 import '../servicios/compartir_servicio.dart';
@@ -67,6 +70,7 @@ class Rutas {
   static const String reportes = '/reportes';
   static const String perfil = '/perfil';
   static const String misParcelas = '/perfil/parcelas';
+  static const String misAvisos = '/perfil/avisos';
 
   /// Detalle y edición van fuera de la barra inferior (pantalla 15).
   static String detalleParcela(String parcelaId) => '/parcelas/$parcelaId';
@@ -325,6 +329,16 @@ GoRouter crearEnrutador({
                       create: (context) =>
                           MisParcelasVm(context.read<ParcelasServicio>()),
                       child: const MisParcelasPantalla(),
+                    ),
+                  ),
+                  GoRoute(
+                    path: 'avisos',
+                    builder: (context, estado) => ChangeNotifierProvider(
+                      create: (context) => MisAvisosVm(
+                        avisos: context.read<AvisosServicio>(),
+                        parcelas: context.read<ParcelasServicio>(),
+                      ),
+                      child: const MisAvisosPantalla(),
                     ),
                   ),
                 ],

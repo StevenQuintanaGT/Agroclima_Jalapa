@@ -19,9 +19,31 @@ class PreferenciaAlerta {
   final bool activa;
   final NivelSeveridad nivelMinimo;
 
-  /// Hora local `HH:mm` sin avisos (salvo PELIGRO).
+  /// Hora local `HH:mm` sin avisos (salvo PELIGRO). Vacías = sin silencio
+  /// (el ciclo las lee igual, `functions/src/notificaciones.js`).
   final String silencioDesde;
   final String silencioHasta;
+
+  static const String silencioDesdePorDefecto = '22:00';
+  static const String silencioHastaPorDefecto = '05:00';
+
+  bool get silencioActivo =>
+      silencioDesde.isNotEmpty &&
+      silencioHasta.isNotEmpty &&
+      silencioDesde != silencioHasta;
+
+  PreferenciaAlerta copyWith({
+    bool? activa,
+    NivelSeveridad? nivelMinimo,
+    String? silencioDesde,
+    String? silencioHasta,
+  }) => PreferenciaAlerta(
+    tipoRiesgo: tipoRiesgo,
+    activa: activa ?? this.activa,
+    nivelMinimo: nivelMinimo ?? this.nivelMinimo,
+    silencioDesde: silencioDesde ?? this.silencioDesde,
+    silencioHasta: silencioHasta ?? this.silencioHasta,
+  );
 
   Map<String, dynamic> toMap() => {
     'tipoRiesgo': tipoRiesgo.valor,

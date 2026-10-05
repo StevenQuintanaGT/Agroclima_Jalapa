@@ -1,3 +1,4 @@
+import '../modelos/preferencia_alerta.dart';
 import '../modelos/usuario.dart';
 
 /// Contrato del perfil del productor y sus preferencias de avisos.
@@ -16,6 +17,14 @@ abstract class UsuarioRepositorio {
 
   /// Quita el token al cerrar sesión: este teléfono deja de recibir avisos.
   Future<void> quitarTokenAvisos(String uid, String token);
+
+  /// Preferencias de avisos en vivo (`usuarios/{uid}/preferencias`, Tabla 65).
+  /// Sin señal, la copia del teléfono.
+  Stream<List<PreferenciaAlerta>> observarPreferencias(String uid);
+
+  /// Guarda varias preferencias juntas. Sin señal queda en el teléfono y se
+  /// sube sola; el ciclo la usa en su siguiente vuelta.
+  Future<void> guardarPreferencias(String uid, List<PreferenciaAlerta> lista);
 
   /// Borra la copia local de los datos al cerrar sesión (MODELO_DATOS §7).
   Future<void> borrarDatosLocales();

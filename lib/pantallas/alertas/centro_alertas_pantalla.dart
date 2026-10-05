@@ -31,6 +31,13 @@ class CentroAlertasPantalla extends StatelessWidget {
             Textos.avisos,
             style: Tipografia.titulo.copyWith(color: Colors.white),
           ),
+          actions: [
+            IconButton(
+              tooltip: Textos.misAvisos,
+              icon: const Icon(Symbols.tune),
+              onPressed: () => context.push(Rutas.misAvisos),
+            ),
+          ],
           bottom: TabBar(
             isScrollable: true,
             tabAlignment: TabAlignment.start,
