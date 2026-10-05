@@ -38,7 +38,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 - [x] **HT-04** Evaluación periódica (reglas por tipo de riesgo, con pruebas)
 - [x] **HU-10** Notificación por riesgo climático (duplicados, preferencias, silencio, FCM)
 - [x] **HU-11** Centro de alertas y detalle
-- [ ] **HU-12** Preferencias por tipo de alerta ("Mis avisos")
+- [x] **HU-12** Preferencias por tipo de alerta ("Mis avisos")
 
 ## Etapa 5 — Mapa e historial · `plans/03` §7, `plans/05`
 - [ ] **HU-09** Capas del clima en el mapa

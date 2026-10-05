@@ -83,6 +83,7 @@ agroclima_jalapa/
 │   │   ├── notificaciones_servicio.dart     # FCM: permiso, token, canales, abrir detalle
 │   │   ├── alertas_servicio.dart            # activas/anteriores, orden por nivel, sin repetir, sin leer
 │   │   ├── compartir_servicio.dart          # menú de compartir (WhatsApp) con share_plus
+│   │   ├── avisos_servicio.dart             # "Mis avisos": preferencias y lo que aguanta el cultivo
 │   │   ├── ubicacion_servicio.dart          # geolocator + permisos
 │   │   └── reportes_servicio.dart           # resumen por período + PDF
 │   │

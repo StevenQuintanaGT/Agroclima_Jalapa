@@ -65,6 +65,36 @@ class FirestoreUsuarioRepositorio implements UsuarioRepositorio {
           .timeout(esperaConfirmacion, onTimeout: () {});
 
   @override
+  Stream<List<PreferenciaAlerta>> observarPreferencias(String uid) =>
+      _perfil(uid)
+          .collection('preferencias')
+          .snapshots()
+          .map(
+            (consulta) => [
+              for (final doc in consulta.docs)
+                if (TipoRiesgo.desdeValor(doc.id) != null)
+                  PreferenciaAlerta.fromMap({
+                    ...doc.data(),
+                    'tipoRiesgo': doc.id,
+                  }),
+            ],
+          );
+
+  @override
+  Future<void> guardarPreferencias(String uid, List<PreferenciaAlerta> lista) {
+    final lote = _db.batch();
+    for (final preferencia in lista) {
+      lote.set(
+        _perfil(uid)
+            .collection('preferencias')
+            .doc(preferencia.tipoRiesgo.valor),
+        preferencia.toMap(),
+      );
+    }
+    return lote.commit().timeout(esperaConfirmacion, onTimeout: () {});
+  }
+
+  @override
   Future<void> borrarDatosLocales() async {
     await _db.terminate();
     await _db.clearPersistence();
