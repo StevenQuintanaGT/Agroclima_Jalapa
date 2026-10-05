@@ -65,7 +65,7 @@ agroclima_jalapa/
 │   │   ├── usuario_repositorio.dart         # perfil, preferencias, tokens FCM
 │   │   ├── parcelas_repositorio.dart
 │   │   ├── clima_repositorio.dart           # caché primero
-│   │   ├── alertas_repositorio.dart
+│   │   ├── alertas_repositorio.dart         # + firestore_alertas_repositorio.dart (solo leida/atendida)
 │   │   ├── umbrales_repositorio.dart        # solo lectura
 │   │   ├── historial_repositorio.dart       # condiciones pasadas por rango de fechas
 │   │   └── preferencias_locales_repositorio.dart # marcas del teléfono (bienvenida vista, permisos ofrecidos)
@@ -81,6 +81,8 @@ agroclima_jalapa/
 │   │   ├── vigencia_servicio.dart           # ¿el dato guardado sigue vigente?
 │   │   ├── conectividad_servicio.dart       # estado y cambios de conexión
 │   │   ├── notificaciones_servicio.dart     # FCM: permiso, token, canales, abrir detalle
+│   │   ├── alertas_servicio.dart            # activas/anteriores, orden por nivel, sin repetir, sin leer
+│   │   ├── compartir_servicio.dart          # menú de compartir (WhatsApp) con share_plus
 │   │   ├── ubicacion_servicio.dart          # geolocator + permisos
 │   │   └── reportes_servicio.dart           # resumen por período + PDF
 │   │
@@ -89,13 +91,15 @@ agroclima_jalapa/
 │   │   │                         #         recuperar_contrasena, permiso_ubicacion, permiso_notificaciones
 │   │   ├── parcelas/             # MOD-02: registro_parcela (4 pasos), mis_parcelas, detalle_parcela
 │   │   ├── clima/                # MOD-03: panel_principal, detalle_pronostico, mapa_clima
-│   │   ├── alertas/              # MOD-04: centro_alertas, detalle_alerta, mis_avisos, apertura_alertas (abrir desde el aviso)
+│   │   ├── alertas/              # MOD-04: centro_alertas, detalle_alerta, tarjeta_alerta, mis_avisos,
+│   │   │                         #         apertura_alertas (abrir desde el aviso), contador_avisos (distintivo)
 │   │   ├── reportes/             # MOD-05: reportes, historial, exportar_reporte
 │   │   ├── perfil/               # perfil, ajustes, ayuda_glosario, acerca_de
 │   │   └── shell/                # contenedor con la barra inferior de 5 destinos + pantalla_en_construccion
 │   │
 │   ├── componentes/              # CO-18 transversales, reutilizables
 │   │   ├── chip_semaforo.dart    # color + ícono + palabra, siempre juntos
+│   │   ├── icono_riesgo.dart     # ícono de cada tipo de riesgo
 │   │   ├── tarjeta_metrica.dart
 │   │   ├── boton_principal.dart  # 60 dp de alto, ancho completo
 │   │   ├── boton_secundario.dart # 56 dp, neutro o destacado

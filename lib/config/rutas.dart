@@ -5,6 +5,11 @@ import 'package:provider/provider.dart';
 
 import '../pantallas/acceso/bienvenida_pantalla.dart';
 import '../pantallas/alertas/apertura_alertas.dart';
+import '../pantallas/alertas/centro_alertas_pantalla.dart';
+import '../pantallas/alertas/centro_alertas_vm.dart';
+import '../pantallas/alertas/contador_avisos.dart';
+import '../pantallas/alertas/detalle_alerta_pantalla.dart';
+import '../pantallas/alertas/detalle_alerta_vm.dart';
 import '../pantallas/acceso/bienvenida_vm.dart';
 import '../pantallas/acceso/inicio_sesion_pantalla.dart';
 import '../pantallas/acceso/inicio_sesion_vm.dart';
@@ -31,8 +36,10 @@ import '../pantallas/perfil/perfil_vm.dart';
 import '../pantallas/shell/pantalla_en_construccion.dart';
 import '../pantallas/shell/shell_pantalla.dart';
 import '../repositorios/preferencias_locales_repositorio.dart';
+import '../servicios/alertas_servicio.dart';
 import '../servicios/busqueda_lugares_servicio.dart';
 import '../servicios/clima_servicio.dart';
+import '../servicios/compartir_servicio.dart';
 import '../servicios/conectividad_servicio.dart';
 import '../servicios/cuenta_servicio.dart';
 import '../servicios/notificaciones_servicio.dart';
@@ -251,15 +258,26 @@ GoRouter crearEnrutador({
           child: const DetallePronosticoPantalla(),
         ),
       ),
-      // Detalle de alerta: lo completa HU-11.
+      // Detalle de alerta (22): fuera de la barra, como lo abre la notificación.
       GoRoute(
         path: '/alertas/:alertaId',
-        builder: (context, estado) =>
-            const PantallaEnConstruccion(titulo: Textos.detalleAlerta),
+        builder: (context, estado) => ChangeNotifierProvider(
+          create: (context) => DetalleAlertaVm(
+            alertas: context.read<AlertasServicio>(),
+            parcelas: context.read<ParcelasServicio>(),
+            compartir: context.read<CompartirServicio>(),
+            alertaId: estado.pathParameters['alertaId']!,
+          ),
+          child: const DetalleAlertaPantalla(),
+        ),
       ),
       StatefulShellRoute.indexedStack(
-        builder: (context, estado, navegacion) =>
-            AperturaAlertas(child: ShellPantalla(navegacion: navegacion)),
+        builder: (context, estado, navegacion) => AperturaAlertas(
+          child: ContadorAvisos(
+            builder: (context, sinLeer) =>
+                ShellPantalla(navegacion: navegacion, alertasNoLeidas: sinLeer),
+          ),
+        ),
         branches: [
           // Inicio: panel del clima; sin parcelas, el estado vacío (16).
           StatefulShellBranch(
@@ -279,7 +297,18 @@ GoRouter crearEnrutador({
             ],
           ),
           _rama(Rutas.mapa, Textos.navMapa),
-          _rama(Rutas.alertas, Textos.navAlertas),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Rutas.alertas,
+                builder: (context, estado) => ChangeNotifierProvider(
+                  create: (context) =>
+                      CentroAlertasVm(context.read<AlertasServicio>()),
+                  child: const CentroAlertasPantalla(),
+                ),
+              ),
+            ],
+          ),
           _rama(Rutas.reportes, Textos.navReportes),
           StatefulShellBranch(
             routes: [

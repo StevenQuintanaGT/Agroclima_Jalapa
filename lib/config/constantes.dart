@@ -28,4 +28,8 @@ class Constantes {
   // Validaciones de cuenta y parcela (VA-02, VA-05).
   static const int largoMinimoContrasena = 8;
   static const int largoMaximoNombreParcela = 40;
+
+  // Centro de alertas (HU-11): las más recientes. El historial completo
+  // por período es de HU-14.
+  static const int alertasEnLista = 100;
 }

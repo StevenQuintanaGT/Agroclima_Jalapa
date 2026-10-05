@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 
+import '../modelos/alerta.dart';
 import '../modelos/enums.dart';
 import '../modelos/error_clima.dart';
 
@@ -433,5 +434,163 @@ class Textos {
   static const String canalNormal = 'Avisos normales';
   static const String canalNormalDetalle =
       'Información del clima de sus parcelas.';
-  static const String detalleAlerta = 'Aviso';
+
+  // ---------- Centro y detalle de alertas (pantallas 21, 22 y 35, HU-11) ----------
+  static const String avisos = 'Avisos';
+  static const String activos = 'Activos';
+  static const String anteriores = 'Anteriores';
+  static String sinLeer(int n) =>
+      n == 1 ? '1 aviso sin ver' : '$n avisos sin ver';
+  static const String nuevo = 'Nuevo';
+  static const String todoTranquilo = 'Todo tranquilo';
+  static const String todoTranquiloDetalle =
+      'No hay peligro para sus parcelas en los próximos días. Le avisamos si '
+      'algo cambia.';
+  static const String sinAnteriores = 'Todavía no hay avisos anteriores';
+  static const String sinAnterioresDetalle =
+      'Aquí quedan los avisos de días que ya pasaron.';
+  static const String alertaNoEsta = 'Este aviso ya no está';
+  static const String alertaNoEstaDetalle =
+      'Puede que la parcela se haya borrado. Vea sus otros avisos.';
+  static const String verAvisos = 'Ver mis avisos';
+  static const String porQueAvisamos = 'Por qué le avisamos';
+  static const String quePuedeHacer = 'Qué puede hacer hoy';
+  static const String yaTomeMedidas = 'Ya tomé medidas';
+  static const String yaTomoMedidas = 'Ya tomó medidas';
+  static const String avisarWhatsApp = 'Avisar por WhatsApp';
+
+  /// Riesgo en pocas palabras: "Puede caer helada", "Viento fuerte".
+  static String tituloAlerta(Alerta a) => a.esHelada
+      ? 'Puede caer helada'
+      : switch (a.tipoRiesgo) {
+          TipoRiesgo.lluviaIntensa => 'Lluvia fuerte',
+          TipoRiesgo.vientoFuerte => 'Viento fuerte',
+          TipoRiesgo.sequia => 'Días sin lluvia',
+          TipoRiesgo.temperaturaBaja => 'Frío',
+          TipoRiesgo.temperaturaAlta => 'Mucho calor',
+          TipoRiesgo.humedadAlta => 'Mucha humedad',
+        };
+
+  /// "La Joya · Café" (tarjeta) o "La Joya · Café floreando" (detalle).
+  static String parcelaYCultivo(String parcela, Cultivo? c, [Etapa? e]) {
+    if (c == null) return parcela;
+    final etapaTexto = e == null ? '' : ' ${etapa(e).toLowerCase()}';
+    return '$parcela · ${cultivo(c)}$etapaTexto';
+  }
+
+  /// Cuándo pasa, en lenguaje hablado: "Mañana en la madrugada", "Hoy",
+  /// "El jueves por la tarde", "A partir del viernes". La alerta es por día
+  /// (D-48): la parte del día sale del tipo de riesgo (el frío es de
+  /// madrugada y el calor de tarde).
+  static String cuandoAlerta(Alerta a, DateTime ahora) {
+    final evento = _diaRelativo(a.fechaEvento, ahora);
+    if (a.tipoRiesgo == TipoRiesgo.sequia) {
+      return evento.pasado
+          ? 'Desde el ${evento.fecha}'
+          : 'A partir ${evento.desde}';
+    }
+    final parte = switch (a.tipoRiesgo) {
+      TipoRiesgo.temperaturaBaja => ' en la madrugada',
+      TipoRiesgo.temperaturaAlta => ' por la tarde',
+      _ => '',
+    };
+    final seguidos = (a.diasConsecutivos ?? 1) > 1
+        ? ' · ${a.diasConsecutivos} días seguidos'
+        : '';
+    return '${_mayuscula(evento.texto)}$parte$seguidos';
+  }
+
+  /// Día del evento respecto de hoy, en hora de Guatemala.
+  static ({String texto, String desde, String fecha, bool pasado}) _diaRelativo(
+    DateTime fechaEvento,
+    DateTime ahora,
+  ) {
+    final local = fechaEvento.toUtc().add(const Duration(hours: -6));
+    final dia = DateTime.utc(local.year, local.month, local.day);
+    final ahoraLocal = ahora.toUtc().add(const Duration(hours: -6));
+    final hoy = DateTime.utc(ahoraLocal.year, ahoraLocal.month, ahoraLocal.day);
+    final diferencia = dia.difference(hoy).inDays;
+    final semana = DateFormat('EEEE', 'es').format(dia);
+    final fecha = '$semana ${DateFormat("d 'de' MMMM", 'es').format(dia)}';
+    return switch (diferencia) {
+      0 => (texto: 'hoy', desde: 'de hoy', fecha: fecha, pasado: false),
+      1 => (texto: 'mañana', desde: 'de mañana', fecha: fecha, pasado: false),
+      > 1 && < 7 => (
+        texto: 'el $semana',
+        desde: 'del $semana',
+        fecha: fecha,
+        pasado: false,
+      ),
+      _ => (
+        texto: 'el $fecha',
+        desde: 'del $fecha',
+        fecha: fecha,
+        pasado: diferencia < 0,
+      ),
+    };
+  }
+
+  static String _mayuscula(String texto) =>
+      texto.isEmpty ? texto : texto[0].toUpperCase() + texto.substring(1);
+
+  /// Valor con su unidad: "2 °C", "20 mm por hora", "7 días".
+  static String valorAlerta(TipoRiesgo tipo, double valor) {
+    final n = valor.round();
+    return switch (tipo) {
+      TipoRiesgo.temperaturaBaja || TipoRiesgo.temperaturaAlta => '$n °C',
+      TipoRiesgo.lluviaIntensa => '$n mm por hora',
+      TipoRiesgo.vientoFuerte => '$n km/h',
+      TipoRiesgo.humedadAlta => '$n %',
+      TipoRiesgo.sequia => n == 1 ? '1 día' : '$n días',
+    };
+  }
+
+  static String seEspera(TipoRiesgo tipo) =>
+      tipo == TipoRiesgo.sequia ? 'Se esperan' : 'Se espera';
+
+  /// "El café aguanta hasta" (D-14: el valor es el del umbral real).
+  static String aguanta(Cultivo? c, TipoRiesgo tipo) {
+    final hasta = tipo == TipoRiesgo.sequia ? '' : ' hasta';
+    return switch (c) {
+      Cultivo.maiz => 'El maíz aguanta$hasta',
+      Cultivo.frijol => 'El frijol aguanta$hasta',
+      Cultivo.cafe => 'El café aguanta$hasta',
+      Cultivo.hortalizas => 'Las hortalizas aguantan$hasta',
+      null => 'Lo seguro es$hasta',
+    };
+  }
+
+  /// Frase de la comparación: "Va a estar 2 grados más frío de lo que
+  /// aguanta su cultivo."
+  static String diferenciaAlerta(Alerta a) {
+    final limite = a.cultivo == null
+        ? 'de lo seguro'
+        : 'de lo que aguanta su cultivo';
+    final d = (a.valorEsperado - a.valorUmbral).abs().round();
+    if (d == 0) return 'Va a llegar al límite $limite.';
+    final grados = d == 1 ? 'grado' : 'grados';
+    return switch (a.tipoRiesgo) {
+      TipoRiesgo.temperaturaBaja => 'Va a estar $d $grados más frío $limite.',
+      TipoRiesgo.temperaturaAlta =>
+        'Va a estar $d $grados más caliente $limite.',
+      TipoRiesgo.lluviaIntensa => 'Va a llover $d mm por hora más $limite.',
+      TipoRiesgo.vientoFuerte => 'El viento va a soplar $d km/h más $limite.',
+      TipoRiesgo.humedadAlta => 'La humedad va a estar $d % más alta $limite.',
+      TipoRiesgo.sequia =>
+        'Van a ser $d ${d == 1 ? 'día' : 'días'} más sin lluvia $limite.',
+    };
+  }
+
+  /// Texto para compartir por WhatsApp (RN-07: información de apoyo). El
+  /// mensaje ya dice cuándo pasa.
+  static String textoCompartir(Alerta a) =>
+      '${palabraNivel(a.nivel)}: ${tituloAlerta(a).toLowerCase()} en '
+      '${a.parcelaNombre}. ${a.mensaje}\n\n'
+      'Aviso de $nombreApp. $avisoApoyo';
+
+  /// Lectura de la tarjeta para TalkBack.
+  static String lecturaTarjetaAlerta(Alerta a, DateTime ahora) =>
+      '${palabraNivel(a.nivel)}. ${tituloAlerta(a)}. '
+      '${parcelaYCultivo(a.parcelaNombre, a.cultivo)}. '
+      '${cuandoAlerta(a, ahora)}.${a.leida ? '' : ' $nuevo.'}';
 }
