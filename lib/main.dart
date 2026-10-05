@@ -11,7 +11,9 @@ import 'package:provider/provider.dart';
 import 'app.dart';
 import 'config/entorno.dart';
 import 'config/rutas.dart';
+import 'repositorios/alertas_repositorio.dart';
 import 'repositorios/auth_repositorio.dart';
+import 'repositorios/firestore_alertas_repositorio.dart';
 import 'repositorios/firebase_auth_repositorio.dart';
 import 'repositorios/firestore_parcelas_repositorio.dart';
 import 'repositorios/firestore_umbrales_repositorio.dart';
@@ -24,6 +26,8 @@ import 'repositorios/umbrales_repositorio.dart';
 import 'repositorios/preferencias_locales_repositorio.dart';
 import 'repositorios/shared_preferences_locales_repositorio.dart';
 import 'repositorios/usuario_repositorio.dart';
+import 'servicios/alertas_servicio.dart';
+import 'servicios/compartir_servicio.dart';
 import 'servicios/cuenta_servicio.dart';
 import 'servicios/busqueda_lugares_servicio.dart';
 import 'servicios/clima_servicio.dart';
@@ -85,6 +89,16 @@ Future<void> main() async {
         ),
         Provider(create: (_) => ClimaServicio(clima)),
         Provider(create: (_) => ConectividadServicio()),
+        Provider<AlertasRepositorio>(
+          create: (_) => FirestoreAlertasRepositorio(),
+        ),
+        Provider(
+          create: (context) => AlertasServicio(
+            repositorio: context.read<AlertasRepositorio>(),
+            auth: auth,
+          ),
+        ),
+        Provider(create: (_) => CompartirServicio()),
         ChangeNotifierProvider<EstadoSesion>.value(value: estadoSesion),
       ],
       child: AgroClimaApp(
