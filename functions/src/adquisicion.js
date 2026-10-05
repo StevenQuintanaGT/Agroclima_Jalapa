@@ -7,7 +7,9 @@
  *    centro de la celda (2 llamadas por celda);
  * 3. si la celda falla, la registra y sigue con la siguiente;
  * 4. escribe en todas las parcelas de la celda `condiciones/{hoy}` (con la
- *    lluvia del día, D-40) y `pronosticos/{fecha}` de hoy + 4 días.
+ *    lluvia del día, D-40) y `pronosticos/{fecha}` de hoy + 4 días;
+ * 5. devuelve lo escrito por celda para que el motor lo evalúe sin leerlo de
+ *    nuevo (HT-04). Las celdas que fallaron no se evalúan (§4.7.2).
  */
 const { FieldValue, Timestamp } = require('firebase-admin/firestore');
 const { TAMANO_CELDA_GRADOS, PAUSA_ENTRE_CELDAS_MS } = require('./config');
@@ -33,7 +35,9 @@ function centroDeCelda(celda) {
  * @param {(ms: number) => Promise<void>} [opciones.esperar] pausa entre celdas (cuota 60/min)
  * @param {(mensaje: string) => void} [opciones.registrar]
  * @returns {Promise<{celdas: number, llamadas: number, parcelas: number,
- *   fallidas: Array<{celda: string, motivo: string}>, actualizadas: string[]}>}
+ *   fallidas: Array<{celda: string, motivo: string}>, actualizadas: string[],
+ *   celdasActualizadas: Array<{celda: string, parcelas: Array<object>,
+ *   pronosticos: Array<object>, lluviaHoy: number}>}>}
  */
 async function adquirirClima({
   db,
@@ -48,10 +52,10 @@ async function adquirirClima({
     const celda = doc.get('celdaClima');
     if (!celda) continue;
     if (!porCelda.has(celda)) porCelda.set(celda, []);
-    porCelda.get(celda).push(doc.ref);
+    porCelda.get(celda).push(doc);
   }
 
-  const resumen = { celdas: porCelda.size, llamadas: 0, parcelas: 0, fallidas: [], actualizadas: [] };
+  const resumen = { celdas: porCelda.size, llamadas: 0, parcelas: 0, fallidas: [], actualizadas: [], celdasActualizadas: [] };
   let primera = true;
   for (const [celda, parcelas] of porCelda) {
     if (!primera) await esperar(PAUSA_ENTRE_CELDAS_MS);
@@ -74,9 +78,16 @@ async function adquirirClima({
       registrar(`Celda ${celda}: sin datos (${error.motivo ?? error.message})`);
       continue;
     }
-    await guardarCelda({ db, parcelas, actual, franjas, ahora });
+    const refs = parcelas.map((doc) => doc.ref);
+    const { dias, lluviaHoy } = await guardarCelda({ db, parcelas: refs, actual, franjas, ahora });
     resumen.parcelas += parcelas.length;
-    resumen.actualizadas.push(...parcelas.map((ref) => ref.id));
+    resumen.actualizadas.push(...refs.map((ref) => ref.id));
+    resumen.celdasActualizadas.push({
+      celda,
+      parcelas: parcelas.map((doc) => ({ ...doc.data(), parcelaId: doc.id })),
+      pronosticos: dias,
+      lluviaHoy,
+    });
   }
   registrar(
     `Clima: ${resumen.celdas} celdas, ${resumen.llamadas} llamadas, ` +
@@ -158,6 +169,10 @@ async function guardarCelda({ db, parcelas, actual, franjas, ahora }) {
     }
   }
   await lote.close();
+
+  // Lluvia de hoy completa: lo que ya cayó más lo que falta según el pronóstico.
+  const pendiente = Object.values(lluviaPrevista ?? {}).reduce((a, b) => a + b, 0);
+  return { dias, lluviaHoy: Math.round((cuentaHoy.precipitacion + pendiente) * 100) / 100 };
 }
 
 module.exports = { adquirirClima, centroDeCelda };

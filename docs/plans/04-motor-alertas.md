@@ -15,16 +15,16 @@ Referencia completa del algoritmo: `docs/UMBRALES.md`.
 - **Teléfono** (`lib/pantallas/alertas/`): CO-14 centro de alertas y detalle, CO-15 preferencias.
 
 ## HT-03 — Catálogo
-- [ ] `functions/seed/umbrales.json` = `UMBRALES.md` §2; script `sembrar-umbrales.js` idempotente (usa `umbralId` como id).
-- [ ] `UmbralesRepositorio` en la app (solo lectura) para mostrar "lo que aguanta el cultivo" en el detalle.
-- [ ] Prueba: agregar un umbral nuevo en Firestore y verificar que el motor lo usa sin redeploy (RNF-19).
+- [x] `functions/seed/umbrales.json` = `UMBRALES.md` §2; script `sembrar-umbrales.js` idempotente (usa `umbralId` como id).
+- [x] `UmbralesRepositorio` en la app (solo lectura) para mostrar "lo que aguanta el cultivo" en el detalle.
+- [x] Prueba: agregar un umbral nuevo en Firestore y verificar que el motor lo usa sin redeploy (RNF-19).
 
 ## HT-04 — Evaluación (CMP-09)
-- [ ] `motor/evaluador.js`: recibe parcela, pronósticos (5 días), historial de condiciones (últimos 20 días
+- [x] `motor/evaluador.js`: recibe parcela, pronósticos (5 días), historial de condiciones (últimos 20 días
       para sequía) y umbrales; aplica filtros de `UMBRALES.md` §3 y reglas §4.
-- [ ] Una regla por `tipoRiesgo` en `motor/reglas/` (Estrategia): agregar un criterio no toca las demás.
-- [ ] Se ejecuta al final de `adquirirClima` para las parcelas actualizadas. Catálogo leído una vez por ciclo.
-- [ ] Pruebas jest con casos de la Tabla 31: café con 3 días > 30 °C → crítica; maíz en floración con
+- [x] Una regla por `tipoRiesgo` en `motor/reglas/` (Estrategia): agregar un criterio no toca las demás.
+- [x] Se ejecuta al final de `adquirirClima` para las parcelas actualizadas. Catálogo leído una vez por ciclo.
+- [x] Pruebas jest con casos de la Tabla 31: café con 3 días > 30 °C → crítica; maíz en floración con
       7 días secos → preventiva; frijol con mínima 17 °C → preventiva; hortalizas con 16 °C → nada;
       parcela sin cultivo con −1 °C → crítica (helada); lluvia 20 mm/h → preventiva.
 

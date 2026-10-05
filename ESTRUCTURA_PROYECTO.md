@@ -137,9 +137,13 @@ agroclima_jalapa/
 │   │   ├── lluvia_del_dia.js     # lluvia acumulada del día desde las franjas (D-40)
 │   │   ├── pronostico_diario.js  # franjas de 3 h → días (D-10)
 │   │   ├── fechas.js             # id diario yyyyMMdd en hora de Guatemala
+│   │   ├── evaluacion.js         # paso del ciclo: celdas actualizadas + historial → motor (HT-04)
 │   │   ├── motor/
 │   │   │   ├── evaluador.js      # CMP-09: aplica reglas y devuelve nivel por tipo de riesgo
+│   │   │   ├── comparar.js       # operadores, orden de niveles, umbral que define el nivel
 │   │   │   └── reglas/           # ESTRATEGIA: una regla por tipo de riesgo
+│   │   │       ├── index.js      # registro tipoRiesgo → regla
+│   │   │       ├── regla_diaria.js  # base de las variables diarias (con rachas de duracionDias)
 │   │   │       ├── lluvia_intensa.js
 │   │   │       ├── viento_fuerte.js
 │   │   │       ├── sequia.js
