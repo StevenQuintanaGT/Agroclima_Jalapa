@@ -36,7 +36,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 ## Etapa 4 — Motor de alertas · `plans/04`
 - [x] **HT-03** Catálogo de umbrales (semilla en Firestore)
 - [x] **HT-04** Evaluación periódica (reglas por tipo de riesgo, con pruebas)
-- [ ] **HU-10** Notificación por riesgo climático (duplicados, preferencias, silencio, FCM)
+- [x] **HU-10** Notificación por riesgo climático (duplicados, preferencias, silencio, FCM)
 - [ ] **HU-11** Centro de alertas y detalle
 - [ ] **HU-12** Preferencias por tipo de alerta ("Mis avisos")
 

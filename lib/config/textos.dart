@@ -421,4 +421,17 @@ class Textos {
   static const String cerrarSesion = 'Cerrar sesión';
   static const String cerrandoSesion = 'Cerrando sesión…';
   static const String enviandoEnlace = 'Enviando…';
+
+  // ---------- Avisos (HU-10): canales de Android ----------
+  // El teléfono los muestra en Ajustes → Notificaciones de la app.
+  static const String canalPeligro = 'Avisos de PELIGRO';
+  static const String canalPeligroDetalle =
+      'Riesgos graves para sus parcelas. Suenan aunque sea de noche.';
+  static const String canalPrecaucion = 'Avisos de PRECAUCIÓN';
+  static const String canalPrecaucionDetalle =
+      'Riesgos que conviene atender pronto.';
+  static const String canalNormal = 'Avisos normales';
+  static const String canalNormalDetalle =
+      'Información del clima de sus parcelas.';
+  static const String detalleAlerta = 'Aviso';
 }

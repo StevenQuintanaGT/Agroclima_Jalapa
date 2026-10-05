@@ -52,6 +52,7 @@ describe('casos de la Tabla 31 (plans/04, HT-04)', () => {
         fechaEvento: FECHAS[i],
         umbralId: 'tmax_cafe_critica',
         diasConsecutivos: 3,
+        inicioRacha: FECHAS[1],
       })),
     );
   });

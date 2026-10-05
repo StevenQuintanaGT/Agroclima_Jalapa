@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -44,6 +46,8 @@ Future<void> main() async {
   final PreferenciasLocalesRepositorio preferencias =
       await SharedPreferencesLocalesRepositorio.crear();
   final notificaciones = NotificacionesServicio();
+  // Canales y escucha de avisos, sin esperar ni pedir permisos (HU-10).
+  unawaited(notificaciones.iniciar());
   final cuenta = CuentaServicio(
     auth: auth,
     usuarios: usuarios,
