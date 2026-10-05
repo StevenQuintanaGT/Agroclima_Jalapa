@@ -10,11 +10,14 @@
  * Pasos de cada vuelta:
  * 1. limpieza de parcelas borradas (HU-06)
  * 2. adquisición del clima por celda (Etapa 3)
- * 3. evaluación de umbrales, alertas y envío FCM (Etapa 4, pendiente)
+ * 3. evaluación de umbrales de las celdas actualizadas (HT-04)
+ * 4. alertas y envío FCM (HU-10, pendiente)
  */
 const { limpiarParcelasBorradas } = require('./src/limpieza');
 const { adquirirClima } = require('./src/adquisicion');
 const { crearCliente } = require('./src/openweather');
+const { leerCatalogo } = require('./src/umbrales');
+const { evaluarCeldas } = require('./src/evaluacion');
 
 async function ejecutarCiclo({ db, clima, ahora = new Date(), registrar = console.log }) {
   const limpieza = await limpiarParcelasBorradas(db);
@@ -22,8 +25,19 @@ async function ejecutarCiclo({ db, clima, ahora = new Date(), registrar = consol
     registrar(`Limpieza: ${limpieza.limpiadas.length} parcelas borradas.`);
   }
   const adquisicion = await adquirirClima({ db, clima, ahora, registrar });
-  // TODO(HT-04): evaluar umbrales con adquisicion.actualizadas.
-  return { limpieza, adquisicion };
+  let evaluacion = { parcelas: 0, riesgos: [] };
+  if (adquisicion.celdasActualizadas.length > 0) {
+    const catalogo = await leerCatalogo(db, registrar);
+    evaluacion = await evaluarCeldas({
+      db,
+      celdas: adquisicion.celdasActualizadas,
+      catalogo,
+      ahora,
+      registrar,
+    });
+  }
+  // TODO(HU-10): crear alertas sin duplicar y avisar por FCM con evaluacion.riesgos.
+  return { limpieza, adquisicion, evaluacion };
 }
 
 /** Arranque desde GitHub Actions o la terminal. */

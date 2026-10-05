@@ -80,10 +80,14 @@ Por cada parcela activa, con sus pronósticos de hoy + 4 días (`pronosticos/{yy
 3. **Sequía** (`diasSecos`): día seco = `acumuladoDia < 1 mm` (Zhang et al., 2011). La racha se cuenta
    uniendo los últimos días de `condiciones` (historial, `precipitacion < 1`) con los días del pronóstico.
    `valorEsperado` = días secos consecutivos que se alcanzarían al final de la racha dentro del pronóstico.
-   Si no hay historial suficiente, se cuenta solo con lo disponible.
+   Si no hay historial suficiente, se cuenta solo con lo disponible (un día sin dato o que falta corta la racha).
+   Hoy cuenta con la lluvia que ya cayó más la que falta según el pronóstico. Cada racha que llega al
+   pronóstico da **un** resultado; su `fechaEvento` es el día en que la racha alcanza el umbral del nivel
+   resultante, para que la misma sequía no se repita cada día (D-46).
 4. **Nivel resultante**: por cada `tipoRiesgo` y día se toma el **nivel más alto** entre todos los umbrales
    cumplidos (generales y específicos). Esto hace que en etapa sensible el criterio específico "adelante"
-   un nivel, como pide la tesis, sin anular la helada general en café o frijol.
+   un nivel, como pide la tesis, sin anular la helada general en café o frijol. A igual nivel, define el
+   umbral del cultivo (su valor es "lo que aguanta el cultivo", D-14).
 5. Para cada `tipoRiesgo` se genera como máximo **una alerta por día de evento** con el nivel resultante.
 6. `valorEsperado` = valor pronosticado del día; `valorUmbral` = `valor` del umbral que definió el nivel.
 

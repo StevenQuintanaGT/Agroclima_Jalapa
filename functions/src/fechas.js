@@ -15,4 +15,12 @@ function idDiario(instante) {
   return `${local.getUTCFullYear()}${mes}${dia}`;
 }
 
-module.exports = { idDiario };
+/** Día anterior a un id yyyyMMdd (para recorrer el historial hacia atrás). */
+function diaAnterior(id) {
+  const fecha = new Date(Date.UTC(+id.slice(0, 4), +id.slice(4, 6) - 1, +id.slice(6, 8) - 1));
+  const mes = String(fecha.getUTCMonth() + 1).padStart(2, '0');
+  const dia = String(fecha.getUTCDate()).padStart(2, '0');
+  return `${fecha.getUTCFullYear()}${mes}${dia}`;
+}
+
+module.exports = { idDiario, diaAnterior };
