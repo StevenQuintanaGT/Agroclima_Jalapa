@@ -6,6 +6,7 @@ import 'package:agroclima_jalapa/pantallas/acceso/inicio_sesion_pantalla.dart';
 import 'package:agroclima_jalapa/pantallas/acceso/registro_pantalla.dart';
 import 'package:agroclima_jalapa/pantallas/acceso/splash_pantalla.dart';
 import 'package:agroclima_jalapa/servicios/clima_servicio.dart';
+import 'package:agroclima_jalapa/servicios/conectividad_servicio.dart';
 import 'package:agroclima_jalapa/servicios/cuenta_servicio.dart';
 import 'package:agroclima_jalapa/servicios/notificaciones_servicio.dart';
 import 'package:agroclima_jalapa/servicios/parcelas_servicio.dart';
@@ -27,6 +28,15 @@ class _ParcelasFalsas extends Mock implements ParcelasServicio {}
 
 class _ClimaFalso extends Mock implements ClimaServicio {}
 
+class _RedFalsa extends Mock implements ConectividadServicio {}
+
+ConectividadServicio _conRed() {
+  final red = _RedFalsa();
+  when(red.hayRed).thenAnswer((_) async => true);
+  when(() => red.cambios).thenAnswer((_) => const Stream.empty());
+  return red;
+}
+
 ParcelasServicio _sinParcelas() {
   final parcelas = _ParcelasFalsas();
   when(parcelas.misParcelas).thenAnswer((_) => Stream.value(const []));
@@ -47,6 +57,7 @@ Future<ValueNotifier<bool>> _abrir(
         Provider<NotificacionesServicio>.value(value: _AvisosFalsos()),
         Provider<ParcelasServicio>.value(value: _sinParcelas()),
         Provider<ClimaServicio>.value(value: _ClimaFalso()),
+        Provider<ConectividadServicio>.value(value: _conRed()),
       ],
       child: AgroClimaApp(
         enrutador: crearEnrutador(

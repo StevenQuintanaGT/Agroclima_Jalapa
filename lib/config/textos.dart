@@ -350,7 +350,7 @@ class Textos {
   };
 
   // ---------- Pronóstico (panel y pantalla 19, HU-08) ----------
-  static const String horaPorHora = 'Hoy, hora por hora';
+  static const String horaPorHora = 'Hora por hora';
   static String proximosDias(int cantidad) => 'Los próximos $cantidad días';
   static const String ahora = 'Ahora';
   static const String hoy = 'Hoy';

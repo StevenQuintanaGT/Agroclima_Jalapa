@@ -9,7 +9,6 @@ import '../../modelos/pronostico_dia.dart';
 import '../../modelos/resumen_dia.dart';
 import '../../servicios/clima_servicio.dart';
 import '../../servicios/parcelas_servicio.dart';
-import '../../utilidades/fechas.dart';
 
 /// Detalle de pronóstico (pantalla 19, HU-08). Usa lo que el panel ya dejó
 /// en la caché: abrirlo no gasta consultas si el pronóstico sigue vigente.
@@ -71,7 +70,7 @@ class DetallePronosticoVm extends ChangeNotifier {
     );
   }
 
-  bool get esHoy => dia?.fecha == Fechas.idDiario(_reloj().toUtc());
+  bool get esHoy => dia?.esHoy ?? false;
 
   /// Salida y puesta del sol: solo se conocen las de hoy.
   ClimaActual? get solDeHoy => esHoy ? _actual : null;

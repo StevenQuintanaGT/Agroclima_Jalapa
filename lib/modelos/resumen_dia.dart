@@ -13,6 +13,7 @@ class ResumenDia {
     required this.precipitacionHora,
     required this.velocidadViento,
     required this.humedadRelativa,
+    this.esHoy = false,
     this.codigoClima,
     this.probabilidadLluvia,
     this.franjas = const [],
@@ -31,6 +32,10 @@ class ResumenDia {
   final double precipitacionHora;
   final double velocidadViento;
   final double humedadRelativa;
+
+  /// ¿Es el día de hoy en Guatemala? De noche ya no quedan franjas de hoy y
+  /// la lista empieza mañana: no basta con ser el primero.
+  final bool esHoy;
 
   /// El tiempo más fuerte del día; `null` si solo hay el resumen del ciclo.
   final int? codigoClima;

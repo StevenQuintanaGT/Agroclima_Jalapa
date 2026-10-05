@@ -112,6 +112,20 @@ void main() {
       expect(dias[1].probabilidadLluvia, 0.8);
       expect(dias[1].acumuladoDia, 6);
       expect(dias[1].dia, DateTime.utc(2026, 10, 4));
+      expect(dias[0].esHoy, isTrue);
+      expect(dias[1].esHoy, isFalse);
+    });
+
+    test('de noche la lista empieza mañana y no se llama "Hoy"', () {
+      final noche = DateTime.utc(2026, 10, 4, 4); // 3 oct, 22:00 en Guatemala
+      final manana = franjas.where((f) => f.fechaHora.isAfter(noche)).toList();
+      final dias = ClimaServicio.dias(
+        franjas: manana,
+        guardados: const [],
+        ahora: noche,
+      );
+      expect(dias.first.fecha, '20261004');
+      expect(dias.first.esHoy, isFalse);
     });
 
     test('sin franjas usa lo que guardó el ciclo', () {

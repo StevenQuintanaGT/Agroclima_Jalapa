@@ -13,6 +13,7 @@ import 'package:agroclima_jalapa/modelos/resultado.dart';
 import 'package:agroclima_jalapa/pantallas/clima/panel_pantalla.dart';
 import 'package:agroclima_jalapa/pantallas/clima/panel_vm.dart';
 import 'package:agroclima_jalapa/servicios/clima_servicio.dart';
+import 'package:agroclima_jalapa/servicios/conectividad_servicio.dart';
 import 'package:agroclima_jalapa/servicios/parcelas_servicio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -25,6 +26,8 @@ import '../../apoyo/preferencias_falsas.dart';
 class _ParcelasFalsas extends Mock implements ParcelasServicio {}
 
 class _ClimaFalso extends Mock implements ClimaServicio {}
+
+class _RedFalsa extends Mock implements ConectividadServicio {}
 
 /// 3 de octubre, 12:00 en Guatemala.
 final _ahora = DateTime.utc(2026, 10, 3, 18);
@@ -133,8 +136,9 @@ void main() {
 
   Future<PanelVm> abrir(
     WidgetTester tester,
-    List<Parcela> parcelasIniciales,
-  ) async {
+    List<Parcela> parcelasIniciales, {
+    ConectividadServicio? conectividad,
+  }) async {
     tester.view.physicalSize = const Size(1080, 2340);
     tester.view.devicePixelRatio = 2.75;
     addTearDown(tester.view.reset);
@@ -142,6 +146,7 @@ void main() {
       parcelas: parcelas,
       clima: clima,
       preferencias: preferencias,
+      conectividad: conectividad,
       reloj: () => _ahora,
     );
     await tester.pumpWidget(
@@ -256,5 +261,83 @@ void main() {
       Textos.actualizadoHace(const Duration(minutes: 5)),
       'Datos de OpenWeather · actualizado hace 5 minutos',
     );
+  });
+
+  group('sin conexión (HU-15)', () {
+    late StreamController<bool> red;
+    late _RedFalsa conectividad;
+
+    setUp(() {
+      red = StreamController<bool>.broadcast();
+      conectividad = _RedFalsa();
+      when(() => conectividad.cambios).thenAnswer((_) => red.stream);
+    });
+
+    tearDown(() => red.close());
+
+    testWidgets(
+      'sin red en el teléfono se ve el banner, aun con dato vigente',
+      (tester) async {
+        when(conectividad.hayRed).thenAnswer((_) async => false);
+        climaActual(Resultado(dato: _soleado, fecha: _ahora, vigente: true));
+        await abrir(tester, const [_guayabal], conectividad: conectividad);
+        expect(find.text(Textos.sinInternetTitulo), findsOneWidget);
+        expect(
+          find.text(Textos.datosDel('3 de octubre, 12:00 p.m.')),
+          findsNothing,
+        );
+      },
+    );
+
+    testWidgets('al volver la señal se actualiza solo lo vencido', (
+      tester,
+    ) async {
+      when(conectividad.hayRed).thenAnswer((_) async => false);
+      climaActual(
+        Resultado(
+          dato: _soleado,
+          fecha: _ahora.subtract(const Duration(hours: 3)),
+          vigente: false,
+          error: MotivoErrorClima.sinConexion,
+        ),
+      );
+      await abrir(tester, const [_guayabal], conectividad: conectividad);
+      clearInteractions(clima);
+      climaActual(Resultado(dato: _soleado, fecha: _ahora, vigente: true));
+
+      red.add(true);
+      await tester.pumpAndSettle();
+
+      verify(() => clima.actual(_guayabal, forzar: false)).called(1);
+      expect(find.text(Textos.sinInternetTitulo), findsNothing);
+      expect(find.text(Textos.intentarDeNuevo), findsNothing);
+    });
+
+    testWidgets('con dato vigente, volver la señal no gasta consultas', (
+      tester,
+    ) async {
+      when(conectividad.hayRed).thenAnswer((_) async => false);
+      climaActual(Resultado(dato: _soleado, fecha: _ahora, vigente: true));
+      await abrir(tester, const [_guayabal], conectividad: conectividad);
+      clearInteractions(clima);
+
+      red.add(true);
+      await tester.pumpAndSettle();
+
+      verifyNever(() => clima.actual(any(), forzar: any(named: 'forzar')));
+    });
+
+    testWidgets('al volver a la app se revisa la vigencia', (tester) async {
+      when(conectividad.hayRed).thenAnswer((_) async => true);
+      climaActual(Resultado(dato: _soleado, fecha: _ahora, vigente: true));
+      final vm = await abrir(tester, const [
+        _guayabal,
+      ], conectividad: conectividad);
+      clearInteractions(clima);
+
+      await vm.alVolverALaApp();
+
+      verify(() => clima.actual(_guayabal, forzar: false)).called(1);
+    });
   });
 }

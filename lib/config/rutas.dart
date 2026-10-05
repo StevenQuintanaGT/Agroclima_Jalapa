@@ -32,6 +32,7 @@ import '../pantallas/shell/shell_pantalla.dart';
 import '../repositorios/preferencias_locales_repositorio.dart';
 import '../servicios/busqueda_lugares_servicio.dart';
 import '../servicios/clima_servicio.dart';
+import '../servicios/conectividad_servicio.dart';
 import '../servicios/cuenta_servicio.dart';
 import '../servicios/notificaciones_servicio.dart';
 import '../servicios/parcelas_servicio.dart';
@@ -260,6 +261,7 @@ GoRouter crearEnrutador({
                     parcelas: context.read<ParcelasServicio>(),
                     clima: context.read<ClimaServicio>(),
                     preferencias: preferencias,
+                    conectividad: context.read<ConectividadServicio>(),
                   ),
                   child: const PanelPantalla(),
                 ),
