@@ -7,11 +7,12 @@
  *
  * Uso:
  *   Emulador:   FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node functions/scripts/sembrar-umbrales.js
- *   Producción: gcloud auth application-default login   (una vez)
- *               node functions/scripts/sembrar-umbrales.js
+ *   Producción: GitHub → Actions → "Sembrar umbrales" → Run workflow (usa el
+ *               secreto FIREBASE_SERVICE_ACCOUNT; D-37). En la PC, con la
+ *               variable FIREBASE_SERVICE_ACCOUNT con el JSON de la cuenta.
  */
 const path = require('node:path');
-const { initializeApp } = require('firebase-admin/app');
+const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
 
 const { validarCatalogo } = require('../src/umbrales_semilla');
@@ -28,7 +29,12 @@ async function sembrar() {
     return;
   }
 
-  initializeApp({ projectId: ID_PROYECTO });
+  const cuenta = process.env.FIREBASE_SERVICE_ACCOUNT;
+  initializeApp(
+    cuenta && !process.env.FIRESTORE_EMULATOR_HOST
+      ? { credential: cert(JSON.parse(cuenta)) }
+      : { projectId: ID_PROYECTO },
+  );
   const db = getFirestore();
   const lote = db.batch();
   for (const umbral of umbrales) {
@@ -39,7 +45,7 @@ async function sembrar() {
 
   const destino = process.env.FIRESTORE_EMULATOR_HOST
     ? `emulador ${process.env.FIRESTORE_EMULATOR_HOST}`
-    : `proyecto ${ID_PROYECTO}`;
+    : `proyecto ${cuenta ? JSON.parse(cuenta).project_id : ID_PROYECTO}`;
   console.log(`${umbrales.length} umbrales cargados en ${destino}.`);
 }
 

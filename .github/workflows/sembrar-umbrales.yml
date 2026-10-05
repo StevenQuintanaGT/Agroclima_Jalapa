@@ -1,0 +1,31 @@
+# Carga o actualiza el catálogo de umbrales (functions/seed/umbrales.json) en
+# Firestore de producción (HT-03). Solo se ejecuta a mano: Actions →
+# "Sembrar umbrales" → Run workflow. Es idempotente (usa umbralId como id).
+name: Sembrar umbrales
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  sembrar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: functions
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci --omit=dev
+
+      - name: Cargar el catálogo
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node scripts/sembrar-umbrales.js

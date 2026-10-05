@@ -123,6 +123,7 @@ agroclima_jalapa/
 ├── test/                         # espejo de lib/ (unit + widget)
 │
 ├── .github/workflows/ciclo-clima.yml  # tarea programada (cada 3 h) que ejecuta el ciclo (D-37)
+├── .github/workflows/sembrar-umbrales.yml  # tarea manual: carga el catálogo de umbrales (D-45)
 │
 ├── functions/                    # ciclo automático en JavaScript (Node LTS), lo ejecuta GitHub Actions
 │   ├── package.json              # firebase-admin; jest para pruebas
@@ -132,6 +133,7 @@ agroclima_jalapa/
 │   │   ├── openweather.js        # cliente (fachada) del ciclo
 │   │   ├── adquisicion.js        # CMP-08: recorre parcelas, agrupa por celda, guarda pronósticos/condiciones
 │   │   ├── validacion.js         # VA-06..VA-08
+│   │   ├── umbrales.js           # lee el catálogo vigente y filtra por parcela (§3)
 │   │   ├── lluvia_del_dia.js     # lluvia acumulada del día desde las franjas (D-40)
 │   │   ├── pronostico_diario.js  # franjas de 3 h → días (D-10)
 │   │   ├── fechas.js             # id diario yyyyMMdd en hora de Guatemala

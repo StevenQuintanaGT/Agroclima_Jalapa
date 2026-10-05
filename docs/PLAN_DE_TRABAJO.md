@@ -34,7 +34,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 - [x] **HU-08** Pronóstico de los próximos días (+ detalle de pronóstico)
 
 ## Etapa 4 — Motor de alertas · `plans/04`
-- [ ] **HT-03** Catálogo de umbrales (semilla en Firestore)
+- [x] **HT-03** Catálogo de umbrales (semilla en Firestore)
 - [ ] **HT-04** Evaluación periódica (reglas por tipo de riesgo, con pruebas)
 - [ ] **HU-10** Notificación por riesgo climático (duplicados, preferencias, silencio, FCM)
 - [ ] **HU-11** Centro de alertas y detalle
@@ -80,6 +80,7 @@ Se puede adelantar una tarea de una etapa posterior solo si sus dependencias ya 
 - HU-07 (D-42): probado en el emulador con OpenWeather real (clima de la parcela, caché al reabrir sin nueva consulta, deslizar sin internet → aviso y dato guardado). El aspecto de "dato vencido" (más de 60 min sin señal) está cubierto por pruebas de widget.
 - HU-08 (D-43): probado en el emulador con OpenWeather real (hora por hora, 5 días, detalle con curva, lluvia y resumen).
 - HU-15 (D-44): probado en el emulador (quitar la red → banner al instante; devolverla → desaparece solo). De noche la lista de días ya no llama "Hoy" a mañana.
+- HT-03 (D-45): lectura del catálogo y filtro por parcela probados (jest + emulador, Dart contra la misma semilla). **Falta cargarlo en producción:** GitHub → Actions → "Sembrar umbrales" → Run workflow.
 - `adquirirClima` y la tarea de GitHub Actions (D-40, D-41): probados con el emulador y un clima falso. Secretos creados en GitHub (2026-10-03): la tarea corrió en la nube y se conectó a Firestore (0 parcelas en producción); con OpenWeather real contra el emulador guardó condiciones y 5 días de pronóstico de 2 celdas.
 
 (Espacio libre para anotar problemas encontrados — cuota, conectividad, comportamiento de algún teléfono —

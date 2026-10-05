@@ -152,7 +152,7 @@ npm run test:reglas                              # reglas de Firestore con el em
 npm run test:emulador                            # reglas + limpieza de parcelas borradas
 firebase emulators:start --only auth,firestore
 firebase deploy --only firestore:rules,firestore:indexes   # funciona con el plan Spark
-node functions/scripts/sembrar-umbrales.js      # carga el catálogo de umbrales
+node functions/scripts/sembrar-umbrales.js      # catálogo de umbrales (en producción: Actions → "Sembrar umbrales")
 # El ciclo se ejecuta solo en GitHub Actions (.github/workflows/); a mano: Actions → Run workflow
 ```
 
