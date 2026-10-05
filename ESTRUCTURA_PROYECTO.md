@@ -91,7 +91,7 @@ agroclima_jalapa/
 │   │   ├── acceso/               # MOD-01: splash, onboarding, inicio_sesion, registro,
 │   │   │                         #         recuperar_contrasena, permiso_ubicacion, permiso_notificaciones
 │   │   ├── parcelas/             # MOD-02: registro_parcela (4 pasos), mis_parcelas, detalle_parcela
-│   │   ├── clima/                # MOD-03: panel_principal, detalle_pronostico, mapa_clima
+│   │   ├── clima/                # MOD-03: panel_principal, detalle_pronostico, mapa_clima (+ mapa_clima.dart: flutter_map + capas)
 │   │   ├── alertas/              # MOD-04: centro_alertas, detalle_alerta, tarjeta_alerta, mis_avisos,
 │   │   │                         #         apertura_alertas (abrir desde el aviso), contador_avisos (distintivo)
 │   │   ├── reportes/             # MOD-05: reportes, historial, exportar_reporte

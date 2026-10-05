@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 import '../config/constantes.dart';
+import '../modelos/capa_clima.dart';
 import '../modelos/clima_actual.dart';
 import '../modelos/condicion.dart';
 import '../modelos/franja_pronostico.dart';
@@ -91,6 +92,9 @@ class OpenWeatherClimaRepositorio implements ClimaRepositorio {
         }
         return Condicion.fromMap(datos, fechaHora: fecha.toDate());
       });
+
+  @override
+  String urlCapa(CapaClima capa) => _cliente.urlTeselas(capa);
 
   @override
   Stream<List<PronosticoDia>> proximosDias(String parcelaId) => _firestore

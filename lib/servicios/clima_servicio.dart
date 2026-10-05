@@ -1,3 +1,4 @@
+import '../modelos/capa_clima.dart';
 import '../modelos/clima_actual.dart';
 import '../modelos/condicion.dart';
 import '../modelos/franja_pronostico.dart';
@@ -22,6 +23,9 @@ class ClimaServicio {
     Parcela parcela, {
     bool forzar = false,
   }) => _repositorio.actual(parcela, forzar: forzar);
+
+  /// Plantilla de teselas de una capa del mapa del clima (HU-09).
+  String urlCapa(CapaClima capa) => _repositorio.urlCapa(capa);
 
   Future<Resultado<List<FranjaPronostico>>> porHoras(
     Parcela parcela, {

@@ -109,9 +109,7 @@ class AvisosServicio {
           porTipo[umbral.tipoRiesgo] = umbral;
         }
       }
-      resultado[cultivo] = [
-        for (final tipo in orden) ?porTipo[tipo],
-      ];
+      resultado[cultivo] = [for (final tipo in orden) ?porTipo[tipo]];
     }
     return resultado;
   }

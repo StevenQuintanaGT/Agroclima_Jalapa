@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import '../config/constantes.dart';
+import '../modelos/capa_clima.dart';
 import '../modelos/clima_actual.dart';
 import '../modelos/error_clima.dart';
 import '../modelos/franja_pronostico.dart';
@@ -32,6 +33,18 @@ class OpenWeatherCliente {
   final Duration espera;
 
   static const String _base = 'api.openweathermap.org';
+
+  /// Weather Maps 1.0 (plan gratuito): plantilla de teselas de una capa,
+  /// con {z}/{x}/{y} para el mapa. Cada tesela cuenta como consulta.
+  String urlTeselas(CapaClima capa) {
+    final nombre = switch (capa) {
+      CapaClima.lluvia => 'precipitation_new',
+      CapaClima.nubes => 'clouds_new',
+      CapaClima.calor => 'temp_new',
+      CapaClima.viento => 'wind_new',
+    };
+    return 'https://tile.openweathermap.org/map/$nombre/{z}/{x}/{y}.png?appid=$_clave';
+  }
 
   /// Current Weather 2.5: clima de este momento en el punto.
   Future<ClimaActual> actual(double latitud, double longitud) async {
