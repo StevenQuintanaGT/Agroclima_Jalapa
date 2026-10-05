@@ -89,7 +89,7 @@ agroclima_jalapa/
 │   │   │                         #         recuperar_contrasena, permiso_ubicacion, permiso_notificaciones
 │   │   ├── parcelas/             # MOD-02: registro_parcela (4 pasos), mis_parcelas, detalle_parcela
 │   │   ├── clima/                # MOD-03: panel_principal, detalle_pronostico, mapa_clima
-│   │   ├── alertas/              # MOD-04: centro_alertas, detalle_alerta, mis_avisos
+│   │   ├── alertas/              # MOD-04: centro_alertas, detalle_alerta, mis_avisos, apertura_alertas (abrir desde el aviso)
 │   │   ├── reportes/             # MOD-05: reportes, historial, exportar_reporte
 │   │   ├── perfil/               # perfil, ajustes, ayuda_glosario, acerca_de
 │   │   └── shell/                # contenedor con la barra inferior de 5 destinos + pantalla_en_construccion
@@ -156,6 +156,7 @@ agroclima_jalapa/
 │   │   └── limpieza.js           # borrado en cascada de parcela y de cuenta
 │   ├── seed/umbrales.json        # catálogo inicial (Tabla 31)
 │   ├── scripts/sembrar-umbrales.js
+│   ├── scripts/simular-pronostico.js  # SOLO emulador: pronóstico extremo → alertas de prueba
 │   └── test/
 │
 └── docs/

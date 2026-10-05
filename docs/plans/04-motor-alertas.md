@@ -29,16 +29,16 @@ Referencia completa del algoritmo: `docs/UMBRALES.md`.
       parcela sin cultivo con −1 °C → crítica (helada); lluvia 20 mm/h → preventiva.
 
 ## HU-10 — Generación y notificación (CMP-10)
-- [ ] `alertas.js`: por cada resultado, control de duplicados (`UMBRALES.md` §5, índice 2), arma `mensaje`
+- [x] `alertas.js`: por cada resultado, control de duplicados (`UMBRALES.md` §5, índice 2), arma `mensaje`
       y `medidaSugerida` (`mensajes.js`), crea `alertas/{id}` con `leida:false, atendida:false`.
-- [ ] `notificaciones.js`: aplica preferencias y silencio (§6), envía con `admin.messaging().sendEachForMulticast`
-      a `tokensFcm`; título `"{PALABRA} · {parcelaNombre}"`, cuerpo = `mensaje`, `data: { alertaId, parcelaId }`,
+- [x] `notificaciones.js`: aplica preferencias y silencio (§6), envía con `admin.messaging().sendEachForMulticast`
+      a `tokensFcm`; título `"{PALABRA}: {riesgo} en {parcelaNombre}"` (pantalla 24, D-47), cuerpo = `mensaje`, `data: { alertaId, parcelaId }`,
       canal Android por nivel (`alertas_peligro` alta importancia, `alertas_precaucion`, `alertas_normal`).
       Quitar tokens inválidos. Guardar `notificada`.
-- [ ] App: `NotificacionesServicio` crea los 3 canales, muestra notificaciones en primer plano con
+- [x] App: `NotificacionesServicio` crea los 3 canales, muestra notificaciones en primer plano con
       `flutter_local_notifications`, y al tocar (app abierta, en segundo plano o cerrada:
       `getInitialMessage` / `onMessageOpenedApp`) navega a `/alertas/:alertaId`.
-- [ ] Latencia: el envío ocurre en la misma ejecución del ciclo (≤ 5 min tras la detección, RNF-10).
+- [x] Latencia: el envío ocurre en la misma ejecución del ciclo (≤ 5 min tras la detección, RNF-10).
 
 ## HU-11 — Centro y detalle
 - Centro (21): pestañas **Activos** (`fechaEvento` ≥ hoy) y **Anteriores**; ordenar por nivel (PELIGRO primero)

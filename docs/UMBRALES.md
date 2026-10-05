@@ -109,11 +109,14 @@ Se notifica por FCM si: `preferencias/{tipoRiesgo}.activa == true` **y** `nivel 
 no se está en horario de silencio (`silencioDesde`–`silencioHasta`, hora de Guatemala) — **excepto
 `critica`, que siempre suena**. Si no se notifica, la alerta igual queda en `alertas` con `notificada: false`.
 Se envía a todos los `tokensFcm` del usuario; los tokens inválidos que devuelva FCM se eliminan.
+Varios días seguidos del mismo riesgo y nivel en una parcela (p. ej. tres días de calor) se avisan con **una**
+notificación, la del primer día; las alertas de cada día quedan en el centro de alertas (D-47).
 
 ## 7. Mensajes (RNF-14) — `functions/src/mensajes.js`
 
-Formato de la notificación: **título** = palabra del semáforo + nombre de la parcela
-(`PELIGRO · Parcela El Tablón`); **cuerpo** = qué va a pasar y cuándo, en lenguaje del campo.
+Formato de la notificación (pantalla 24 del diseño, D-47): **título** = palabra del semáforo + riesgo + parcela
+(`PELIGRO: puede caer helada en La Joya`); **cuerpo** = qué va a pasar y cuándo, en lenguaje del campo, más una
+acción corta (`Mañana en la madrugada puede bajar a -1 °C. Proteja el almácigo.`).
 
 Ejemplos de estilo (se revisarán con productores):
 - lluviaIntensa/preventiva: "Va a llover fuerte el jueves. Revise que el agua pueda salir de la parcela."

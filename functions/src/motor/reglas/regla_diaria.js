@@ -8,17 +8,20 @@
  */
 const { cumple, definitorio } = require('../comparar');
 
-/** Longitud de la racha (días seguidos que cumplen) a la que pertenece cada día. */
+/**
+ * Racha (días seguidos que cumplen) a la que pertenece cada día:
+ * su longitud y el índice del día en que empieza.
+ */
 function rachas(pronosticos, variable, umbral) {
-  const longitudes = new Array(pronosticos.length).fill(0);
+  const lista = pronosticos.map(() => ({ longitud: 0, inicio: -1 }));
   let inicio = 0;
   for (let i = 0; i <= pronosticos.length; i++) {
     const sigue = i < pronosticos.length && cumple(pronosticos[i][variable], umbral);
     if (sigue) continue;
-    for (let j = inicio; j < i; j++) longitudes[j] = i - inicio;
+    for (let j = inicio; j < i; j++) lista[j] = { longitud: i - inicio, inicio };
     inicio = i + 1;
   }
-  return longitudes;
+  return lista;
 }
 
 /**
@@ -36,7 +39,7 @@ function crearReglaDiaria(variable) {
       const resultados = [];
       pronosticos.forEach((dia, i) => {
         const cumplidos = propios.filter(
-          (u) => rachasPorUmbral.get(u)[i] >= Math.max(1, u.duracionDias ?? 1),
+          (u) => rachasPorUmbral.get(u)[i].longitud >= Math.max(1, u.duracionDias ?? 1),
         );
         const umbral = definitorio(cumplidos);
         if (!umbral) return;
@@ -48,7 +51,10 @@ function crearReglaDiaria(variable) {
           umbralId: umbral.umbralId,
         };
         if ((umbral.duracionDias ?? 1) > 1) {
-          resultado.diasConsecutivos = rachasPorUmbral.get(umbral)[i];
+          // Para el mensaje: "Desde mañana, 3 días seguidos…" en cada día de la racha.
+          const racha = rachasPorUmbral.get(umbral)[i];
+          resultado.diasConsecutivos = racha.longitud;
+          resultado.inicioRacha = pronosticos[racha.inicio].fecha;
         }
         resultados.push(resultado);
       });

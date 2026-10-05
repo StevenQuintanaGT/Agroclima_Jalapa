@@ -4,6 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
 import '../pantallas/acceso/bienvenida_pantalla.dart';
+import '../pantallas/alertas/apertura_alertas.dart';
 import '../pantallas/acceso/bienvenida_vm.dart';
 import '../pantallas/acceso/inicio_sesion_pantalla.dart';
 import '../pantallas/acceso/inicio_sesion_vm.dart';
@@ -67,6 +68,9 @@ class Rutas {
   static String detallePronostico(String parcelaId, {String? dia}) =>
       '/pronostico/$parcelaId'
       '${dia == null ? '' : '?dia=$dia'}';
+
+  /// Pantalla 22. La abre una notificación sin pasar por la barra (DISENO_UI §8).
+  static String detalleAlerta(String alertaId) => '/alertas/$alertaId';
   static String editarParcela(String parcelaId, {int? paso}) =>
       '/parcelas/$parcelaId/editar${paso == null ? '' : '?paso=$paso'}';
 
@@ -247,9 +251,15 @@ GoRouter crearEnrutador({
           child: const DetallePronosticoPantalla(),
         ),
       ),
+      // Detalle de alerta: lo completa HU-11.
+      GoRoute(
+        path: '/alertas/:alertaId',
+        builder: (context, estado) =>
+            const PantallaEnConstruccion(titulo: Textos.detalleAlerta),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, estado, navegacion) =>
-            ShellPantalla(navegacion: navegacion),
+            AperturaAlertas(child: ShellPantalla(navegacion: navegacion)),
         branches: [
           // Inicio: panel del clima; sin parcelas, el estado vacío (16).
           StatefulShellBranch(

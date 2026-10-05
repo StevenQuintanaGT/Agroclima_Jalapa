@@ -12,7 +12,8 @@
     "test:emulador": "firebase emulators:exec --only firestore --project demo-agroclima-reglas \"jest test-reglas test-emulador --runInBand\"",
     "emuladores": "firebase emulators:start --only auth,firestore",
     "sembrar:emulador": "cross-env FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node scripts/sembrar-umbrales.js",
-    "deploy:reglas": "firebase deploy --only firestore:rules,firestore:indexes"
+    "deploy:reglas": "firebase deploy --only firestore:rules,firestore:indexes",
+    "simular:emulador": "cross-env FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node scripts/simular-pronostico.js"
   },
   "jest": {
     "testEnvironment": "node"
