@@ -12,11 +12,13 @@ import 'config/rutas.dart';
 import 'repositorios/auth_repositorio.dart';
 import 'repositorios/firebase_auth_repositorio.dart';
 import 'repositorios/firestore_parcelas_repositorio.dart';
+import 'repositorios/firestore_umbrales_repositorio.dart';
 import 'repositorios/firestore_usuario_repositorio.dart';
 import 'repositorios/cache_local.dart';
 import 'repositorios/clima_repositorio.dart';
 import 'repositorios/openweather_clima_repositorio.dart';
 import 'repositorios/parcelas_repositorio.dart';
+import 'repositorios/umbrales_repositorio.dart';
 import 'repositorios/preferencias_locales_repositorio.dart';
 import 'repositorios/shared_preferences_locales_repositorio.dart';
 import 'repositorios/usuario_repositorio.dart';
@@ -74,6 +76,9 @@ Future<void> main() async {
         ),
         Provider(create: (_) => BusquedaLugaresServicio()),
         Provider<ClimaRepositorio>.value(value: clima),
+        Provider<UmbralesRepositorio>(
+          create: (_) => FirestoreUmbralesRepositorio(),
+        ),
         Provider(create: (_) => ClimaServicio(clima)),
         Provider(create: (_) => ConectividadServicio()),
         ChangeNotifierProvider<EstadoSesion>.value(value: estadoSesion),
