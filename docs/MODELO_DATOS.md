@@ -103,6 +103,8 @@ Las preferencias **filtran el envío, no la generación**: la alerta se registra
 | vigente | bool | sí | true | Dentro de su intervalo de validez |
 | lluviaPrevista | map | no | {} | Apoyo del ciclo (D-40): `{inicio de franja: mm}` aún sin sumar |
 | franjasContadas | array<string> | no | [] | Apoyo del ciclo (D-40): franjas ya sumadas a `precipitacion` |
+| temperaturaMinima | double | no | — | °C, mínima observada en el día por el ciclo (D-53) |
+| temperaturaMaxima | double | no | — | °C, máxima observada en el día por el ciclo (D-53) |
 
 ### parcelas/{id}/pronosticos/{yyyyMMdd}  (Tabla 68) — único insumo del motor
 | Campo | Tipo | Oblig. | Defecto | Descripción |

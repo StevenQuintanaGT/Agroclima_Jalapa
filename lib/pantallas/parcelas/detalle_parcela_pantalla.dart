@@ -48,7 +48,18 @@ class DetalleParcelaPantalla extends StatelessWidget {
     final vm = context.watch<DetalleParcelaVm>();
     final parcela = vm.parcela;
     return Scaffold(
-      appBar: AppBar(title: Text(parcela?.nombre ?? Textos.misParcelas)),
+      appBar: AppBar(
+        title: Text(parcela?.nombre ?? Textos.misParcelas),
+        actions: [
+          if (parcela != null && !vm.borrada)
+            IconButton(
+              tooltip: Textos.verDiaPorDia,
+              icon: const Icon(Symbols.calendar_month),
+              onPressed: () =>
+                  context.push(Rutas.historialParcela(parcela.parcelaId)),
+            ),
+        ],
+      ),
       body: SafeArea(
         child: vm.noExiste
             ? const EstadoVacio(

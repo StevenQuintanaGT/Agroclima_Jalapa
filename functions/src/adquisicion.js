@@ -129,6 +129,7 @@ async function guardarCelda({ db, parcelas, actual, franjas, ahora }) {
     ? {
         fechaHora: Timestamp.fromDate(actual.fechaHora),
         temperatura: actual.temperatura,
+        ...extremosDelDia(guardadoHoy, actual.temperatura),
         humedadRelativa: actual.humedadRelativa,
         velocidadViento: actual.velocidadViento,
         origen: 'ciclo',
@@ -175,4 +176,22 @@ async function guardarCelda({ db, parcelas, actual, franjas, ahora }) {
   return { dias, lluviaHoy: Math.round((cuentaHoy.precipitacion + pendiente) * 100) / 100 };
 }
 
-module.exports = { adquirirClima, centroDeCelda };
+/**
+ * Mínima y máxima observadas en el día (HU-13, D-53): las guardadas, la última
+ * temperatura registrada (también la de una consulta de la app) y la nueva.
+ * Con una observación cada 3 h es una aproximación de los extremos del día.
+ */
+function extremosDelDia(guardado, temperatura) {
+  const valores = [
+    guardado.temperaturaMinima,
+    guardado.temperaturaMaxima,
+    guardado.temperatura,
+    temperatura,
+  ].filter((v) => typeof v === 'number' && Number.isFinite(v));
+  return {
+    temperaturaMinima: Math.min(...valores),
+    temperaturaMaxima: Math.max(...valores),
+  };
+}
+
+module.exports = { adquirirClima, centroDeCelda, extremosDelDia };
