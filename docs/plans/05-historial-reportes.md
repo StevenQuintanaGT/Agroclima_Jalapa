@@ -9,7 +9,7 @@ Este módulo **solo usa datos ya guardados**; no llama a OpenWeather.
 ## Componentes
 - **CO-16** `HistorialRepositorio`: `condiciones(parcelaId, desde, hasta)` ordenando por id `yyyyMMdd`
   (sin índice extra); alertas por parcela y rango desde `AlertasRepositorio`.
-- **CO-17** `ReportesServicio`: calcula el resumen y genera el PDF.
+- **CO-17** `ReportesServicio`: calcula el resumen y arma los archivos (PDF, Excel, CSV) y la impresión (D-51).
 
 ## HU-14 — Historial de alertas
 Pestaña "Anteriores" del centro de alertas (plan 04) + filtro por parcela. Muestra si se atendió.
@@ -24,8 +24,21 @@ Sin datos → "Todavía no hay días guardados de esta parcela".
 - 4 indicadores: días con lluvia (`precipitacion ≥ 1 mm`), noche más fría (mín. temperatura registrada),
   lluvia acumulada (suma), avisos de peligro (alertas `critica` con `fechaEvento` en el período).
 - Gráficas (fl_chart): temperatura por día y lluvia por día; cada una con una frase que la interpreta.
-- Exportar: PDF con `pdf` + `printing` (encabezado AgroClima Jalapa, parcela, período, indicadores, tabla diaria,
-  alertas, pie "Información de apoyo…"); guardar o compartir con `share_plus`.
+- Guardar o enviar (27, D-51): el productor elige el período y el **formato**; todo se arma en el teléfono
+  con los datos ya guardados (funciona sin señal, sin servidor y sin costo):
+  - **Archivo PDF** — "Se abre en cualquier teléfono". Paquetes `pdf` + `printing`: encabezado AgroClima
+    Jalapa, parcela, período, los 4 indicadores, tabla diaria, alertas y pie "Información de apoyo…".
+  - **Hoja de Excel (.xlsx)** — "Para hacer cuentas en la computadora". Paquete `excel`: hojas *Resumen*
+    (indicadores), *Días* (fecha, mínima, máxima, lluvia, aviso más alto) y *Avisos* (fecha, parcela,
+    riesgo, nivel, valor esperado, lo que aguanta, si se atendió). Números como números, no como texto.
+  - **Archivo CSV** — "Para otros programas". La tabla de *Días* (una fila por día), UTF-8 con BOM para que
+    Excel lea las tildes, separador coma, punto decimal, fechas `AAAA-MM-DD` y encabezados en español sin
+    tildes (`fecha,temperatura_minima,…`).
+  - **Compartir**: el archivo elegido con `share_plus` (WhatsApp, correo, Drive o "Guardar en el teléfono").
+  - **Imprimir**: el mismo PDF con `Printing.layoutPdf`, que abre el servicio de impresión de Android
+    (impresora de la red o "Guardar como PDF"). Si el teléfono no tiene servicio de impresión, se avisa
+    y se ofrece compartir.
+  - Nombre del archivo: `agroclima_{parcela}_{desde}_{hasta}.{pdf|xlsx|csv}` (sin tildes ni espacios).
 
 ## Perfil y soporte (Etapa 6)
 - Perfil (28): nombre, correo, teléfono (editables salvo correo), accesos a parcelas, avisos, ajustes, ayuda, cerrar sesión.

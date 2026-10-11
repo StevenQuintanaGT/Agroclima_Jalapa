@@ -37,6 +37,12 @@ Habilitadores técnicos: **HT-01** Configuración inicial Flutter (3) · **HT-02
 reglas de seguridad (5) · **HT-03** Catálogo de umbrales (5) · **HT-04** Servicio de evaluación periódica (8).
 Total de la pila: 115 puntos.
 
+> Nota HU-16: el resumen del período se **exporta a PDF, Excel (.xlsx) o CSV** y también se puede
+> **imprimir** desde el teléfono. La tesis solo menciona PDF; ver `DECISIONES.md` D-51.
+> Criterios: normal — el archivo trae los mismos datos que se ven en Reportes; alterno — período sin
+> alertas → el archivo lo dice; ante error — sin impresora o sin app para abrir el archivo → se ofrece
+> compartirlo (WhatsApp, correo, Drive) en lugar de fallar.
+
 > Nota HU-01: la tesis (§5.6.1) resuelve el acceso con **correo + contraseña o cuenta de Google**. El
 > teléfono se guarda como dato de contacto (+502), no como método de acceso. Ver `DECISIONES.md` D-03.
 
