@@ -42,7 +42,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 
 ## Etapa 5 — Mapa e historial · `plans/03` §7, `plans/05`
 - [x] **HU-09** Capas del clima en el mapa
-- [ ] **HU-14** Historial de alertas
+- [x] **HU-14** Historial de alertas
 - [ ] **HU-13** Registro de condiciones anteriores (historial día por día)
 
 ## Etapa 6 — Reportes, perfil y cierre · `plans/05`

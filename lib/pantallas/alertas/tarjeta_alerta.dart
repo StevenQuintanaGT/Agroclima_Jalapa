@@ -112,6 +112,29 @@ class TarjetaAlerta extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                                // Historial (HU-14): si el productor atendió el aviso.
+                                if (alerta.atendida) ...[
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Symbols.task_alt,
+                                        size: 22,
+                                        color: esquema.primary,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Flexible(
+                                        child: Text(
+                                          Textos.yaTomoMedidas,
+                                          style: Tipografia.cuerpo.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: esquema.primary,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ],
                             ),
                           ),

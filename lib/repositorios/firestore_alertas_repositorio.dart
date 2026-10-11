@@ -16,10 +16,10 @@ class FirestoreAlertasRepositorio implements AlertasRepositorio {
       (_db ?? FirebaseFirestore.instance).collection('alertas');
 
   @override
-  Stream<List<Alerta>> delUsuario(String usuarioId) => _alertas
+  Stream<List<Alerta>> delUsuario(String usuarioId, {int? limite}) => _alertas
       .where('usuarioId', isEqualTo: usuarioId)
       .orderBy('fechaGeneracion', descending: true)
-      .limit(Constantes.alertasEnLista)
+      .limit(limite ?? Constantes.alertasEnLista)
       .snapshots()
       .map(
         (consulta) => [

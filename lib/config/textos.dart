@@ -458,6 +458,9 @@ class Textos {
   static const String quePuedeHacer = 'Qué puede hacer hoy';
   static const String yaTomeMedidas = 'Ya tomé medidas';
   static const String yaTomoMedidas = 'Ya tomó medidas';
+  static const String todas = 'Todas';
+  static const String verMasAvisos = 'Ver más avisos';
+  static const String buscandoMasAvisos = 'Buscando avisos…';
   static const String avisarWhatsApp = 'Avisar por WhatsApp';
 
   /// Riesgo en pocas palabras: "Puede caer helada", "Viento fuerte".
@@ -593,7 +596,8 @@ class Textos {
   static String lecturaTarjetaAlerta(Alerta a, DateTime ahora) =>
       '${palabraNivel(a.nivel)}. ${tituloAlerta(a)}. '
       '${parcelaYCultivo(a.parcelaNombre, a.cultivo)}. '
-      '${cuandoAlerta(a, ahora)}.${a.leida ? '' : ' $nuevo.'}';
+      '${cuandoAlerta(a, ahora)}.${a.atendida ? ' $yaTomoMedidas.' : ''}'
+      '${a.leida ? '' : ' $nuevo.'}';
 
   // ---------- Mapa del clima (pantalla 20, HU-09) ----------
   static const String mapaClima = 'Mapa del clima';

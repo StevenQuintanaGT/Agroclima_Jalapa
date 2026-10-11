@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
+import '../../componentes/boton_secundario.dart';
+import '../../componentes/chip_seleccion.dart';
 import '../../componentes/esqueleto_carga.dart';
 import '../../componentes/estado_vacio.dart';
 import '../../config/rutas.dart';
@@ -69,7 +71,7 @@ class CentroAlertasPantalla extends StatelessWidget {
                           detalle: Textos.todoTranquiloDetalle,
                         )
                       : _Lista(alertas: vm.activas, ahora: vm.ahora),
-                  vm.anteriores.isEmpty
+                  vm.parcelasAnteriores.isEmpty
                       ? EstadoVacio(
                           icono: Symbols.history,
                           titulo: Textos.sinAnteriores,
@@ -81,7 +83,28 @@ class CentroAlertasPantalla extends StatelessWidget {
                               .colorScheme
                               .surfaceContainerHighest,
                         )
-                      : _Lista(alertas: vm.anteriores, ahora: vm.ahora),
+                      : _Lista(
+                          alertas: vm.anteriores,
+                          ahora: vm.ahora,
+                          encabezado: vm.parcelasAnteriores.length > 1
+                              ? _FiltroParcela(
+                                  parcelas: vm.parcelasAnteriores,
+                                  elegida: vm.parcelaFiltro,
+                                  alElegir: vm.filtrarParcela,
+                                )
+                              : null,
+                          pie: vm.hayMas
+                              ? BotonSecundario(
+                                  texto: vm.cargandoMas
+                                      ? Textos.buscandoMasAvisos
+                                      : Textos.verMasAvisos,
+                                  icono: Symbols.history,
+                                  alPresionar: vm.cargandoMas
+                                      ? null
+                                      : vm.verMas,
+                                )
+                              : null,
+                        ),
                 ],
               ),
       ),
@@ -128,22 +151,76 @@ class _PestanaActivos extends StatelessWidget {
 }
 
 class _Lista extends StatelessWidget {
-  const _Lista({required this.alertas, required this.ahora});
+  const _Lista({
+    required this.alertas,
+    required this.ahora,
+    this.encabezado,
+    this.pie,
+  });
 
   final List<Alerta> alertas;
   final DateTime ahora;
 
+  /// Filtro por parcela del historial (HU-14).
+  final Widget? encabezado;
+
+  /// "Ver más avisos".
+  final Widget? pie;
+
   @override
   Widget build(BuildContext context) {
+    final filas = <Widget>[
+      ?encabezado,
+      for (final alerta in alertas)
+        TarjetaAlerta(
+          alerta: alerta,
+          ahora: ahora,
+          alTocar: () => context.push(Rutas.detalleAlerta(alerta.alertaId)),
+        ),
+      ?pie,
+    ];
     return ListView.separated(
       padding: const EdgeInsets.all(Medidas.margenPantalla),
-      itemCount: alertas.length,
+      itemCount: filas.length,
       separatorBuilder: (_, _) =>
           const SizedBox(height: Medidas.separacionTarjetas),
-      itemBuilder: (context, i) => TarjetaAlerta(
-        alerta: alertas[i],
-        ahora: ahora,
-        alTocar: () => context.push(Rutas.detalleAlerta(alertas[i].alertaId)),
+      itemBuilder: (_, i) => filas[i],
+    );
+  }
+}
+
+/// Filtro del historial por parcela: "Todas" y una pastilla por parcela.
+class _FiltroParcela extends StatelessWidget {
+  const _FiltroParcela({
+    required this.parcelas,
+    required this.elegida,
+    required this.alElegir,
+  });
+
+  final List<(String, String)> parcelas;
+  final String? elegida;
+  final void Function(String? parcelaId) alElegir;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          ChipSeleccion(
+            texto: Textos.todas,
+            elegido: elegida == null,
+            alTocar: () => alElegir(null),
+          ),
+          for (final (id, nombre) in parcelas) ...[
+            const SizedBox(width: 8),
+            ChipSeleccion(
+              texto: nombre,
+              elegido: elegida == id,
+              alTocar: () => alElegir(id),
+            ),
+          ],
+        ],
       ),
     );
   }

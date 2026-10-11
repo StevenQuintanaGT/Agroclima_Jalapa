@@ -13,6 +13,7 @@ Este módulo **solo usa datos ya guardados**; no llama a OpenWeather.
 
 ## HU-14 — Historial de alertas
 Pestaña "Anteriores" del centro de alertas (plan 04) + filtro por parcela. Muestra si se atendió.
+Hecho: ver `DECISIONES.md` D-52.
 
 ## HU-13 — Historial día por día (26)
 Lista por día: fecha en palabras, mínima/máxima o temperatura registrada, lluvia del día, ícono de aviso si
