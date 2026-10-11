@@ -11,11 +11,25 @@ class AlertasServicio {
   final AlertasRepositorio _repositorio;
   final AuthRepositorio _auth;
 
-  /// Alertas del productor con sesión, en vivo. Vacío si no hay sesión.
-  Stream<List<Alerta>> misAlertas() {
+  /// Alertas del productor con sesión, en vivo (las más recientes, hasta
+  /// [limite]). Vacío si no hay sesión.
+  Stream<List<Alerta>> misAlertas({int? limite}) {
     final uid = _auth.uidActual;
     if (uid == null) return Stream.value(const []);
-    return _repositorio.delUsuario(uid);
+    return limite == null
+        ? _repositorio.delUsuario(uid)
+        : _repositorio.delUsuario(uid, limite: limite);
+  }
+
+  /// Parcelas que aparecen en las alertas (para el filtro del historial,
+  /// HU-14), en orden alfabético: (parcelaId, nombre).
+  static List<(String, String)> parcelasDe(List<Alerta> alertas) {
+    final nombres = <String, String>{};
+    for (final alerta in alertas) {
+      nombres.putIfAbsent(alerta.parcelaId, () => alerta.parcelaNombre);
+    }
+    return [for (final e in nombres.entries) (e.key, e.value)]
+      ..sort((a, b) => a.$2.compareTo(b.$2));
   }
 
   Stream<Alerta?> observar(String alertaId) => _repositorio.observar(alertaId);
