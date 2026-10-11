@@ -59,6 +59,7 @@ Curva de temperatura (fl_chart), barras de lluvia por franja con frase que la in
 ("lluvia ligera" < 2.5 mm/h, "lluvia moderada" 2.5–15, "lluvia fuerte" > 15), viento, humedad, sol.
 
 ## 7. Mapa del clima (20, HU-09)
+> Hecho con `flutter_map` + Esri en lugar de `GoogleMap` (D-37); detalles en `DECISIONES.md` D-50.
 `GoogleMap` con pines de las parcelas del usuario. Capas como `TileOverlay` desde
 `https://tile.openweathermap.org/map/{capa}/{z}/{x}/{y}.png?appid=` con botones con ícono y nombre:
 Lluvia (`precipitation_new`), Nubes (`clouds_new`), Calor (`temp_new`), Viento (`wind_new`).

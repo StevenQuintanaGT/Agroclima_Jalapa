@@ -25,6 +25,8 @@ import '../pantallas/acceso/splash_pantalla.dart';
 import '../modelos/parcela.dart';
 import '../pantallas/clima/detalle_pronostico_pantalla.dart';
 import '../pantallas/clima/detalle_pronostico_vm.dart';
+import '../pantallas/clima/mapa_clima_pantalla.dart';
+import '../pantallas/clima/mapa_clima_vm.dart';
 import '../pantallas/clima/panel_pantalla.dart';
 import '../pantallas/clima/panel_vm.dart';
 import '../pantallas/parcelas/detalle_parcela_pantalla.dart';
@@ -300,7 +302,23 @@ GoRouter crearEnrutador({
               ),
             ],
           ),
-          _rama(Rutas.mapa, Textos.navMapa),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Rutas.mapa,
+                builder: (context, estado) => ChangeNotifierProvider(
+                  create: (context) => MapaClimaVm(
+                    parcelas: context.read<ParcelasServicio>(),
+                    alertas: context.read<AlertasServicio>(),
+                    clima: context.read<ClimaServicio>(),
+                    preferencias: preferencias,
+                    conectividad: context.read<ConectividadServicio>(),
+                  ),
+                  child: const MapaClimaPantalla(),
+                ),
+              ),
+            ],
+          ),
           StatefulShellBranch(
             routes: [
               GoRoute(

@@ -1,3 +1,4 @@
+import '../modelos/capa_clima.dart';
 import '../modelos/clima_actual.dart';
 import '../modelos/condicion.dart';
 import '../modelos/franja_pronostico.dart';
@@ -24,4 +25,8 @@ abstract class ClimaRepositorio {
 
   /// Pronóstico por día que guardó el ciclo, de hoy en adelante.
   Stream<List<PronosticoDia>> proximosDias(String parcelaId);
+
+  /// Plantilla de teselas de una capa del mapa del clima (HU-09), con
+  /// {z}/{x}/{y}. Cambiar de proveedor no toca el mapa (RNF-20).
+  String urlCapa(CapaClima capa);
 }

@@ -181,7 +181,7 @@ void main() {
     expect(
       find.descendant(
         of: find.byType(AppBar),
-        matching: find.text(Textos.navMapa),
+        matching: find.text(Textos.mapaClima),
       ),
       findsOneWidget,
     );

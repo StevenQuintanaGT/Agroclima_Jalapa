@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 
 import '../modelos/alerta.dart';
+import '../modelos/capa_clima.dart';
 import '../modelos/enums.dart';
 import '../modelos/error_clima.dart';
 
@@ -593,6 +594,36 @@ class Textos {
       '${palabraNivel(a.nivel)}. ${tituloAlerta(a)}. '
       '${parcelaYCultivo(a.parcelaNombre, a.cultivo)}. '
       '${cuandoAlerta(a, ahora)}.${a.leida ? '' : ' $nuevo.'}';
+
+  // ---------- Mapa del clima (pantalla 20, HU-09) ----------
+  static const String mapaClima = 'Mapa del clima';
+  static const String departamentoJalapa = 'Departamento de Jalapa';
+  static const String miParcela = 'Mi parcela';
+  static const String queSignificanColores = 'Qué significan los colores';
+  static const String verMasClaro = 'Ver más claro';
+  static const String elijaCapa =
+      'Toque Lluvia, Nubes, Calor o Viento para verlo sobre el mapa.';
+  static const String errorCapa =
+      'No pudimos traer esa capa. El mapa sigue funcionando.';
+  static const String sinInternetMapa =
+      'Sin internet el mapa y las capas no se pueden cargar.';
+  static const String fuenteMapaClima =
+      'Mapa: Esri y colaboradores · Clima: OpenWeather';
+
+  static String nombreCapa(CapaClima capa) => switch (capa) {
+    CapaClima.lluvia => 'Lluvia',
+    CapaClima.nubes => 'Nubes',
+    CapaClima.calor => 'Calor',
+    CapaClima.viento => 'Viento',
+  };
+
+  /// Extremos de la leyenda: (poco, mucho).
+  static (String, String) extremosCapa(CapaClima capa) => switch (capa) {
+    CapaClima.lluvia => ('Poca lluvia', 'Lluvia fuerte'),
+    CapaClima.nubes => ('Pocas nubes', 'Muy nublado'),
+    CapaClima.calor => ('Frío', 'Calor'),
+    CapaClima.viento => ('Poco viento', 'Viento fuerte'),
+  };
 
   // ---------- Mis avisos (pantalla 23, HU-12) ----------
   static const String misAvisos = 'Mis avisos';
