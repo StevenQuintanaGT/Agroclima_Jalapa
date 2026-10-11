@@ -86,7 +86,8 @@ agroclima_jalapa/
 │   │   ├── avisos_servicio.dart             # "Mis avisos": preferencias y lo que aguanta el cultivo
 │   │   ├── ubicacion_servicio.dart          # geolocator + permisos
 │   │   ├── historial_servicio.dart          # día por día: avisos por día y filtros (HU-13)
-│   │   └── reportes_servicio.dart           # resumen por período + PDF, Excel, CSV e impresión
+│   │   ├── reportes_servicio.dart           # período, resumen e indicadores (HU-16)
+│   │   └── exportar_reporte.dart            # arma el PDF, el Excel y el CSV en el teléfono (D-51)
 │   │
 │   ├── pantallas/                # una carpeta por módulo; cada pantalla con su *_vm.dart
 │   │   ├── acceso/               # MOD-01: splash, onboarding, inicio_sesion, registro,

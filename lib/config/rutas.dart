@@ -38,8 +38,9 @@ import '../pantallas/parcelas/registro_parcela_vm.dart';
 import '../pantallas/perfil/perfil_pantalla.dart';
 import '../pantallas/reportes/historial_pantalla.dart';
 import '../pantallas/reportes/historial_vm.dart';
+import '../pantallas/reportes/reportes_pantalla.dart';
+import '../pantallas/reportes/reportes_vm.dart';
 import '../pantallas/perfil/perfil_vm.dart';
-import '../pantallas/shell/pantalla_en_construccion.dart';
 import '../pantallas/shell/shell_pantalla.dart';
 import '../repositorios/preferencias_locales_repositorio.dart';
 import '../servicios/alertas_servicio.dart';
@@ -50,6 +51,7 @@ import '../servicios/compartir_servicio.dart';
 import '../servicios/conectividad_servicio.dart';
 import '../servicios/cuenta_servicio.dart';
 import '../servicios/historial_servicio.dart';
+import '../servicios/reportes_servicio.dart';
 import '../servicios/notificaciones_servicio.dart';
 import '../servicios/parcelas_servicio.dart';
 import '../servicios/ubicacion_servicio.dart';
@@ -350,7 +352,23 @@ GoRouter crearEnrutador({
               ),
             ],
           ),
-          _rama(Rutas.reportes, Textos.navReportes),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Rutas.reportes,
+                builder: (context, estado) => ChangeNotifierProvider(
+                  create: (context) => ReportesVm(
+                    parcelas: context.read<ParcelasServicio>(),
+                    alertas: context.read<AlertasServicio>(),
+                    reportes: context.read<ReportesServicio>(),
+                    compartir: context.read<CompartirServicio>(),
+                    preferencias: preferencias,
+                  ),
+                  child: const ReportesPantalla(),
+                ),
+              ),
+            ],
+          ),
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -387,12 +405,3 @@ GoRouter crearEnrutador({
     ],
   );
 }
-
-StatefulShellBranch _rama(String ruta, String titulo) => StatefulShellBranch(
-  routes: [
-    GoRoute(
-      path: ruta,
-      builder: (context, estado) => PantallaEnConstruccion(titulo: titulo),
-    ),
-  ],
-);

@@ -599,6 +599,136 @@ class Textos {
       '${cuandoAlerta(a, ahora)}.${a.atendida ? ' $yaTomoMedidas.' : ''}'
       '${a.leida ? '' : ' $nuevo.'}';
 
+  // ---------- Reportes (pantallas 25 y 27, HU-16) ----------
+  static const String resumen = 'Resumen';
+  static const String enviar = 'Enviar';
+  static const String sieteDias = '7 días';
+  static const String treintaDias = '30 días';
+  static const String elegir = 'Elegir';
+  static const String elegirPeriodo = 'Elija los días del resumen';
+  static String diasConLluvia(int n) =>
+      n == 1 ? 'día con lluvia' : 'días con lluvia';
+  static const String nocheMasFria = 'la noche más fría';
+  static const String llovioEnTotal = 'llovió en total';
+  static String avisosDePeligro(int n) =>
+      n == 1 ? 'aviso de peligro' : 'avisos de peligro';
+  static String temperaturaDelPeriodo(int dias) => switch (dias) {
+    7 => 'Temperatura de la semana',
+    30 => 'Temperatura del mes',
+    _ => 'Temperatura de estos días',
+  };
+  static const String masCaliente = 'Más caliente';
+  static const String masFrio = 'Más frío';
+  static const String lluviaPorDia = 'Lluvia por día';
+  static const String sinDatosPeriodo =
+      'No hay días guardados en este período. Pruebe con otros días.';
+  static const String sinParcelasReporte =
+      'Registre una parcela para ver su resumen';
+  static const String sinParcelasReporteDetalle =
+      'El resumen junta la lluvia, el frío, el calor y los avisos de cada día.';
+  static const String sinPeligro = 'Sin avisos de peligro en estos días.';
+
+  /// "martes 6".
+  static String diaYNumero(DateTime dia) =>
+      '${DateFormat('EEEE', 'es').format(dia)} ${dia.day}';
+
+  /// "Del 4 al 10 de octubre de 2026" / "Del 28 de septiembre al 4 de octubre de 2026".
+  static String periodoEnPalabras(DateTime desde, DateTime hasta) {
+    String fecha(DateTime d, {required bool mes, required bool anio}) =>
+        '${d.day}${mes ? ' de ${DateFormat('MMMM', 'es').format(d)}' : ''}'
+        '${anio ? ' de ${d.year}' : ''}';
+    final mismoAnio = desde.year == hasta.year;
+    final mismoMes = mismoAnio && desde.month == hasta.month;
+    return 'Del ${fecha(desde, mes: !mismoMes, anio: !mismoAnio)} al '
+        '${fecha(hasta, mes: true, anio: true)}';
+  }
+
+  /// Frase de la gráfica de temperatura.
+  static String fraseTemperatura(
+    DateTime? diaFrio,
+    double? frio,
+    DateTime? diaCaliente,
+    double? caliente,
+  ) {
+    if (diaFrio == null || frio == null) return sinDatosPeriodo;
+    final partes = [
+      'La noche más fría fue el ${diaYNumero(diaFrio)}, con '
+          '${frio.round()} °C.',
+    ];
+    if (diaCaliente != null && caliente != null) {
+      partes.add(
+        'Lo más caliente fue el ${diaYNumero(diaCaliente)}, con '
+        '${caliente.round()} °C.',
+      );
+    }
+    return partes.join(' ');
+  }
+
+  /// Frase de la gráfica de lluvia.
+  static String fraseLluvia(DateTime? diaMasLluvioso, double? mm) =>
+      diaMasLluvioso == null || mm == null
+      ? 'No llovió en estos días.'
+      : 'Llovió más el ${diaYNumero(diaMasLluvioso)}: ${mm.round()} mm.';
+
+  // Hoja "Guardar o enviar" (27, D-51).
+  static const String guardarOEnviar = 'Guardar o enviar';
+  static const String seHaceArchivo = 'Se hace un archivo con el resumen.';
+  static const String archivoPdf = 'Archivo PDF';
+  static const String archivoPdfDetalle = 'Se abre en cualquier teléfono';
+  static const String hojaExcel = 'Hoja de Excel';
+  static const String hojaExcelDetalle = 'Para hacer cuentas en la computadora';
+  static const String archivoCsv = 'Archivo CSV';
+  static const String archivoCsvDetalle = 'Para otros programas';
+  static const String compartir = 'Compartir';
+  static const String imprimir = 'Imprimir';
+  static const String cancelar = 'Cancelar';
+  static const String preparandoArchivo = 'Preparando el archivo…';
+  static const String noSePudoImprimir =
+      'Este teléfono no puede imprimir. Comparta el archivo y imprímalo desde '
+      'otro lado.';
+
+  // Contenido de los archivos (PDF, Excel y CSV).
+  static const String tituloReporte = 'Resumen del clima';
+  static const String periodo = 'Período';
+  static const String desde = 'Desde';
+  static const String hasta = 'Hasta';
+  static const String sinCultivoReporte = 'Sin cultivo';
+  static const String indicadores = 'Indicadores';
+  static const String fecha = 'Fecha';
+  static const String minimaGrados = 'Mínima (°C)';
+  static const String maximaGrados = 'Máxima (°C)';
+  static const String registradaGrados = 'Registrada (°C)';
+  static const String lluviaMm = 'Lluvia (mm)';
+  static const String aviso = 'Aviso';
+  static const String avisosDelPeriodo = 'Avisos del período';
+  static const String riesgo = 'Riesgo';
+  static const String nivel = 'Nivel';
+  static const String seEsperaba = 'Se esperaba';
+  static const String loQueAguantaCorto = 'Lo que aguanta';
+  static const String tomoMedidas = '¿Tomó medidas?';
+  static const String si = 'Sí';
+  static const String no = 'No';
+  static const String ningunAviso = 'Ningún aviso en este período.';
+  static const String hojaResumen = 'Resumen';
+  static const String hojaDias = 'Días';
+  static const String hojaAvisos = 'Avisos';
+  static const String fuenteDatosReporte =
+      'Datos de OpenWeather guardados por AgroClima Jalapa.';
+
+  /// En hora de Guatemala, sin importar la zona del teléfono.
+  static String generado(DateTime cuando) =>
+      'Hecho el ${DateFormat("d 'de' MMMM 'de' y, h:mm a", 'es').format(cuando.toUtc().add(const Duration(hours: -6)))}';
+
+  /// Encabezados del CSV: en español, sin tildes ni espacios (plans/05).
+  static const List<String> encabezadosCsv = [
+    'fecha',
+    'temperatura_minima',
+    'temperatura_maxima',
+    'temperatura_registrada',
+    'lluvia_mm',
+    'aviso',
+  ];
+
   // ---------- Día por día (pantalla 26, HU-13) ----------
   static const String diaPorDia = 'Día por día';
   static const String verDiaPorDia = 'Ver día por día';

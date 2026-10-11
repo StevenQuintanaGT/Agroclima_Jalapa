@@ -32,6 +32,7 @@ import 'servicios/avisos_servicio.dart';
 import 'servicios/compartir_servicio.dart';
 import 'servicios/cuenta_servicio.dart';
 import 'servicios/historial_servicio.dart';
+import 'servicios/reportes_servicio.dart';
 import 'servicios/busqueda_lugares_servicio.dart';
 import 'servicios/clima_servicio.dart';
 import 'servicios/conectividad_servicio.dart';
@@ -104,6 +105,9 @@ Future<void> main() async {
         Provider(create: (_) => CompartirServicio()),
         Provider(
           create: (_) => HistorialServicio(FirestoreHistorialRepositorio()),
+        ),
+        Provider(
+          create: (_) => ReportesServicio(FirestoreHistorialRepositorio()),
         ),
         Provider(
           create: (context) => AvisosServicio(

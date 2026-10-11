@@ -10,6 +10,24 @@ class FirestoreHistorialRepositorio implements HistorialRepositorio {
   final FirebaseFirestore? _db;
 
   @override
+  Stream<List<RegistroDia>> rango(
+    String parcelaId, {
+    required String desde,
+    required String hasta,
+  }) => (_db ?? FirebaseFirestore.instance)
+      .collection('parcelas/$parcelaId/condiciones')
+      .where('fecha', isGreaterThanOrEqualTo: desde)
+      .where('fecha', isLessThanOrEqualTo: hasta)
+      .orderBy('fecha')
+      .snapshots()
+      .map(
+        (consulta) => [
+          for (final doc in consulta.docs)
+            RegistroDia.fromMap(doc.id, doc.data()),
+        ],
+      );
+
+  @override
   Stream<List<RegistroDia>> dias(String parcelaId, {required int limite}) =>
       (_db ?? FirebaseFirestore.instance)
           .collection('parcelas/$parcelaId/condiciones')
