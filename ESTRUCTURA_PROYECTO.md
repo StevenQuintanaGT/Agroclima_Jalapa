@@ -67,7 +67,7 @@ agroclima_jalapa/
 │   │   ├── clima_repositorio.dart           # caché primero
 │   │   ├── alertas_repositorio.dart         # + firestore_alertas_repositorio.dart (solo leida/atendida)
 │   │   ├── umbrales_repositorio.dart        # solo lectura
-│   │   ├── historial_repositorio.dart       # condiciones pasadas por rango de fechas
+│   │   ├── historial_repositorio.dart       # condiciones pasadas, del día más nuevo al más viejo (+ firestore_)
 │   │   └── preferencias_locales_repositorio.dart # marcas del teléfono (bienvenida vista, permisos ofrecidos)
 │   │
 │   ├── servicios/                # lógica de negocio; no conocen widgets
@@ -85,6 +85,7 @@ agroclima_jalapa/
 │   │   ├── compartir_servicio.dart          # menú de compartir (WhatsApp) con share_plus
 │   │   ├── avisos_servicio.dart             # "Mis avisos": preferencias y lo que aguanta el cultivo
 │   │   ├── ubicacion_servicio.dart          # geolocator + permisos
+│   │   ├── historial_servicio.dart          # día por día: avisos por día y filtros (HU-13)
 │   │   └── reportes_servicio.dart           # resumen por período + PDF, Excel, CSV e impresión
 │   │
 │   ├── pantallas/                # una carpeta por módulo; cada pantalla con su *_vm.dart

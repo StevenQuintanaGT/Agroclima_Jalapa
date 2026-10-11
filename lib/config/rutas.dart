@@ -36,6 +36,8 @@ import '../pantallas/parcelas/mis_parcelas_vm.dart';
 import '../pantallas/parcelas/registro_parcela_pantalla.dart';
 import '../pantallas/parcelas/registro_parcela_vm.dart';
 import '../pantallas/perfil/perfil_pantalla.dart';
+import '../pantallas/reportes/historial_pantalla.dart';
+import '../pantallas/reportes/historial_vm.dart';
 import '../pantallas/perfil/perfil_vm.dart';
 import '../pantallas/shell/pantalla_en_construccion.dart';
 import '../pantallas/shell/shell_pantalla.dart';
@@ -47,6 +49,7 @@ import '../servicios/clima_servicio.dart';
 import '../servicios/compartir_servicio.dart';
 import '../servicios/conectividad_servicio.dart';
 import '../servicios/cuenta_servicio.dart';
+import '../servicios/historial_servicio.dart';
 import '../servicios/notificaciones_servicio.dart';
 import '../servicios/parcelas_servicio.dart';
 import '../servicios/ubicacion_servicio.dart';
@@ -84,6 +87,10 @@ class Rutas {
 
   /// Pantalla 22. La abre una notificación sin pasar por la barra (DISENO_UI §8).
   static String detalleAlerta(String alertaId) => '/alertas/$alertaId';
+
+  /// Pantalla 26, día por día de una parcela.
+  static String historialParcela(String parcelaId) =>
+      '/parcelas/$parcelaId/historial';
   static String editarParcela(String parcelaId, {int? paso}) =>
       '/parcelas/$parcelaId/editar${paso == null ? '' : '?paso=$paso'}';
 
@@ -231,6 +238,18 @@ GoRouter crearEnrutador({
           child: const DetalleParcelaPantalla(),
         ),
         routes: [
+          GoRoute(
+            path: 'historial',
+            builder: (context, estado) => ChangeNotifierProvider(
+              create: (context) => HistorialVm(
+                historial: context.read<HistorialServicio>(),
+                alertas: context.read<AlertasServicio>(),
+                parcelas: context.read<ParcelasServicio>(),
+                parcelaId: estado.pathParameters['parcelaId']!,
+              ),
+              child: const HistorialPantalla(),
+            ),
+          ),
           GoRoute(
             path: 'editar',
             // La parcela llega desde la lista o el detalle; sin ella, al detalle.

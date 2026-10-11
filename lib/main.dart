@@ -14,6 +14,7 @@ import 'config/rutas.dart';
 import 'repositorios/alertas_repositorio.dart';
 import 'repositorios/auth_repositorio.dart';
 import 'repositorios/firestore_alertas_repositorio.dart';
+import 'repositorios/firestore_historial_repositorio.dart';
 import 'repositorios/firebase_auth_repositorio.dart';
 import 'repositorios/firestore_parcelas_repositorio.dart';
 import 'repositorios/firestore_umbrales_repositorio.dart';
@@ -30,6 +31,7 @@ import 'servicios/alertas_servicio.dart';
 import 'servicios/avisos_servicio.dart';
 import 'servicios/compartir_servicio.dart';
 import 'servicios/cuenta_servicio.dart';
+import 'servicios/historial_servicio.dart';
 import 'servicios/busqueda_lugares_servicio.dart';
 import 'servicios/clima_servicio.dart';
 import 'servicios/conectividad_servicio.dart';
@@ -100,6 +102,9 @@ Future<void> main() async {
           ),
         ),
         Provider(create: (_) => CompartirServicio()),
+        Provider(
+          create: (_) => HistorialServicio(FirestoreHistorialRepositorio()),
+        ),
         Provider(
           create: (context) => AvisosServicio(
             usuarios: usuarios,

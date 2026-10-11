@@ -599,6 +599,43 @@ class Textos {
       '${cuandoAlerta(a, ahora)}.${a.atendida ? ' $yaTomoMedidas.' : ''}'
       '${a.leida ? '' : ' $nuevo.'}';
 
+  // ---------- Día por día (pantalla 26, HU-13) ----------
+  static const String diaPorDia = 'Día por día';
+  static const String verDiaPorDia = 'Ver día por día';
+  static const String filtroTodo = 'Todo';
+  static const String filtroConLluvia = 'Con lluvia';
+  static const String filtroConAviso = 'Con aviso';
+  static const String sinDias = 'Todavía no hay días guardados de esta parcela';
+  static const String sinDiasDetalle =
+      'Cada día que pase se irá guardando aquí el clima de su parcela.';
+  static const String sinDiasConLluvia = 'No llovió en los días guardados';
+  static const String sinDiasConAviso = 'No hubo avisos en los días guardados';
+  static const String verDiasAnteriores = 'Ver días anteriores';
+  static const String buscandoDias = 'Buscando días…';
+
+  /// Cómo estuvo el día según la lluvia que sumó el ciclo (D-40, D-53).
+  static String resumenLluviaDia(double? mm) => switch (mm) {
+    null => 'Sin dato de lluvia',
+    < 1 => 'Sin lluvia',
+    < 10 => 'Lluvia ligera',
+    <= 30 => 'Llovió bastante',
+    _ => 'Llovió fuerte',
+  };
+
+  /// "8 mm de lluvia", "32 mm · 1 aviso", "Sin dato · 2 avisos".
+  static String detalleDia(double? mm, int avisos) {
+    final lluvia = mm == null ? 'Sin dato' : '${mm.round()} mm';
+    if (avisos == 0) return mm == null ? lluvia : '$lluvia de lluvia';
+    return '$lluvia · ${avisos == 1 ? '1 aviso' : '$avisos avisos'}';
+  }
+
+  /// "agosto".
+  static String nombreMes(DateTime dia) => DateFormat('MMMM', 'es').format(dia);
+
+  /// Lectura de una fila para TalkBack.
+  static String lecturaDia(String fecha, String resumen, String detalle) =>
+      '$fecha. $resumen. $detalle.';
+
   // ---------- Mapa del clima (pantalla 20, HU-09) ----------
   static const String mapaClima = 'Mapa del clima';
   static const String departamentoJalapa = 'Departamento de Jalapa';
