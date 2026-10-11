@@ -110,7 +110,7 @@ Espaciado: 8 / 16 / 24 / 32 / 48 dp. Radios: 8 y 16 dp. Íconos siempre con su p
 | 24 | Notificación del sistema: empieza con la palabra del semáforo y la parcela | MOD-04 | HU-10 |
 | 25 | Reportes: 7/30 días, 4 indicadores (días con lluvia, noche más fría, lluvia acumulada, avisos de peligro) + gráficas | MOD-05 | HU-16 |
 | 26 | Historial día por día, filtros Todo / Con lluvia / Con aviso | MOD-05 | HU-13 |
-| 27 | Exportar reporte a PDF (guardar o compartir) | MOD-05 | HU-16 |
+| 27 | Guardar o enviar el reporte: período (7/30 días/elegir), formato **PDF / Excel / CSV** (tarjetas con ícono, nombre y para qué sirve), botones "Compartir" e "Imprimir" (D-51) | MOD-05 | HU-16 |
 | 28 | Perfil: datos, parcelas, avisos, ajustes, ayuda, cerrar sesión | Perfil | — |
 | 29 | Ajustes: °C/°F, manzanas/ha, tema oscuro, ahorro de datos; eliminar cuenta al final | Perfil | — |
 | 30 | Ayuda y glosario | Perfil | — |

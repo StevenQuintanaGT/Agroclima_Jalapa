@@ -85,7 +85,7 @@ agroclima_jalapa/
 │   │   ├── compartir_servicio.dart          # menú de compartir (WhatsApp) con share_plus
 │   │   ├── avisos_servicio.dart             # "Mis avisos": preferencias y lo que aguanta el cultivo
 │   │   ├── ubicacion_servicio.dart          # geolocator + permisos
-│   │   └── reportes_servicio.dart           # resumen por período + PDF
+│   │   └── reportes_servicio.dart           # resumen por período + PDF, Excel, CSV e impresión
 │   │
 │   ├── pantallas/                # una carpeta por módulo; cada pantalla con su *_vm.dart
 │   │   ├── acceso/               # MOD-01: splash, onboarding, inicio_sesion, registro,
@@ -202,7 +202,8 @@ Agregarlas con `flutter pub add <paquete>` para obtener la versión vigente comp
 | shared_preferences | Caché local pequeña (pronóstico horario, marca de onboarding) |
 | intl | Fechas y números en `es` |
 | fl_chart | Gráficas de pronóstico y reportes |
-| pdf, printing | Exportar reporte a PDF |
+| pdf, printing | Reporte en PDF e impresión con el servicio de Android (D-51) |
+| excel | Reporte en hoja de Excel (.xlsx), generado en el teléfono (D-51) |
 | share_plus, url_launcher | Compartir por WhatsApp / abrir enlaces |
 | **dev:** flutter_lints, mocktail | Análisis y pruebas |
 

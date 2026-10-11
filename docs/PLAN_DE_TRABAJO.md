@@ -46,7 +46,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 - [ ] **HU-13** Registro de condiciones anteriores (historial día por día)
 
 ## Etapa 6 — Reportes, perfil y cierre · `plans/05`
-- [ ] **HU-16** Resumen de un período + exportar PDF
+- [ ] **HU-16** Resumen de un período + exportar a PDF, Excel y CSV, e imprimir (D-51)
 - [ ] Perfil, ajustes, ayuda y glosario, acerca de, eliminar cuenta
 - [ ] Ajustes que salgan de las pruebas con productores
 - [ ] APK final firmado (≤ 50 MB)

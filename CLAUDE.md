@@ -17,7 +17,8 @@ El productor:
 2. consulta el clima actual y el pronóstico de **cada parcela** (no del municipio);
 3. recibe **alertas automáticas** cuando el pronóstico de los próximos 5 días supera los umbrales
    agrometeorológicos de su cultivo y etapa;
-4. revisa el historial de condiciones y alertas, y genera resúmenes por período (PDF).
+4. revisa el historial de condiciones y alertas, y genera resúmenes por período que se exportan a
+   **PDF, Excel o CSV** o se **imprimen** (D-51).
 
 Usuarios: productores de 25 a 60 años, teléfonos Android de gama media/baja, señal intermitente,
 poca costumbre con aplicaciones especializadas. **Esto manda sobre cualquier decisión de UI.**
