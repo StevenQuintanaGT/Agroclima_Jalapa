@@ -59,6 +59,7 @@ umbrales/{umbralId}
 | temaOscuro | bool | sí | false | |
 | ahorroDatos | bool | sí | false | Restringe la capa del mapa y amplía la vigencia del dato |
 | tokensFcm | array<string> | no | [] | Un token por teléfono con sesión activa |
+| eliminacionSolicitada | timestamp | no | — | Pidió eliminar la cuenta (Ajustes); el ciclo la borra (D-55) |
 
 ### usuarios/{uid}/preferencias/{tipoRiesgo}  (Tabla 65)
 Un documento por tipo de riesgo (6). Se crean con valores por defecto al registrar la cuenta.
@@ -233,8 +234,11 @@ cambiar `mensaje` de una alerta → rechazo; marcar `leida` propia → permitido
 - **Eliminar parcela** (desde la app se borra el documento): en la siguiente vuelta del ciclo de GitHub
   Actions, `limpiarParcelasBorradas` (`functions/src/limpieza.js`) borra `condiciones`, `pronosticos` y las
   `alertas` con ese `parcelaId` (D-37, D-38; reemplaza a `onDocumentDeleted`, que exige Blaze).
-- **Eliminar cuenta** (Tabla 76): función invocable `eliminarCuenta` borra perfil, preferencias, parcelas
-  (con su cascada) y alertas, y luego el usuario de Auth, lo que cierra la sesión en todos los teléfonos.
+- **Eliminar cuenta** (Tabla 76, D-55): sin Blaze no hay función invocable. La app escribe
+  `eliminacionSolicitada` (con señal: espera la confirmación del servidor), vacía `tokensFcm` y cierra la
+  sesión. En la siguiente vuelta del ciclo, `eliminarCuentasSolicitadas` (`functions/src/cuentas.js`) borra
+  **primero el usuario de Auth** (ya no puede entrar ni recrear su perfil) y luego parcelas (con su
+  cascada), alertas, preferencias y perfil. Si algo falla, la marca queda y la próxima vuelta reintenta.
 
 ## 7. Operación sin conexión
 

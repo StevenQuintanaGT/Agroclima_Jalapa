@@ -38,17 +38,18 @@ async function limpiarParcelasBorradas(db) {
   for (const referencia of borradas) {
     // Primero las alertas: si algo falla, el documento fantasma sigue ahí y
     // la próxima vuelta lo vuelve a intentar.
-    await borrarAlertasDe(db, referencia.id);
+    await borrarAlertasDonde(db, 'parcelaId', referencia.id);
     await db.recursiveDelete(referencia);
     limpiadas.push(referencia.id);
   }
   return { existentes: existentes.map((ref) => ref.id), limpiadas };
 }
 
-async function borrarAlertasDe(db, parcelaId) {
+/** Borra las alertas cuyo [campo] vale [valor] (parcelaId o usuarioId). */
+async function borrarAlertasDonde(db, campo, valor) {
   const alertas = await db
     .collection('alertas')
-    .where('parcelaId', '==', parcelaId)
+    .where(campo, '==', valor)
     .select()
     .get();
   for (let i = 0; i < alertas.docs.length; i += LOTE) {
@@ -58,4 +59,4 @@ async function borrarAlertasDe(db, parcelaId) {
   }
 }
 
-module.exports = { limpiarParcelasBorradas };
+module.exports = { limpiarParcelasBorradas, borrarAlertasDonde };

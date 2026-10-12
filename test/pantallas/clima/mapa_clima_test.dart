@@ -47,6 +47,8 @@ void main() {
     bool red = true,
     List<Alerta> alertas = const [],
     String? elegida,
+    bool ahorro = false,
+    bool wifi = false,
   }) {
     final parcelas = _ParcelasFalsas();
     final servicioAlertas = _AlertasFalsas();
@@ -60,6 +62,7 @@ void main() {
     );
     when(servicioAlertas.misAlertas).thenAnswer((_) => Stream.value(alertas));
     when(conectividad.hayRed).thenAnswer((_) async => red);
+    when(conectividad.enWifi).thenAnswer((_) async => wifi);
     when(() => conectividad.cambios).thenAnswer((_) => const Stream.empty());
     when(() => clima.urlCapa(any())).thenAnswer(
       (i) =>
@@ -72,6 +75,7 @@ void main() {
       clima: clima,
       preferencias: preferencias,
       conectividad: conectividad,
+      ahorroDatos: () => ahorro,
       reloj: () => ahoraDePrueba,
     );
   }
@@ -91,6 +95,22 @@ void main() {
         expect(vm.capa, CapaClima.nubes);
         vm.elegirCapa(CapaClima.nubes);
         expect(vm.capa, isNull);
+      },
+    );
+
+    test(
+      'con "Ahorrar datos" y sin wifi, poner una capa pide permiso',
+      () async {
+        expect(await crearVm().pidePermiso(CapaClima.lluvia), isFalse);
+        expect(
+          await crearVm(ahorro: true, wifi: true).pidePermiso(CapaClima.lluvia),
+          isFalse,
+        );
+        final vm = crearVm(ahorro: true);
+        expect(await vm.pidePermiso(CapaClima.lluvia), isTrue);
+        // Quitar la capa puesta nunca lo pide.
+        vm.elegirCapa(CapaClima.lluvia);
+        expect(await vm.pidePermiso(CapaClima.lluvia), isFalse);
       },
     );
 

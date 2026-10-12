@@ -183,6 +183,54 @@ void pruebasHu02() {
     ]);
   });
 
+  test('eliminar cuenta: primero la marca en la nube, luego sale', () async {
+    when(() => auth.uidActual).thenReturn('u1');
+    when(() => auth.cerrarSesion()).thenAnswer((_) async {});
+    when(() => usuarios.solicitarEliminacion('u1')).thenAnswer((_) async {});
+    await servicio.eliminarCuenta();
+    verifyInOrder([
+      () => usuarios.solicitarEliminacion('u1'),
+      () => auth.cerrarSesion(),
+      () => usuarios.borrarDatosLocales(),
+    ]);
+  });
+
+  test('si la marca no llega al servidor, no cierra la sesión', () async {
+    when(() => auth.uidActual).thenReturn('u1');
+    when(() => usuarios.solicitarEliminacion('u1'))
+        .thenThrow(TimeoutException('sin señal'));
+    await expectLater(servicio.eliminarCuenta(), throwsA(isA<Exception>()));
+    verifyNever(() => auth.cerrarSesion());
+  });
+
+  test('una cuenta que pidió eliminarse no vuelve a entrar', () async {
+    when(() => auth.cerrarSesion()).thenAnswer((_) async {});
+    when(() => usuarios.obtenerPerfil('u1')).thenAnswer(
+      (_) async => Usuario(
+        uid: 'u1',
+        nombre: 'Ana',
+        correo: 'ana@c.com',
+        eliminacionSolicitada: DateTime.utc(2026, 10, 12),
+      ),
+    );
+    await expectLater(
+      servicio.iniciarSesion(correo: 'ana@c.com', contrasena: 'x'),
+      throwsA(
+        isA<ErrorAcceso>().having(
+          (e) => e.codigo,
+          'codigo',
+          ErrorAcceso.cuentaEliminandose,
+        ),
+      ),
+    );
+    verify(() => auth.cerrarSesion()).called(1);
+    // La pantalla nueva de "Entrar" recoge el motivo una sola vez.
+    expect(servicio.tomarMotivoDeSalida(), ErrorAcceso.cuentaEliminandose);
+    expect(servicio.tomarMotivoDeSalida(), isNull);
+    verifyNever(() => usuarios.crearPerfil(any()));
+    verifyNever(() => usuarios.agregarTokenAvisos(any(), any()));
+  });
+
   test('recuperar contraseña delega en la autenticación', () async {
     when(() => auth.recuperarContrasena(any())).thenAnswer((_) async {});
     await servicio.recuperarContrasena('ana@c.com');

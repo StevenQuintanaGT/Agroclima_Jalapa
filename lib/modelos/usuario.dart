@@ -11,6 +11,7 @@ class Usuario {
     this.temaOscuro = false,
     this.ahorroDatos = false,
     this.tokensFcm = const [],
+    this.eliminacionSolicitada,
   });
 
   final String uid;
@@ -31,6 +32,26 @@ class Usuario {
   final bool temaOscuro;
   final bool ahorroDatos;
   final List<String> tokensFcm;
+
+  /// Cuándo pidió eliminar su cuenta; el ciclo la borra en su siguiente
+  /// vuelta (D-55). Solo la escribe `solicitarEliminacion`.
+  final DateTime? eliminacionSolicitada;
+
+  bool get fahrenheit => unidadTemperatura == 'F';
+  bool get hectareas => unidadArea == 'hectarea';
+
+  /// Iniciales para el círculo del perfil: "Juan López" → "JL".
+  String get iniciales {
+    final partes = nombre
+        .trim()
+        .split(RegExp(r'\s+'))
+        .where((p) => p.isNotEmpty);
+    if (partes.isEmpty) return '?';
+    final letras = partes.length == 1
+        ? partes.first.substring(0, 1)
+        : partes.first.substring(0, 1) + partes.last.substring(0, 1);
+    return letras.toUpperCase();
+  }
 
   /// Campos que escribe la app. `fechaRegistro` lo agrega el repositorio con
   /// la hora del servidor.
@@ -62,5 +83,6 @@ class Usuario {
     temaOscuro: mapa['temaOscuro'] as bool? ?? false,
     ahorroDatos: mapa['ahorroDatos'] as bool? ?? false,
     tokensFcm: List<String>.from(mapa['tokensFcm'] as List? ?? const []),
+    eliminacionSolicitada: fecha?.call(mapa['eliminacionSolicitada']),
   );
 }

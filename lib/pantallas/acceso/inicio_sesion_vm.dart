@@ -8,7 +8,12 @@ import '../../utilidades/validadores.dart';
 
 /// Estado de la pantalla de inicio de sesión (pantalla 05, HU-02).
 class InicioSesionVm extends ChangeNotifier {
-  InicioSesionVm(this._cuenta);
+  InicioSesionVm(this._cuenta) {
+    // Si la sesión se cerró sola (p. ej. la cuenta se está eliminando), la
+    // pantalla de entrar es nueva: el motivo se recoge aquí.
+    final motivo = _cuenta.tomarMotivoDeSalida();
+    if (motivo != null) _errorGeneral = Errores.deAcceso(motivo);
+  }
 
   final CuentaServicio _cuenta;
 

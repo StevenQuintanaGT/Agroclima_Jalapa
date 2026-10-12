@@ -47,6 +47,37 @@ class _MapaClimaPantallaState extends State<MapaClimaPantalla> {
     );
   }
 
+  /// Con "Ahorrar datos" y sin wifi, pregunta antes de bajar la capa.
+  Future<void> _elegirCapa(
+    BuildContext context,
+    MapaClimaVm vm,
+    CapaClima capa,
+  ) async {
+    if (await vm.pidePermiso(capa)) {
+      if (!context.mounted) return;
+      final si = await showDialog<bool>(
+        context: context,
+        builder: (contexto) => AlertDialog(
+          icon: const Icon(Symbols.data_saver_on, size: 40),
+          title: const Text(Textos.capaSinWifiTitulo),
+          content: const Text(Textos.capaSinWifiDetalle),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(contexto).pop(false),
+              child: const Text(Textos.noEsperar),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.of(contexto).pop(true),
+              child: const Text(Textos.siBajarla),
+            ),
+          ],
+        ),
+      );
+      if (si != true) return;
+    }
+    vm.elegirCapa(capa);
+  }
+
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<MapaClimaVm>();
@@ -91,7 +122,10 @@ class _MapaClimaPantallaState extends State<MapaClimaPantalla> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _Capas(capa: vm.capa, alElegir: vm.elegirCapa),
+                _Capas(
+                  capa: vm.capa,
+                  alElegir: (capa) => _elegirCapa(context, vm, capa),
+                ),
                 if (!vm.hayRed)
                   const _Aviso(
                     icono: Symbols.wifi_off,

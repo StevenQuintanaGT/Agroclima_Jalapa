@@ -10,7 +10,10 @@ import 'package:agroclima_jalapa/servicios/clima_servicio.dart';
 import 'package:agroclima_jalapa/servicios/conectividad_servicio.dart';
 import 'package:agroclima_jalapa/servicios/cuenta_servicio.dart';
 import 'package:agroclima_jalapa/servicios/notificaciones_servicio.dart';
+import 'package:agroclima_jalapa/repositorios/auth_repositorio.dart';
+import 'package:agroclima_jalapa/repositorios/usuario_repositorio.dart';
 import 'package:agroclima_jalapa/servicios/parcelas_servicio.dart';
+import 'package:agroclima_jalapa/servicios/perfil_servicio.dart';
 import 'package:agroclima_jalapa/servicios/ubicacion_servicio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -32,6 +35,18 @@ class _ClimaFalso extends Mock implements ClimaServicio {}
 class _RedFalsa extends Mock implements ConectividadServicio {}
 
 class _AlertasFalsas extends Mock implements AlertasServicio {}
+
+class _AuthFalso extends Mock implements AuthRepositorio {}
+
+class _UsuariosFalso extends Mock implements UsuarioRepositorio {}
+
+/// Ajustes por defecto (sin perfil cargado).
+PerfilServicio _perfilPorDefecto() {
+  final auth = _AuthFalso();
+  when(() => auth.uidActual).thenReturn(null);
+  when(() => auth.cambiosDeSesion).thenAnswer((_) => const Stream.empty());
+  return PerfilServicio(auth: auth, usuarios: _UsuariosFalso());
+}
 
 AlertasServicio _sinAlertas() {
   final alertas = _AlertasFalsas();
@@ -68,6 +83,9 @@ Future<ValueNotifier<bool>> _abrir(
         Provider<ClimaServicio>.value(value: _ClimaFalso()),
         Provider<ConectividadServicio>.value(value: _conRed()),
         Provider<AlertasServicio>.value(value: _sinAlertas()),
+        ChangeNotifierProvider<PerfilServicio>(
+          create: (_) => _perfilPorDefecto(),
+        ),
       ],
       child: AgroClimaApp(
         enrutador: crearEnrutador(

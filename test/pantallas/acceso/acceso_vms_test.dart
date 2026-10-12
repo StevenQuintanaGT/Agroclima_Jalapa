@@ -27,6 +27,15 @@ void main() {
       ).thenAnswer((_) => respuesta());
     }
 
+    test('si la sesión se cerró porque la cuenta se elimina, lo dice', () {
+      when(() => cuenta.tomarMotivoDeSalida())
+          .thenReturn(ErrorAcceso.cuentaEliminandose);
+      expect(
+        InicioSesionVm(cuenta).errorGeneral,
+        Textos.errorCuentaEliminandose,
+      );
+    });
+
     test('campos vacíos: errores llanos y no llama al servicio', () async {
       final vm = InicioSesionVm(cuenta);
       expect(await vm.entrar(), isFalse);

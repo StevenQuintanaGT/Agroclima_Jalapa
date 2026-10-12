@@ -45,8 +45,9 @@ Hecho: ver `DECISIONES.md` D-54.
 ## Perfil y soporte (Etapa 6)
 - Perfil (28): nombre, correo, teléfono (editables salvo correo), accesos a parcelas, avisos, ajustes, ayuda, cerrar sesión.
 - Ajustes (29): °C/°F, manzanas/hectáreas, tema oscuro, ahorro de datos → guardan en `usuarios/{uid}`
-  y se aplican al instante. **Eliminar cuenta** al final, con confirmación doble y llamada a la función
-  `eliminarCuenta` (MODELO_DATOS §6).
+  y se aplican al instante. **Eliminar cuenta** al final, con confirmación doble; la app marca la cuenta y
+  el ciclo la borra (MODELO_DATOS §6, D-55).
+  Hecho: ver `DECISIONES.md` D-55.
 - Ayuda y glosario (30): preguntas frecuentes y palabras sencillas (helada, días sin lluvia, humedad…).
 - Acerca de (31): de dónde salen los datos (OpenWeather, retícula, no es medición en la parcela — RT-02),
   que no es aviso oficial, versión, autor y universidad.

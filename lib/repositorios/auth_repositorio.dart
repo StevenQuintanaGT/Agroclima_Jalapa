@@ -6,6 +6,9 @@ class ErrorAcceso implements Exception {
   /// El productor cerró la ventana de Google: no es un error que mostrar.
   static const String cancelado = 'cancelado';
 
+  /// Pidió eliminar la cuenta y el ciclo todavía no la borra (D-55).
+  static const String cuentaEliminandose = 'cuenta-eliminandose';
+
   final String codigo;
 
   @override

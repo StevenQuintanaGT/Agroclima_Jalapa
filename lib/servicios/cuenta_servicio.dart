@@ -20,6 +20,15 @@ class CuentaServicio {
   final UsuarioRepositorio _usuarios;
   final NotificacionesServicio? _notificaciones;
   StreamSubscription<String>? _vigilanciaToken;
+  String? _motivoDeSalida;
+
+  /// Código de por qué se cerró la sesión sin que el productor lo pidiera
+  /// (al entrar, el enrutador ya cambió de pantalla). Se entrega una vez.
+  String? tomarMotivoDeSalida() {
+    final motivo = _motivoDeSalida;
+    _motivoDeSalida = null;
+    return motivo;
+  }
 
   /// HU-01: crea la cuenta y su perfil con valores por defecto.
   /// [telefono] llega ya con código de país o vacío.
@@ -79,6 +88,16 @@ class CuentaServicio {
     await _intentar(_usuarios.borrarDatosLocales);
   }
 
+  /// Ajustes → "Eliminar mi cuenta" (D-55): marca la cuenta para que el
+  /// ciclo la borre (≤ 3 h) y cierra la sesión. Necesita señal: si el
+  /// servidor no confirma, lanza y la sesión sigue abierta.
+  Future<void> eliminarCuenta() async {
+    final uid = _auth.uidActual;
+    if (uid == null) return;
+    await _usuarios.solicitarEliminacion(uid);
+    await cerrarSesion();
+  }
+
   /// Vuelve a guardar el token cuando FCM lo cambia. Se llama una vez al
   /// abrir la app.
   void vigilarTokenDeAvisos() {
@@ -91,16 +110,27 @@ class CuentaServicio {
   }
 
   /// Si el perfil no existe (primera vez con Google, o el registro no
-  /// alcanzó a escribirlo), se crea ahora; luego se guarda el token.
+  /// alcanzó a escribirlo), se crea ahora; luego se guarda el token. Una
+  /// cuenta que pidió eliminarse no vuelve a entrar.
   Future<void> _alEntrar(DatosAcceso datos) async {
+    Usuario? perfil;
+    var leido = false;
     await _intentar(() async {
-      final perfil = await _usuarios.obtenerPerfil(datos.uid);
-      if (perfil == null) {
-        await _usuarios.crearPerfil(
-          Usuario(uid: datos.uid, nombre: datos.nombre, correo: datos.correo),
-        );
-      }
+      perfil = await _usuarios.obtenerPerfil(datos.uid);
+      leido = true;
     });
+    if (perfil?.eliminacionSolicitada != null) {
+      _motivoDeSalida = ErrorAcceso.cuentaEliminandose;
+      await _auth.cerrarSesion();
+      throw const ErrorAcceso(ErrorAcceso.cuentaEliminandose);
+    }
+    if (leido && perfil == null) {
+      await _intentar(
+        () => _usuarios.crearPerfil(
+          Usuario(uid: datos.uid, nombre: datos.nombre, correo: datos.correo),
+        ),
+      );
+    }
     await _guardarToken(datos.uid);
   }
 

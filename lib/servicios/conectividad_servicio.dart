@@ -15,6 +15,15 @@ class ConectividadServicio {
   Future<bool> hayRed() async =>
       _hayRed(await _conectividad.checkConnectivity());
 
+  /// ¿Wifi (o cable)? Con "Ahorrar datos" los mapas del clima se bajan
+  /// solo así, salvo que el productor diga que sí (D-55).
+  Future<bool> enWifi() async {
+    final resultados = await _conectividad.checkConnectivity();
+    return resultados.any(
+      (r) => r == ConnectivityResult.wifi || r == ConnectivityResult.ethernet,
+    );
+  }
+
   static bool _hayRed(List<ConnectivityResult> resultados) =>
       resultados.any((r) => r != ConnectivityResult.none);
 }

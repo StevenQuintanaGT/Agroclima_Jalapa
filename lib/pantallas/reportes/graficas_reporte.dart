@@ -5,6 +5,7 @@ import '../../config/tema/colores.dart';
 import '../../config/tema/medidas.dart';
 import '../../config/tema/tipografia.dart';
 import '../../config/textos.dart';
+import '../../utilidades/unidades.dart';
 import '../../modelos/registro_dia.dart';
 import '../../servicios/reportes_servicio.dart';
 
@@ -115,10 +116,14 @@ class GraficaTemperatura extends StatelessWidget {
     final hayExtremos = dias.any(
       (d) => d.temperaturaMinima != null && d.temperaturaMaxima != null,
     );
-    double? minima(RegistroDia d) =>
-        hayExtremos ? d.temperaturaMinima : ResumenPeriodo.minimaDe(d);
-    double? maxima(RegistroDia d) =>
-        hayExtremos ? d.temperaturaMaxima : ResumenPeriodo.maximaDe(d);
+    // En la unidad del productor (°C o °F).
+    double? enUnidad(double? c) => c == null ? null : Unidades.temperatura(c);
+    double? minima(RegistroDia d) => enUnidad(
+      hayExtremos ? d.temperaturaMinima : ResumenPeriodo.minimaDe(d),
+    );
+    double? maxima(RegistroDia d) => enUnidad(
+      hayExtremos ? d.temperaturaMaxima : ResumenPeriodo.maximaDe(d),
+    );
     final valores = [
       for (final d in dias) ...[?minima(d), ?maxima(d)],
     ];

@@ -1,3 +1,5 @@
+import 'package:agroclima_jalapa/config/textos.dart';
+import 'package:agroclima_jalapa/modelos/enums.dart';
 import 'package:agroclima_jalapa/utilidades/unidades.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -25,6 +27,34 @@ void main() {
     test('m/s a km/h', () {
       expect(Unidades.metrosPorSegundoAKmPorHora(10), closeTo(36, 1e-9));
       expect(Unidades.metrosPorSegundoAKmPorHora(0), 0);
+    });
+  });
+
+  group('al mostrar, según Ajustes (D-55)', () {
+    tearDown(() {
+      Unidades.enFahrenheit = false;
+      Unidades.enHectareas = false;
+    });
+
+    test('°C por defecto, °F si lo eligió; se guarda en °C', () {
+      expect(Textos.grados(18.4), '18°');
+      expect(Textos.gradosConUnidad(2), '2 °C');
+      Unidades.enFahrenheit = true;
+      expect(Textos.grados(18.4), '65°');
+      expect(Textos.gradosConUnidad(0), '32 °F');
+      expect(Textos.valorAlerta(TipoRiesgo.temperaturaBaja, 2), '36 °F');
+      expect(
+        Textos.valorAlerta(TipoRiesgo.lluviaIntensa, 20),
+        '20 mm por hora',
+      );
+    });
+
+    test('el área se muestra en la unidad elegida', () {
+      expect(Textos.area(2, 'manzana'), '2 manzanas');
+      expect(Textos.area(1.4, 'hectarea'), '2 manzanas');
+      Unidades.enHectareas = true;
+      expect(Textos.area(2, 'manzana'), '1.4 ha');
+      expect(Textos.area(3, 'hectarea'), '3 ha');
     });
   });
 }
