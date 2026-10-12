@@ -21,6 +21,7 @@ hubo alerta ese día. Filtros **Todo / Con lluvia / Con aviso**. Paginación de 
 Sin datos → "Todavía no hay días guardados de esta parcela".
 
 ## HU-16 — Reportes (25) y exportación (27)
+Hecho: ver `DECISIONES.md` D-54.
 - Período 7 o 30 días, por parcela.
 - 4 indicadores: días con lluvia (`precipitacion ≥ 1 mm`), noche más fría (mín. temperatura registrada),
   lluvia acumulada (suma), avisos de peligro (alertas `critica` con `fechaEvento` en el período).
