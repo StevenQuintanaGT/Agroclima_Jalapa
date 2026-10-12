@@ -71,7 +71,8 @@ agroclima_jalapa/
 │   │   └── preferencias_locales_repositorio.dart # marcas del teléfono (bienvenida vista, permisos ofrecidos)
 │   │
 │   ├── servicios/                # lógica de negocio; no conocen widgets
-│   │   ├── cuenta_servicio.dart             # registro: cuenta + perfil + preferencias
+│   │   ├── cuenta_servicio.dart             # registro: cuenta + perfil + preferencias; pedir eliminar la cuenta
+│   │   ├── perfil_servicio.dart             # perfil en vivo y ajustes (tema, °C/°F, manzanas/ha, ahorro de datos)
 │   │   ├── estado_sesion.dart               # ValueNotifier de sesión para la guarda del enrutador
 │   │   ├── openweather_cliente.dart         # FACHADA: arma peticiones, errores y traducción a dominio
 │   │   ├── validacion_geografica.dart       # punto en polígono → municipio o null
@@ -160,7 +161,8 @@ agroclima_jalapa/
 │   │   ├── alertas.js            # CO-13: mensaje, medida sugerida, control de duplicados
 │   │   ├── notificaciones.js     # envío FCM respetando preferencias y horario de silencio
 │   │   ├── mensajes.js           # plantillas de texto de alertas (lenguaje de acción)
-│   │   └── limpieza.js           # borrado en cascada de parcela y de cuenta
+│   │   ├── limpieza.js           # borrado en cascada de parcelas borradas
+│   │   └── cuentas.js            # eliminar las cuentas que lo pidieron (Auth + datos, D-55)
 │   ├── seed/umbrales.json        # catálogo inicial (Tabla 31)
 │   ├── scripts/sembrar-umbrales.js
 │   ├── scripts/simular-pronostico.js  # SOLO emulador: pronóstico extremo → alertas de prueba

@@ -1,4 +1,5 @@
 import '../config/textos.dart';
+import '../repositorios/auth_repositorio.dart';
 
 /// Traduce códigos de error a texto llano. Nunca se muestra el código al
 /// productor (CLAUDE.md §10).
@@ -14,6 +15,7 @@ class Errores {
     'weak-password' => Textos.errorContrasenaDebil,
     'network-request-failed' => Textos.errorSinSenal,
     'too-many-requests' => Textos.errorMuchosIntentos,
+    ErrorAcceso.cuentaEliminandose => Textos.errorCuentaEliminandose,
     final otro when otro.startsWith('google-') => Textos.errorGoogle,
     _ => Textos.errorGenerico,
   };

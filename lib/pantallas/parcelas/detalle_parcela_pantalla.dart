@@ -138,9 +138,7 @@ class _Datos extends StatelessWidget {
           ].join(' · ');
     final area = parcela.area;
     final tamano = [
-      if (area != null)
-        '${area == area.roundToDouble() ? area.toInt() : area} '
-            '${parcela.unidadArea == 'manzana' ? Textos.manzanas : Textos.hectareasCorto}',
+      if (area != null) Textos.area(area, parcela.unidadArea),
       if (parcela.altitud != null) Textos.msnm(parcela.altitud!),
     ].join(' · ');
     return ListView(

@@ -6,6 +6,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../config/textos.dart';
+import '../utilidades/unidades.dart';
 import '../modelos/alerta.dart';
 import '../modelos/registro_dia.dart';
 import 'reportes_servicio.dart';
@@ -206,6 +207,8 @@ class ExportarReporte {
 
     // Las fuentes del PDF no traen la raya larga: sin dato va un guion.
     String celda(double? v) => v == null ? '-' : v.toStringAsFixed(1);
+    String grados(double? v) =>
+        celda(v == null ? null : Unidades.temperatura(v));
 
     documento.addPage(
       pw.MultiPage(
@@ -258,7 +261,7 @@ class ExportarReporte {
               indicador(
                 fria == null
                     ? '-'
-                    : '${ResumenPeriodo.minimaDe(fria)!.round()} °C',
+                    : Textos.gradosConUnidad(ResumenPeriodo.minimaDe(fria)!),
                 Textos.nocheMasFria,
               ),
               indicador('${r.lluviaTotal.round()} mm', Textos.llovioEnTotal),
@@ -277,8 +280,8 @@ class ExportarReporte {
           pw.TableHelper.fromTextArray(
             headers: [
               Textos.fecha,
-              Textos.minimaGrados,
-              Textos.maximaGrados,
+              Textos.minimaEn(Unidades.simboloTemperatura),
+              Textos.maximaEn(Unidades.simboloTemperatura),
               Textos.lluviaMm,
               Textos.aviso,
             ],
@@ -288,8 +291,8 @@ class ExportarReporte {
                   '${d.dia.day} ${Textos.nombreMes(d.dia)}',
                   // Solo mínimas y máximas del ciclo: la temperatura suelta
                   // de un día repetida en las dos columnas confunde.
-                  celda(d.temperaturaMinima),
-                  celda(d.temperaturaMaxima),
+                  grados(d.temperaturaMinima),
+                  grados(d.temperaturaMaxima),
                   celda(d.precipitacion),
                   r.nivelDelDia(d.fecha) == null
                       ? ''

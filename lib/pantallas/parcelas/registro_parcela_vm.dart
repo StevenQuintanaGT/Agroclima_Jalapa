@@ -6,6 +6,7 @@ import '../../modelos/parcela.dart';
 import '../../servicios/busqueda_lugares_servicio.dart';
 import '../../servicios/parcelas_servicio.dart';
 import '../../servicios/ubicacion_servicio.dart';
+import '../../utilidades/unidades.dart';
 
 /// Resultado de guardar, para que la pantalla sepa qué decir.
 enum ResultadoGuardado { guardada, guardadaSinSenal, error }
@@ -67,7 +68,8 @@ class RegistroParcelaVm extends ChangeNotifier {
   String _altitudTexto = '';
   bool _altitudDelGps = false;
   String _areaTexto = '';
-  String _unidadArea = 'manzana';
+  // La que eligió en Ajustes (D-55); se puede cambiar aquí.
+  String _unidadArea = Unidades.enHectareas ? 'hectarea' : 'manzana';
   bool _ubicando = false;
   bool _buscando = false;
   String? _mensajeUbicacion;

@@ -10,6 +10,7 @@ import '../../config/tema/colores.dart';
 import '../../config/tema/medidas.dart';
 import '../../config/tema/tipografia.dart';
 import '../../config/textos.dart';
+import '../../utilidades/unidades.dart';
 import '../../modelos/franja_pronostico.dart';
 import '../../modelos/resumen_dia.dart';
 import '../../utilidades/fechas.dart';
@@ -241,12 +242,12 @@ class _Temperatura extends StatelessWidget {
                   maxX: 21,
                   minY:
                       franjas
-                          .map((f) => f.temperatura)
+                          .map((f) => Unidades.temperatura(f.temperatura))
                           .reduce((a, b) => a < b ? a : b) -
                       2,
                   maxY:
                       franjas
-                          .map((f) => f.temperatura)
+                          .map((f) => Unidades.temperatura(f.temperatura))
                           .reduce((a, b) => a > b ? a : b) +
                       2,
                   lineTouchData: const LineTouchData(enabled: false),
@@ -289,7 +290,10 @@ class _Temperatura extends StatelessWidget {
                     LineChartBarData(
                       spots: [
                         for (final f in franjas)
-                          FlSpot(_horaDelDia(f), f.temperatura),
+                          FlSpot(
+                            _horaDelDia(f),
+                            Unidades.temperatura(f.temperatura),
+                          ),
                       ],
                       color: linea,
                       barWidth: 4,

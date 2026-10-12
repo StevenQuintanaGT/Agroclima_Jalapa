@@ -35,6 +35,10 @@ import '../pantallas/parcelas/mis_parcelas_pantalla.dart';
 import '../pantallas/parcelas/mis_parcelas_vm.dart';
 import '../pantallas/parcelas/registro_parcela_pantalla.dart';
 import '../pantallas/parcelas/registro_parcela_vm.dart';
+import '../pantallas/perfil/acerca_pantalla.dart';
+import '../pantallas/perfil/ajustes_pantalla.dart';
+import '../pantallas/perfil/ajustes_vm.dart';
+import '../pantallas/perfil/ayuda_pantalla.dart';
 import '../pantallas/perfil/perfil_pantalla.dart';
 import '../pantallas/reportes/historial_pantalla.dart';
 import '../pantallas/reportes/historial_vm.dart';
@@ -54,6 +58,7 @@ import '../servicios/historial_servicio.dart';
 import '../servicios/reportes_servicio.dart';
 import '../servicios/notificaciones_servicio.dart';
 import '../servicios/parcelas_servicio.dart';
+import '../servicios/perfil_servicio.dart';
 import '../servicios/ubicacion_servicio.dart';
 import 'tema/colores.dart';
 import 'textos.dart';
@@ -78,6 +83,9 @@ class Rutas {
   static const String perfil = '/perfil';
   static const String misParcelas = '/perfil/parcelas';
   static const String misAvisos = '/perfil/avisos';
+  static const String ajustes = '/perfil/ajustes';
+  static const String ayuda = '/perfil/ayuda';
+  static const String acercaDe = '/perfil/acerca';
 
   /// Detalle y edición van fuera de la barra inferior (pantalla 15).
   static String detalleParcela(String parcelaId) => '/parcelas/$parcelaId';
@@ -328,13 +336,17 @@ GoRouter crearEnrutador({
               GoRoute(
                 path: Rutas.mapa,
                 builder: (context, estado) => ChangeNotifierProvider(
-                  create: (context) => MapaClimaVm(
-                    parcelas: context.read<ParcelasServicio>(),
-                    alertas: context.read<AlertasServicio>(),
-                    clima: context.read<ClimaServicio>(),
-                    preferencias: preferencias,
-                    conectividad: context.read<ConectividadServicio>(),
-                  ),
+                  create: (context) {
+                    final perfil = context.read<PerfilServicio>();
+                    return MapaClimaVm(
+                      parcelas: context.read<ParcelasServicio>(),
+                      alertas: context.read<AlertasServicio>(),
+                      clima: context.read<ClimaServicio>(),
+                      preferencias: preferencias,
+                      conectividad: context.read<ConectividadServicio>(),
+                      ahorroDatos: () => perfil.ahorroDatos,
+                    );
+                  },
                   child: const MapaClimaPantalla(),
                 ),
               ),
@@ -374,7 +386,11 @@ GoRouter crearEnrutador({
               GoRoute(
                 path: Rutas.perfil,
                 builder: (context, estado) => ChangeNotifierProvider(
-                  create: (context) => PerfilVm(context.read<CuentaServicio>()),
+                  create: (context) => PerfilVm(
+                    cuenta: context.read<CuentaServicio>(),
+                    perfil: context.read<PerfilServicio>(),
+                    parcelas: context.read<ParcelasServicio>(),
+                  ),
                   child: const PerfilPantalla(),
                 ),
                 routes: [
@@ -395,6 +411,25 @@ GoRouter crearEnrutador({
                       ),
                       child: const MisAvisosPantalla(),
                     ),
+                  ),
+                  GoRoute(
+                    path: 'ajustes',
+                    builder: (context, estado) => ChangeNotifierProvider(
+                      create: (context) => AjustesVm(
+                        perfil: context.read<PerfilServicio>(),
+                        cuenta: context.read<CuentaServicio>(),
+                        conectividad: context.read<ConectividadServicio>(),
+                      ),
+                      child: const AjustesPantalla(),
+                    ),
+                  ),
+                  GoRoute(
+                    path: 'ayuda',
+                    builder: (context, estado) => const AyudaPantalla(),
+                  ),
+                  GoRoute(
+                    path: 'acerca',
+                    builder: (context, estado) => const AcercaPantalla(),
                   ),
                 ],
               ),

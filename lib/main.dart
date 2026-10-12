@@ -40,6 +40,7 @@ import 'servicios/openweather_cliente.dart';
 import 'servicios/estado_sesion.dart';
 import 'servicios/notificaciones_servicio.dart';
 import 'servicios/parcelas_servicio.dart';
+import 'servicios/perfil_servicio.dart';
 import 'servicios/ubicacion_servicio.dart';
 import 'servicios/validacion_geografica.dart';
 
@@ -62,11 +63,13 @@ Future<void> main() async {
     notificaciones: notificaciones,
   )..vigilarTokenDeAvisos();
   final estadoSesion = EstadoSesion(auth);
+  final perfil = PerfilServicio(auth: auth, usuarios: usuarios);
   final validacion = await ValidacionGeografica.cargar(rootBundle);
   final ParcelasRepositorio parcelas = FirestoreParcelasRepositorio();
   final ClimaRepositorio clima = OpenWeatherClimaRepositorio(
     cliente: OpenWeatherCliente(clave: Entorno.openWeatherApiKey),
     cache: SharedPreferencesCacheLocal(),
+    ahorroDatos: () => perfil.ahorroDatos,
   );
 
   runApp(
@@ -117,8 +120,10 @@ Future<void> main() async {
           ),
         ),
         ChangeNotifierProvider<EstadoSesion>.value(value: estadoSesion),
+        ChangeNotifierProvider<PerfilServicio>.value(value: perfil),
       ],
       child: AgroClimaApp(
+        perfil: perfil,
         enrutador: crearEnrutador(
           haySesion: estadoSesion,
           preferencias: preferencias,

@@ -4,6 +4,7 @@ import '../modelos/alerta.dart';
 import '../modelos/capa_clima.dart';
 import '../modelos/enums.dart';
 import '../modelos/error_clima.dart';
+import '../utilidades/unidades.dart';
 
 /// Todos los textos visibles de la app (RNF-13). Trato de usted, palabras del
 /// campo, sin anglicismos ni códigos de error (docs/DISENO_UI.md §6).
@@ -195,6 +196,17 @@ class Textos {
   static const String alturaVacia = 'Escriba la altura (opcional)';
   static const String pregTamano = '¿Cuánto mide? (aproximado)';
   static const String manzanas = 'manzanas';
+
+  /// Área en la unidad que eligió en Ajustes: "2 manzanas", "1.4 ha".
+  /// [unidad] es la que se escribió al registrar la parcela.
+  static String area(double valor, String unidad) {
+    final n = Unidades.area(valor, unidad);
+    final texto = n == n.roundToDouble()
+        ? n.toInt().toString()
+        : n.toStringAsFixed(2).replaceFirst(RegExp(r'\.?0+$'), '');
+    return '$texto ${Unidades.enHectareas ? hectareasCorto : manzanas}';
+  }
+
   static const String hectareasCorto = 'ha';
   static const String tituloPaso4 = 'Revise los datos';
   static const String etiquetaNombre = 'Nombre';
@@ -295,7 +307,13 @@ class Textos {
     return rumbos[((grados % 360) / 45).round() % 8];
   }
 
-  static String grados(double valor) => '${valor.round()}°';
+  /// "18°" en la unidad del productor (°C o °F).
+  static String grados(double valor) =>
+      '${Unidades.temperatura(valor).round()}°';
+
+  /// "18 °C" o "64 °F".
+  static String gradosConUnidad(double valor) =>
+      '${Unidades.temperatura(valor).round()} ${Unidades.simboloTemperatura}';
   static const String seSiente = 'Se siente';
   static const String maxima = 'Máx';
   static const String minima = 'Mín';
@@ -424,6 +442,146 @@ class Textos {
   static const String cerrandoSesion = 'Cerrando sesión…';
   static const String enviandoEnlace = 'Enviando…';
 
+  // ---------- Perfil (28) ----------
+  static String resumenPerfil(String? municipio, int parcelas) => [
+    ?municipio,
+    if (parcelas > 0) parcelas == 1 ? '1 parcela' : '$parcelas parcelas',
+  ].join(' · ');
+  static const String ajustes = 'Ajustes';
+  static const String ayuda = 'Ayuda';
+  static const String cambiarMisDatos = 'Cambiar mis datos';
+  static const String correoNoCambia = 'El correo no se puede cambiar.';
+  static const String datosGuardados = 'Sus datos quedaron guardados.';
+
+  // ---------- Ajustes (29) ----------
+  static const String comoSeMuestran = 'Cómo se muestran los datos';
+  static const String temperatura = 'Temperatura';
+  static const String celsius = '°C';
+  static const String fahrenheit = '°F';
+  static const String terreno = 'Terreno';
+  static const String manzanasCorto = 'Manzanas';
+  static const String pantallaOscura = 'Pantalla oscura';
+  static const String internetYAvisos = 'Internet y avisos';
+  static const String ahorrarDatos = 'Ahorrar datos';
+  static const String ahorrarDatosDetalle = 'Baja los mapas solo con wifi';
+  static const String eliminarMiCuenta = 'Eliminar mi cuenta';
+  static const String eliminarCuentaTitulo = '¿Eliminar su cuenta?';
+  static const String eliminarCuentaDetalle =
+      'Se borran sus parcelas, su historial y sus avisos. Ya no le llegarán '
+      'avisos a ningún teléfono.';
+  static const String siSeguir = 'Sí, seguir';
+  static const String eliminarCuentaSeguro = '¿Está seguro?';
+  static const String eliminarCuentaNoVuelve =
+      'Esto no se puede deshacer. Si después quiere volver, tendrá que crear '
+      'una cuenta nueva y registrar sus parcelas otra vez.';
+  static const String siEliminar = 'Sí, eliminar mi cuenta';
+  static const String eliminandoCuenta = 'Eliminando su cuenta…';
+  static const String eliminarSinSenal =
+      'Para eliminar su cuenta necesita internet. Intente de nuevo cuando '
+      'tenga señal.';
+  static const String errorCuentaEliminandose =
+      'Esta cuenta se está eliminando. Si quiere volver a usar la app, cree '
+      'una cuenta nueva más tarde.';
+
+  // Ahorro de datos en el mapa (D-50, D-55).
+  static const String capaSinWifiTitulo = '¿Bajar el mapa sin wifi?';
+  static const String capaSinWifiDetalle =
+      'Tiene "Ahorrar datos" encendido. Esta capa gasta datos del teléfono.';
+  static const String siBajarla = 'Sí, bajarla';
+  static const String noEsperar = 'No, esperar el wifi';
+
+  // ---------- Ayuda y glosario (30) ----------
+  static const String preguntasComunes = 'Preguntas comunes';
+  static const String queQuiereDecir = '¿Qué quiere decir?';
+
+  /// Pregunta y respuesta.
+  static const List<(String, String)> preguntas = [
+    (
+      '¿Por qué no me llegan avisos?',
+      'Revise que tenga internet y que los avisos estén encendidos en "Mis '
+          'avisos". También revise que el teléfono deje a la app mandar avisos.',
+    ),
+    (
+      '¿Puedo poner más de una parcela?',
+      'Sí. En "Mis parcelas" toque "Agregar parcela". Cada una tiene su clima '
+          'y sus avisos.',
+    ),
+    (
+      '¿Funciona sin señal?',
+      'Sí. Se ve el último clima guardado y la app le dice de qué hora es. '
+          'Los avisos le llegan cuando vuelva la señal.',
+    ),
+    (
+      '¿Los avisos son oficiales?',
+      'No. Son información de apoyo calculada con el pronóstico. Siga '
+          'también lo que digan el INSIVUMEH y CONRED.',
+    ),
+    (
+      '¿Qué hago cuando me llega un aviso?',
+      'Ábralo: le dice qué puede pasar, cuándo y qué puede hacer para cuidar '
+          'su cultivo. Cuando haya tomado medidas, toque "Ya tomé medidas".',
+    ),
+    (
+      '¿Cada cuánto se revisa el clima?',
+      'Cada 3 horas, aunque tenga la app cerrada. El pronóstico llega hasta '
+          '5 días adelante.',
+    ),
+  ];
+
+  // Glosario: palabra y explicación corta.
+  static const String helada = 'Helada';
+  static const String heladaDetalle = 'Cuando el frío quema la hoja de noche';
+  static const String canicula = 'Canícula';
+  static const String caniculaDetalle =
+      'Los días secos de julio en plena lluvia';
+  static const String humedadDetalle = 'Cuánta agua trae el aire';
+  static const String milimetro = 'Milímetro';
+  static const String milimetroDetalle = '10 mm moja un dedo de tierra';
+  static const String diasSinLluviaGlosario = 'Días sin lluvia';
+  static const String diasSinLluviaDetalle =
+      'Varios días seguidos sin que llueva';
+  static const String vientoFuerteGlosario = 'Viento fuerte';
+  static const String vientoFuerteDetalle = 'El que puede tumbar la milpa';
+  static const String pronosticoGlosario = 'Pronóstico';
+  static const String pronosticoDetalle = 'Lo que se espera que pase';
+  static const String coloresAviso = 'Colores del aviso';
+  static const String coloresAvisoDetalle =
+      'Verde: tranquilo. Amarillo: cuidado. Rojo: peligro';
+  static const String acercaDeLaApp = 'Acerca de la app';
+
+  // ---------- Acerca de (31) ----------
+  static const String acercaDe = 'Acerca de';
+  static String version(String numero) => 'Versión $numero';
+  static const String deDondeSalen = '¿De dónde salen los datos?';
+  static const String deDondeSalenDetalle =
+      'Del servicio meteorológico OpenWeather, para un cuadro de unos 5 km '
+      'donde está su parcela: no es una medición en su terreno. Los avisos los '
+      'calcula la app con lo que aguanta cada cultivo.';
+  static const String fuentesMapas =
+      'Mapas: Esri. Límites de los municipios: geoBoundaries.';
+  static const String noEsOficial = 'No es un aviso oficial';
+  static const String noEsOficialDetalle =
+      'Es información de apoyo. Para emergencias, siga lo que digan el '
+      'INSIVUMEH y CONRED.';
+  static const String quienLaHizo = 'Quién la hizo';
+  static const String quienLaHizoDetalle =
+      'Proyecto para los productores de los 7 municipios de Jalapa, '
+      'Guatemala. Hecho por Marlon Steven Quintana Recinos, Universidad '
+      'Mariano Gálvez de Guatemala.';
+  static const String terminosYPrivacidad = 'Términos de uso y privacidad';
+  static const List<String> terminos = [
+    'La app es gratuita y es información de apoyo: las decisiones sobre su '
+        'cultivo son suyas.',
+    'Guardamos su nombre, correo, teléfono (si lo dio), sus parcelas y los '
+        'avisos que recibió, solo para darle el clima y los avisos de sus '
+        'parcelas.',
+    'No vendemos ni compartimos sus datos con nadie.',
+    'Su ubicación se usa solo cuando usted pide poner la parcela donde está.',
+    'Puede eliminar su cuenta cuando quiera en Ajustes: se borra todo en '
+        'unas horas.',
+  ];
+  static const String entendido = 'Entendido';
+
   // ---------- Avisos (HU-10): canales de Android ----------
   // El teléfono los muestra en Ajustes → Notificaciones de la app.
   static const String canalPeligro = 'Avisos de PELIGRO';
@@ -541,7 +699,8 @@ class Textos {
   static String valorAlerta(TipoRiesgo tipo, double valor) {
     final n = valor.round();
     return switch (tipo) {
-      TipoRiesgo.temperaturaBaja || TipoRiesgo.temperaturaAlta => '$n °C',
+      TipoRiesgo.temperaturaBaja ||
+      TipoRiesgo.temperaturaAlta => gradosConUnidad(valor),
       TipoRiesgo.lluviaIntensa => '$n mm por hora',
       TipoRiesgo.vientoFuerte => '$n km/h',
       TipoRiesgo.humedadAlta => '$n %',
@@ -653,12 +812,12 @@ class Textos {
     if (diaFrio == null || frio == null) return sinDatosPeriodo;
     final partes = [
       'La noche más fría fue el ${diaYNumero(diaFrio)}, con '
-          '${frio.round()} °C.',
+          '${gradosConUnidad(frio)}.',
     ];
     if (diaCaliente != null && caliente != null) {
       partes.add(
         'Lo más caliente fue el ${diaYNumero(diaCaliente)}, con '
-        '${caliente.round()} °C.',
+        '${gradosConUnidad(caliente)}.',
       );
     }
     return partes.join(' ');
@@ -695,6 +854,10 @@ class Textos {
   static const String sinCultivoReporte = 'Sin cultivo';
   static const String indicadores = 'Indicadores';
   static const String fecha = 'Fecha';
+
+  /// En el PDF van en la unidad del productor; Excel y CSV, siempre en °C.
+  static String minimaEn(String simbolo) => 'Mínima ($simbolo)';
+  static String maximaEn(String simbolo) => 'Máxima ($simbolo)';
   static const String minimaGrados = 'Mínima (°C)';
   static const String maximaGrados = 'Máxima (°C)';
   static const String registradaGrados = 'Registrada (°C)';

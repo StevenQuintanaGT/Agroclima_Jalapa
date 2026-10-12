@@ -42,11 +42,52 @@ class FirestoreUsuarioRepositorio implements UsuarioRepositorio {
     final doc = await _perfil(uid).get();
     final datos = doc.data();
     if (datos == null) return null;
-    return Usuario.fromMap(
-      datos,
-      fecha: (valor) => valor is Timestamp ? valor.toDate() : null,
-    );
+    return Usuario.fromMap(datos, fecha: _fecha);
   }
+
+  @override
+  Stream<Usuario?> observarPerfil(String uid) =>
+      _perfil(uid).snapshots().map((doc) {
+        final datos = doc.data();
+        return datos == null ? null : Usuario.fromMap(datos, fecha: _fecha);
+      });
+
+  static DateTime? _fecha(Object? valor) =>
+      valor is Timestamp ? valor.toDate() : null;
+
+  @override
+  Future<void> guardarDatos(
+    String uid, {
+    required String nombre,
+    required String telefono,
+  }) =>
+      _perfil(uid)
+          .update({'nombre': nombre, 'telefono': telefono})
+          .timeout(esperaConfirmacion, onTimeout: () {});
+
+  @override
+  Future<void> guardarAjustes(
+    String uid, {
+    String? unidadTemperatura,
+    String? unidadArea,
+    bool? temaOscuro,
+    bool? ahorroDatos,
+  }) => _perfil(uid)
+      .update({
+        'unidadTemperatura': ?unidadTemperatura,
+        'unidadArea': ?unidadArea,
+        'temaOscuro': ?temaOscuro,
+        'ahorroDatos': ?ahorroDatos,
+      })
+      .timeout(esperaConfirmacion, onTimeout: () {});
+
+  @override
+  Future<void> solicitarEliminacion(String uid) => _perfil(uid)
+      .update({
+        'eliminacionSolicitada': FieldValue.serverTimestamp(),
+        'tokensFcm': <String>[],
+      })
+      .timeout(esperaConfirmacion);
 
   @override
   Future<void> agregarTokenAvisos(String uid, String token) =>

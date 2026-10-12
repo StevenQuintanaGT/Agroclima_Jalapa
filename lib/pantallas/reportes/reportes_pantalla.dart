@@ -301,7 +301,7 @@ class _Indicadores extends StatelessWidget {
                 colorIcono: cielo,
                 valor: fria == null
                     ? '—'
-                    : '${ResumenPeriodo.minimaDe(fria)!.round()} °C',
+                    : Textos.gradosConUnidad(ResumenPeriodo.minimaDe(fria)!),
                 etiqueta: Textos.nocheMasFria,
               ),
             ),

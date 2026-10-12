@@ -8,12 +8,13 @@
  *   node index.js        (necesita OPENWEATHER_KEY y FIREBASE_SERVICE_ACCOUNT)
  *
  * Pasos de cada vuelta:
- * 1. limpieza de parcelas borradas (HU-06)
+ * 1. cuentas que pidieron eliminarse y limpieza de parcelas borradas (HU-06)
  * 2. adquisición del clima por celda (Etapa 3)
  * 3. evaluación de umbrales de las celdas actualizadas (HT-04)
  * 4. alertas sin duplicar y avisos por FCM (HU-10)
  */
 const { limpiarParcelasBorradas } = require('./src/limpieza');
+const { eliminarCuentasSolicitadas } = require('./src/cuentas');
 const { adquirirClima } = require('./src/adquisicion');
 const { crearCliente } = require('./src/openweather');
 const { leerCatalogo } = require('./src/umbrales');
@@ -26,8 +27,13 @@ const { enviarAvisos } = require('./src/notificaciones');
  * @param {import('firebase-admin/firestore').Firestore} opciones.db
  * @param {{actual: Function, pronostico: Function}} opciones.clima
  * @param {{sendEachForMulticast: Function}} [opciones.mensajeria] FCM; sin él no se avisa
+ * @param {{deleteUser: Function}} [opciones.auth] Auth de administración; sin él no se eliminan cuentas
  */
-async function ejecutarCiclo({ db, clima, mensajeria, ahora = new Date(), registrar = console.log }) {
+async function ejecutarCiclo({ db, clima, mensajeria, auth, ahora = new Date(), registrar = console.log }) {
+  const cuentasEliminadas = auth ? await eliminarCuentasSolicitadas(db, auth, registrar) : [];
+  if (cuentasEliminadas.length > 0) {
+    registrar(`Cuentas eliminadas: ${cuentasEliminadas.length}.`);
+  }
   const limpieza = await limpiarParcelasBorradas(db);
   if (limpieza.limpiadas.length > 0) {
     registrar(`Limpieza: ${limpieza.limpiadas.length} parcelas borradas.`);
@@ -50,7 +56,7 @@ async function ejecutarCiclo({ db, clima, mensajeria, ahora = new Date(), regist
   if (mensajeria && alertas.length > 0) {
     avisos = await enviarAvisos({ db, mensajeria, alertas, ahora, registrar });
   }
-  return { limpieza, adquisicion, evaluacion, alertas, avisos };
+  return { cuentasEliminadas, limpieza, adquisicion, evaluacion, alertas, avisos };
 }
 
 /** Arranque desde GitHub Actions o la terminal. */
@@ -58,6 +64,7 @@ async function principal() {
   const { initializeApp, cert } = require('firebase-admin/app');
   const { getFirestore } = require('firebase-admin/firestore');
   const { getMessaging } = require('firebase-admin/messaging');
+  const { getAuth } = require('firebase-admin/auth');
 
   const clave = process.env.OPENWEATHER_KEY;
   const cuenta = process.env.FIREBASE_SERVICE_ACCOUNT;
@@ -74,6 +81,8 @@ async function principal() {
     clima: crearCliente({ clave }),
     // En el emulador no hay FCM: las alertas se crean pero no se avisan.
     mensajeria: cuenta ? getMessaging(app) : undefined,
+    // Con la cuenta de servicio, o con el emulador de Auth encendido.
+    auth: cuenta || process.env.FIREBASE_AUTH_EMULATOR_HOST ? getAuth(app) : undefined,
   });
   // Si ninguna celda se pudo consultar (clave mala, servicio caído), la tarea
   // falla para que GitHub lo avise por correo.

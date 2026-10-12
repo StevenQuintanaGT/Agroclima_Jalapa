@@ -22,8 +22,10 @@ class MapaClimaVm extends ChangeNotifier {
     required this._clima,
     required this._preferencias,
     required this._conectividad,
+    bool Function()? ahorroDatos,
     DateTime Function()? reloj,
-  }) : _reloj = reloj ?? DateTime.now {
+  }) : _reloj = reloj ?? DateTime.now,
+       _ahorroDatos = ahorroDatos ?? _nunca {
     _suscripciones.addAll([
       _parcelas.misParcelas().listen((lista) {
         _lista = lista;
@@ -52,6 +54,7 @@ class MapaClimaVm extends ChangeNotifier {
   final PreferenciasLocalesRepositorio _preferencias;
   final ConectividadServicio _conectividad;
   final DateTime Function() _reloj;
+  final bool Function() _ahorroDatos;
   final List<StreamSubscription<Object?>> _suscripciones = [];
   bool _descartado = false;
 
@@ -91,6 +94,15 @@ class MapaClimaVm extends ChangeNotifier {
       (p) => p.parcelaId == elegida,
       orElse: () => _lista.first,
     );
+  }
+
+  static bool _nunca() => false;
+
+  /// Con "Ahorrar datos" y sin wifi, poner una capa pide permiso antes
+  /// (D-50, D-55). Quitarla nunca lo pide.
+  Future<bool> pidePermiso(CapaClima capa) async {
+    if (_capa == capa || !_ahorroDatos()) return false;
+    return !await _conectividad.enWifi();
   }
 
   /// Tocar la capa activa la quita.

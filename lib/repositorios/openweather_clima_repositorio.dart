@@ -33,16 +33,24 @@ class OpenWeatherClimaRepositorio implements ClimaRepositorio {
     required this._cache,
     this._db,
     DateTime Function()? reloj,
-    this.vigenciaActual = Constantes.vigenciaCondiciones,
+    bool Function()? ahorroDatos,
     this.vigenciaPronostico = Constantes.vigenciaPronostico,
-  }) : _reloj = reloj ?? DateTime.now;
+  }) : _reloj = reloj ?? DateTime.now,
+       _ahorroDatos = ahorroDatos ?? _nunca;
 
   final OpenWeatherCliente _cliente;
   final CacheLocal _cache;
   final FirebaseFirestore? _db;
   final DateTime Function() _reloj;
-  final Duration vigenciaActual;
+  final bool Function() _ahorroDatos;
   final Duration vigenciaPronostico;
+
+  static bool _nunca() => false;
+
+  /// 60 min; 180 con "Ahorrar datos" (D-08, D-55).
+  Duration get vigenciaActual => _ahorroDatos()
+      ? Constantes.vigenciaCondicionesAhorroDatos
+      : Constantes.vigenciaCondiciones;
 
   FirebaseFirestore get _firestore => _db ?? FirebaseFirestore.instance;
 

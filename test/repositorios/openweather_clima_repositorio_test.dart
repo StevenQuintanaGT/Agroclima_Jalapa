@@ -94,6 +94,27 @@ void main() {
       verify(() => cliente.actual(any(), any())).called(2);
     });
 
+    test('con "Ahorrar datos" el dato vale 180 min (D-08, D-55)', () async {
+      var ahorro = true;
+      OpenWeatherClimaRepositorio conAhorro() => OpenWeatherClimaRepositorio(
+        cliente: cliente,
+        cache: cache,
+        db: db,
+        reloj: () => ahora,
+        ahorroDatos: () => ahorro,
+      );
+      when(() => cliente.actual(any(), any()))
+          .thenAnswer((_) async => _clima(ahora));
+      await conAhorro().actual(_parcela);
+      ahora = ahora.add(const Duration(minutes: 150));
+      expect((await conAhorro().actual(_parcela)).vigente, isTrue);
+      verify(() => cliente.actual(any(), any())).called(1);
+      // Al apagarlo vuelve a valer 60 min.
+      ahorro = false;
+      await conAhorro().actual(_parcela);
+      verify(() => cliente.actual(any(), any())).called(1);
+    });
+
     test('si la red falla, devuelve lo guardado como no vigente', () async {
       when(() => cliente.actual(any(), any()))
           .thenAnswer((_) async => _clima(ahora));
