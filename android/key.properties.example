@@ -1,0 +1,7 @@
+# Copiar como android/key.properties (no se sube a git) y llenar con los datos
+# de la llave creada con keytool (ver README, "APK final firmado").
+# storeFile es relativo a la carpeta android/.
+storeFile=agroclima-entrega.jks
+storePassword=
+keyAlias=agroclima
+keyPassword=

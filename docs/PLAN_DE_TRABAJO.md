@@ -49,7 +49,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 - [x] **HU-16** Resumen de un período + exportar a PDF, Excel y CSV, e imprimir (D-51)
 - [x] Perfil, ajustes, ayuda y glosario, acerca de, eliminar cuenta (D-55)
 - [ ] Ajustes que salgan de las pruebas con productores
-- [ ] APK final firmado (≤ 50 MB)
+- [ ] APK final firmado (≤ 50 MB) — listo para compilar: 38.9 MB, ícono y firma con `key.properties` (D-56). Falta la llave de Steven y la prueba en teléfono físico.
 
 ---
 

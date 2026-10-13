@@ -26,8 +26,29 @@ Ninguno de estos archivos se sube al repositorio (RNF-04).
 flutter pub get
 flutter run --dart-define-from-file=env/dev.json
 flutter analyze && flutter test
-flutter build apk --release --dart-define-from-file=env/prod.json
 ```
+
+## APK final firmado (RNF-09, RNF-25)
+
+La app se entrega como APK (sin Play Store). Se firma con una llave propia que **no se sube a git** y que
+hay que guardar en un lugar seguro: sin ella no se pueden instalar actualizaciones encima de la app.
+
+1. Crear la llave una sola vez (pide la contraseña y los datos del dueño):
+
+   ```bash
+   keytool -genkey -v -keystore android/agroclima-entrega.jks -keyalg RSA -keysize 2048 -validity 10000 -alias agroclima -J-Duser.language=en
+   ```
+
+2. Copiar `android/key.properties.example` como `android/key.properties` y poner las contraseñas.
+3. Copiar `env/dev.example.json` como `env/prod.json` con la clave de OpenWeather.
+4. Compilar (solo ARM: todos los teléfonos Android reales; x86_64 es de emuladores y sumaba 23 MB):
+
+   ```bash
+   flutter build apk --release --target-platform android-arm,android-arm64 --obfuscate --split-debug-info=build/simbolos --dart-define-from-file=env/prod.json
+   ```
+
+   Sale en `build/app/outputs/flutter-apk/app-release.apk` (≈ 39 MB). Sin `key.properties` compila con la
+   firma de prueba y Gradle lo avisa: sirve para probar, no para entregar.
 
 ## Ciclo automático y reglas (`functions/`)
 

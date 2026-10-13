@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
@@ -9,6 +11,14 @@ plugins {
 if (file("google-services.json").exists()) {
     apply(plugin = "com.google.gms.google-services")
 }
+
+// Firma del APK final (RNF-25): android/key.properties y la llave .jks no se
+// suben a git (RNF-04). Plantilla: android/key.properties.example.
+val propiedadesFirma = Properties().apply {
+    val archivo = rootProject.file("key.properties")
+    if (archivo.exists()) archivo.inputStream().use { load(it) }
+}
+val hayFirmaPropia = propiedadesFirma.getProperty("storeFile") != null
 
 android {
     namespace = "gt.umg.agroclima_jalapa"
@@ -32,10 +42,27 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        if (hayFirmaPropia) {
+            create("propia") {
+                storeFile = rootProject.file(propiedadesFirma.getProperty("storeFile"))
+                storePassword = propiedadesFirma.getProperty("storePassword")
+                keyAlias = propiedadesFirma.getProperty("keyAlias")
+                keyPassword = propiedadesFirma.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO(HU-16/cierre): firma propia con key.properties para el APK final.
-            signingConfig = signingConfigs.getByName("debug")
+            // Sin key.properties sale con la firma de prueba: sirve para probar,
+            // no para entregar (no se podría actualizar con la llave real).
+            signingConfig = if (hayFirmaPropia) {
+                signingConfigs.getByName("propia")
+            } else {
+                logger.warn("AVISO: falta android/key.properties; el APK de release usa la firma de prueba.")
+                signingConfigs.getByName("debug")
+            }
         }
     }
 }
