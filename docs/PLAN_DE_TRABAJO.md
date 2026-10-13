@@ -71,7 +71,7 @@ Se puede adelantar una tarea de una etapa posterior solo si sus dependencias ya 
 - **Pendiente general:** prueba en teléfono físico Android ≥ 8.0 de gama media de todas las tareas (D-30).
 - HU-01: el foco del teclado pasaba al botón "Ver" en vez del siguiente campo; corregido y con prueba.
 - Sin señal, Firebase Auth puede responder `unknown` en vez de `network-request-failed`; se reconoce por el mensaje.
-- HU-02: todo verificado en el emulador salvo **entrar con Google** (programado y con pruebas, pero falta activar el proveedor Google y volver a descargar `google-services.json`).
+- HU-02: verificado en el emulador. **En producción (2026-10-12):** Firebase Authentication no estaba activado (el registro daba "No se pudo completar"; el servidor respondía `CONFIGURATION_NOT_FOUND`). Se activaron correo/contraseña y Google, se agregaron las huellas SHA-1/SHA-256 de la llave de entrega y la SHA-1 de depuración, y se volvió a descargar `google-services.json`. Probado en el teléfono de Steven con el APK firmado: crear cuenta y entrar con Google funcionan.
 - `MarcoPunteado` dibujaba el borde debajo del fondo y no se veía; corregido (afectaba ilustraciones, "Datos del…" y error de servicio).
 - HU-03: probado en el emulador con el mapa satelital de Esri (tocar, arrastrar el pin, búsqueda, "Usar mi ubicación", guardado en Firestore).
 - **D-37: sin plan Blaze.** Mapas con flutter_map + Esri; el ciclo automático correrá en GitHub Actions. Actualizar la tesis.
