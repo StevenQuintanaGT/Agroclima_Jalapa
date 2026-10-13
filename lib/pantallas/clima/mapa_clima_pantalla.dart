@@ -107,7 +107,7 @@ class _MapaClimaPantallaState extends State<MapaClimaPantalla> {
               parcelas: vm.parcelas,
               niveles: vm.nivelPorParcela,
               urlCapa: vm.urlCapa,
-              tenirCapa: vm.capa == CapaClima.nubes,
+              filtroCapa: MapaClima.filtroDe(vm.capa),
               opacidad: vm.opacidad,
               alFallarCapa: vm.capaFallo,
               controlador: _controlador,

@@ -4,6 +4,7 @@ import 'package:agroclima_jalapa/modelos/alerta.dart';
 import 'package:agroclima_jalapa/modelos/capa_clima.dart';
 import 'package:agroclima_jalapa/modelos/enums.dart';
 import 'package:agroclima_jalapa/modelos/parcela.dart';
+import 'package:agroclima_jalapa/pantallas/clima/mapa_clima.dart';
 import 'package:agroclima_jalapa/pantallas/clima/mapa_clima_pantalla.dart';
 import 'package:agroclima_jalapa/pantallas/clima/mapa_clima_vm.dart';
 import 'package:agroclima_jalapa/servicios/alertas_servicio.dart';
@@ -79,6 +80,23 @@ void main() {
       reloj: () => ahoraDePrueba,
     );
   }
+
+  test('nubes y viento se tiñen para verse sobre el mapa gris', () {
+    expect(MapaClima.filtroDe(null), isNull);
+    expect(MapaClima.filtroDe(CapaClima.lluvia), isNull);
+    expect(MapaClima.filtroDe(CapaClima.calor), isNull);
+    expect(MapaClima.filtroDe(CapaClima.nubes), isNotNull);
+    // Viento flojo (24 de 255) queda a 192: se ve; más viento, más oscuro.
+    expect(
+      MapaClima.filtroDe(CapaClima.viento),
+      const ColorFilter.matrix([
+        0, 0, 0, 0, 0x28, //
+        0, 0, 0, 0, 0x35, //
+        0, 0, 0, 0, 0x93, //
+        0, 0, 0, 8, 0, //
+      ]),
+    );
+  });
 
   group('MapaClimaVm', () {
     test(
@@ -184,7 +202,7 @@ void main() {
                     required List<Parcela> parcelas,
                     required Map<String, NivelSeveridad> niveles,
                     required String? urlCapa,
-                    required bool tenirCapa,
+                    required ColorFilter? filtroCapa,
                     required double opacidad,
                     required VoidCallback alFallarCapa,
                     required MapController controlador,

@@ -6,6 +6,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import '../../config/tema/colores.dart';
 import '../../config/tema/colores_semaforo.dart';
 import '../../config/tema/tipografia.dart';
+import '../../modelos/capa_clima.dart';
 import '../../modelos/enums.dart';
 import '../../modelos/parcela.dart';
 
@@ -15,7 +16,7 @@ typedef ConstructorMapaClima = Widget Function({
   required List<Parcela> parcelas,
   required Map<String, NivelSeveridad> niveles,
   required String? urlCapa,
-  required bool tenirCapa,
+  required ColorFilter? filtroCapa,
   required double opacidad,
   required VoidCallback alFallarCapa,
   required MapController controlador,
@@ -31,7 +32,7 @@ class MapaClima extends StatelessWidget {
     required this.parcelas,
     required this.niveles,
     required this.urlCapa,
-    required this.tenirCapa,
+    required this.filtroCapa,
     required this.opacidad,
     required this.alFallarCapa,
     required this.controlador,
@@ -42,9 +43,9 @@ class MapaClima extends StatelessWidget {
   final Map<String, NivelSeveridad> niveles;
   final String? urlCapa;
 
-  /// Las nubes de OpenWeather son blancas: sobre el mapa claro no se ven.
-  /// Se tiñen de gris conservando su transparencia (más nubes, más gris).
-  final bool tenirCapa;
+  /// Cómo se pinta la capa para que se vea sobre el mapa gris
+  /// ([filtroDe]); `null` = tal como llega.
+  final ColorFilter? filtroCapa;
   final double opacidad;
   final VoidCallback alFallarCapa;
   final MapController controlador;
@@ -54,6 +55,26 @@ class MapaClima extends StatelessWidget {
   static const LatLng centroJalapa = LatLng(14.62, -89.98);
   static const double zoomDepartamento = 9.6;
 
+  /// Las nubes y el viento de OpenWeather llegan casi blancos y casi
+  /// transparentes: sobre el mapa claro no se ven.
+  /// - Nubes: gris conservando su transparencia (más nubes, más gris).
+  /// - Viento: el índigo de la leyenda y 8 veces más opaco; el viento flojo de
+  ///   Jalapa llega con 24 de 255 como mucho. Más viento sigue siendo más
+  ///   oscuro.
+  static ColorFilter? filtroDe(CapaClima? capa) => switch (capa) {
+    CapaClima.nubes => const ColorFilter.mode(
+      Color(0xFF37474F),
+      BlendMode.srcIn,
+    ),
+    CapaClima.viento => const ColorFilter.matrix([
+      0, 0, 0, 0, 0x28, //
+      0, 0, 0, 0, 0x35, //
+      0, 0, 0, 0, 0x93, //
+      0, 0, 0, 8, 0, //
+    ]),
+    _ => null,
+  };
+
   static const String _esri =
       'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas';
   static const String _paquete = 'gt.umg.agroclima_jalapa';
@@ -62,7 +83,7 @@ class MapaClima extends StatelessWidget {
     required List<Parcela> parcelas,
     required Map<String, NivelSeveridad> niveles,
     required String? urlCapa,
-    required bool tenirCapa,
+    required ColorFilter? filtroCapa,
     required double opacidad,
     required VoidCallback alFallarCapa,
     required MapController controlador,
@@ -71,7 +92,7 @@ class MapaClima extends StatelessWidget {
     parcelas: parcelas,
     niveles: niveles,
     urlCapa: urlCapa,
-    tenirCapa: tenirCapa,
+    filtroCapa: filtroCapa,
     opacidad: opacidad,
     alFallarCapa: alFallarCapa,
     controlador: controlador,
@@ -103,9 +124,9 @@ class MapaClima extends StatelessWidget {
           Opacity(
             opacity: opacidad,
             child: ColorFiltered(
-              colorFilter: tenirCapa
-                  ? const ColorFilter.mode(Color(0xFF37474F), BlendMode.srcIn)
-                  : const ColorFilter.mode(Colors.transparent, BlendMode.dst),
+              colorFilter:
+                  filtroCapa ??
+                  const ColorFilter.mode(Colors.transparent, BlendMode.dst),
               child: TileLayer(
                 key: ValueKey(urlCapa),
                 urlTemplate: urlCapa,
