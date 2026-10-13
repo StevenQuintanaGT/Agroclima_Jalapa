@@ -146,7 +146,7 @@ Claves:
 flutter pub get
 flutter run --dart-define-from-file=env/dev.json
 flutter analyze && flutter test
-flutter build apk --release --dart-define-from-file=env/prod.json   # entrega por APK (RNF-25), ≤ 50 MB (RNF-09)
+flutter build apk --release --target-platform android-arm,android-arm64 --obfuscate --split-debug-info=build/simbolos --dart-define-from-file=env/prod.json   # APK firmado (RNF-25), ≤ 50 MB (RNF-09); ver README
 
 cd functions && npm install && npm test
 npm run test:reglas                              # reglas de Firestore con el emulador
