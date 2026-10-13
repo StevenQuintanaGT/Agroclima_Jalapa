@@ -49,7 +49,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 - [x] **HU-16** Resumen de un período + exportar a PDF, Excel y CSV, e imprimir (D-51)
 - [x] Perfil, ajustes, ayuda y glosario, acerca de, eliminar cuenta (D-55)
 - [ ] Ajustes que salgan de las pruebas con productores
-- [ ] APK final firmado (≤ 50 MB) — listo para compilar: 38.9 MB, ícono y firma con `key.properties` (D-56). Falta la llave de Steven y la prueba en teléfono físico.
+- [ ] APK final firmado (≤ 50 MB) — compilado y firmado con la llave de entrega (38.9 MB, D-56; la llave se guarda fuera del repositorio). Falta la prueba en teléfono físico.
 
 ---
 
@@ -80,7 +80,7 @@ Se puede adelantar una tarea de una etapa posterior solo si sus dependencias ya 
 - HU-07 (D-42): probado en el emulador con OpenWeather real (clima de la parcela, caché al reabrir sin nueva consulta, deslizar sin internet → aviso y dato guardado). El aspecto de "dato vencido" (más de 60 min sin señal) está cubierto por pruebas de widget.
 - HU-08 (D-43): probado en el emulador con OpenWeather real (hora por hora, 5 días, detalle con curva, lluvia y resumen).
 - HU-15 (D-44): probado en el emulador (quitar la red → banner al instante; devolverla → desaparece solo). De noche la lista de días ya no llama "Hoy" a mañana.
-- HT-03 (D-45): lectura del catálogo y filtro por parcela probados (jest + emulador, Dart contra la misma semilla). **Falta cargarlo en producción:** GitHub → Actions → "Sembrar umbrales" → Run workflow.
+- HT-03 (D-45): lectura del catálogo y filtro por parcela probados (jest + emulador, Dart contra la misma semilla). **Cargado en producción (2026-10-12):** 24 umbrales con GitHub → Actions → "Sembrar umbrales".
 - Perfil y ajustes (D-55): probados en el emulador (perfil en vivo, °F y pantalla oscura al instante, ayuda, acerca de). Eliminar cuenta de punta a punta con los emuladores: la app marca y cierra sesión, entrar otra vez muestra "se está eliminando", y el paso del ciclo borró Auth, perfil, parcelas e historial.
 - `adquirirClima` y la tarea de GitHub Actions (D-40, D-41): probados con el emulador y un clima falso. Secretos creados en GitHub (2026-10-03): la tarea corrió en la nube y se conectó a Firestore (0 parcelas en producción); con OpenWeather real contra el emulador guardó condiciones y 5 días de pronóstico de 2 celdas.
 
