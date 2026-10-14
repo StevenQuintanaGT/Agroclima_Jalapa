@@ -80,6 +80,7 @@ Acceso a datos (repositorios: ÚNICOS que tocan Firestore, OpenWeather o almacen
 | `docs/UMBRALES.md` | Catálogo de umbrales y algoritmo del motor de alertas |
 | `docs/DISENO_UI.md` | Paleta, tipografía, semáforo, pantallas, navegación y textos |
 | `docs/DECISIONES.md` | Decisiones tomadas y asuntos abiertos |
+| `docs/GUIA_PAGINA_WEB.md` | Guía para la página de presentación (GitHub Pages) con descarga del APK y la tesis |
 | `docs/plans/00..05-*.md` | Plan de implementación por módulo (léelo antes de trabajar ese módulo) |
 | `docs/diseno/` | Capturas de los mockups (35 pantallas) — referencia visual obligatoria |
 
