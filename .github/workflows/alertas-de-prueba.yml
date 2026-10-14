@@ -1,0 +1,50 @@
+# Manda 2 alertas de prueba (helada y lluvia fuerte) a la primera parcela de
+# una cuenta, para revisar los avisos en un teléfono real; o las borra.
+# Solo a mano: Actions → "Alertas de prueba" → Run workflow.
+name: Alertas de prueba
+
+on:
+  workflow_dispatch:
+    inputs:
+      correo:
+        description: Correo de la cuenta en la app
+        required: true
+        type: string
+      accion:
+        description: enviar o borrar las alertas de prueba
+        required: true
+        default: enviar
+        type: choice
+        options: [enviar, borrar]
+
+jobs:
+  prueba:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: functions
+    steps:
+      - name: Ocultar el correo en el registro
+        working-directory: .
+        env:
+          CORREO: ${{ inputs.correo }}
+        run: echo "::add-mask::$CORREO"
+
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci --omit=dev
+
+      - name: Alertas de prueba
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          CORREO: ${{ inputs.correo }}
+          ACCION: ${{ inputs.accion }}
+        run: node scripts/alertas-de-prueba.js "$CORREO" "$ACCION"
