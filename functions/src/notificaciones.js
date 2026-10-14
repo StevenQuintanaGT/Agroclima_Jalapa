@@ -151,4 +151,4 @@ async function enviarAvisos({ db, mensajeria, alertas, ahora = new Date(), regis
   return resumen;
 }
 
-module.exports = { enviarAvisos, enSilencio, debeAvisar, agruparSeguidas, CANAL };
+module.exports = { enviarAvisos, enSilencio, debeAvisar, agruparSeguidas, mensajeFcm, CANAL };

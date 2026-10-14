@@ -70,6 +70,10 @@ El ciclo de cada 3 horas (clima → alertas → avisos) lo ejecuta **GitHub Acti
 `functions/` (D-37). Necesita dos secretos en GitHub (Settings → Secrets and variables → Actions):
 `OPENWEATHER_KEY` y `FIREBASE_SERVICE_ACCOUNT`.
 
+Para revisar los avisos en un teléfono sin esperar al clima: Actions → **"Alertas de prueba"** → Run workflow,
+con el correo de la cuenta. Manda 2 alertas (helada y lluvia fuerte) a su primera parcela, marcadas como
+prueba; con la opción `borrar` se quitan.
+
 ### Probar la app contra los emuladores (sin tocar producción)
 
 ```bash
