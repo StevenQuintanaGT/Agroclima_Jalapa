@@ -49,6 +49,7 @@ Resultado: splash, onboarding, registro, inicio de sesión, permisos y shell con
 - [x] **HU-16** Resumen de un período + exportar a PDF, Excel y CSV, e imprimir (D-51)
 - [x] Perfil, ajustes, ayuda y glosario, acerca de, eliminar cuenta (D-55)
 - [ ] Ajustes que salgan de las pruebas con productores
+- [x] Encuesta de satisfacción "Su opinión" para la evaluación con productores (D-58, v1.1.0). Falta la prueba en teléfono físico.
 - [ ] APK final firmado (≤ 50 MB) — compilado y firmado con la llave de entrega (38.9 MB, D-56; la llave se guarda fuera del repositorio). Falta la prueba en teléfono físico.
 
 ---

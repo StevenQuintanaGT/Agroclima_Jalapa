@@ -58,11 +58,13 @@ async function cuenta(uid, { pidioEliminar }) {
   await db.collection('alertas').add({ usuarioId: uid, parcelaId: parcela.id });
   // Alerta de una parcela que ya borró antes.
   await db.collection('alertas').add({ usuarioId: uid, parcelaId: 'vieja' });
-  return { perfil, parcela };
+  const encuesta = db.doc(`encuestas/${uid}`);
+  await encuesta.set({ uid, p1: 'facil', consentimiento: true });
+  return { perfil, parcela, encuesta };
 }
 
-test('borra el acceso, el perfil, las preferencias, las parcelas y las alertas', async () => {
-  const { perfil, parcela } = await cuenta('ana', { pidioEliminar: true });
+test('borra el acceso, el perfil, las preferencias, las parcelas, las alertas y la encuesta', async () => {
+  const { perfil, parcela, encuesta } = await cuenta('ana', { pidioEliminar: true });
   const auth = authFalso();
 
   const eliminadas = await eliminarCuentasSolicitadas(db, auth);
@@ -75,11 +77,12 @@ test('borra el acceso, el perfil, las preferencias, las parcelas y las alertas',
   expect((await parcela.collection('condiciones').get()).empty).toBe(true);
   expect((await parcela.collection('pronosticos').get()).empty).toBe(true);
   expect((await db.collection('alertas').get()).empty).toBe(true);
+  expect((await encuesta.get()).exists).toBe(false);
 });
 
 test('no toca a quien no lo pidió', async () => {
   await cuenta('ana', { pidioEliminar: true });
-  const { perfil, parcela } = await cuenta('beto', { pidioEliminar: false });
+  const { perfil, parcela, encuesta } = await cuenta('beto', { pidioEliminar: false });
   const auth = authFalso();
 
   await eliminarCuentasSolicitadas(db, auth);
@@ -87,6 +90,7 @@ test('no toca a quien no lo pidió', async () => {
   expect(auth.borrados).toEqual(['ana']);
   expect((await perfil.get()).exists).toBe(true);
   expect((await parcela.collection('condiciones').get()).size).toBe(1);
+  expect((await encuesta.get()).exists).toBe(true);
   const alertas = await db.collection('alertas').get();
   expect(alertas.docs.map((d) => d.data().usuarioId)).toEqual(['beto', 'beto']);
 });

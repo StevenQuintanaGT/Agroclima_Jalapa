@@ -50,5 +50,12 @@ service cloud.firestore {
       allow read: if autenticado();
       allow write: if false;
     }
+
+    // Encuesta de satisfacción (D-58): un documento por usuario, id = uid.
+    match /encuestas/{uid} {
+      allow read: if esUsuario(uid);
+      allow create, update: if esUsuario(uid) && request.resource.data.uid == uid;
+      allow delete: if false;                      // se borra con la cuenta (cascada)
+    }
   }
 }

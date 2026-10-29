@@ -13,6 +13,7 @@ parcelas/{parcelaId}
     └── pronosticos/{yyyyMMdd}
 alertas/{alertaId}
 umbrales/{umbralId}
+encuestas/{uid}
 ```
 
 - Condiciones y pronósticos son subcolecciones porque siempre se piden por parcela.
@@ -141,6 +142,28 @@ Campos adicionales **permitidos** (desnormalizados para mostrar sin otra lectura
 `notificada` (bool, si se envió por FCM).
 Una alerta **no se modifica** después de creada, salvo `leida` y `atendida`.
 
+### encuestas/{uid}  (D-58)
+Encuesta de satisfacción "Su opinión" (Perfil). Un documento por usuario; volver a enviar lo reemplaza.
+| Campo | Tipo | Oblig. | Defecto | Descripción |
+|---|---|---|---|---|
+| uid | string | sí | — | = id del documento |
+| p1 | string | sí | — | Facilidad: `facil`, `masOMenos`, `dificil` |
+| p2 | string | sí | — | Entiende avisos y colores: `todo`, `mayoria`, `poco` |
+| p3 | string | no | — | Le llegó un aviso: `si`, `no` |
+| p4 | string | sí | — | Sirvió para planificar: `mucho`, `algo`, `poco` |
+| p5 | string | sí | — | Hizo algo por un aviso o el pronóstico: `si`, `no` |
+| p6 | string | sí | — | Un aviso le evitó o redujo un daño: `si`, `sinDanio`, `no` |
+| p7 | string | sí | — | La recomendaría: `si`, `talVez`, `no` |
+| p8 | string | no | — | Qué le cambiaría o agregaría (texto libre) |
+| detalleAviso | string | no | — | De qué fue el aviso (solo si p3 = `si`) |
+| detalleAccion | string | no | — | Qué hizo (solo si p5 = `si`) |
+| detalleDanio | string | no | — | Qué daño evitó (solo si p6 = `si`) |
+| consentimiento | bool | sí | — | Permite usar nombre, respuestas y foto en el trabajo de graduación |
+| municipio | string | no | — | De su primera parcela registrada |
+| cultivo | string | no | — | De su primera parcela registrada |
+| versionApp | string | sí | — | Versión con que respondió, ej. `1.1.0` |
+| fechaRespuesta | timestamp | sí | serverTimestamp | Último envío |
+
 ### umbrales/{umbralId}  (Tabla 70)
 | Campo | Tipo | Oblig. | Defecto | Descripción |
 |---|---|---|---|---|
@@ -218,6 +241,13 @@ service cloud.firestore {
       allow read: if autenticado();
       allow write: if false;
     }
+
+    // Encuesta de satisfacción (D-58): un documento por usuario, id = uid.
+    match /encuestas/{uid} {
+      allow read: if esUsuario(uid);
+      allow create, update: if esUsuario(uid) && request.resource.data.uid == uid;
+      allow delete: if false;                      // se borra con la cuenta (cascada)
+    }
   }
 }
 ```
@@ -227,7 +257,8 @@ Las consultas de la app **siempre** deben filtrar por `usuarioId == uid` o las r
 
 Pruebas obligatorias de reglas (emulador, `@firebase/rules-unit-testing`): leer parcela ajena → rechazo;
 crear parcela con `usuarioId` ajeno → rechazo; escribir pronóstico desde el cliente → rechazo;
-cambiar `mensaje` de una alerta → rechazo; marcar `leida` propia → permitido.
+cambiar `mensaje` de una alerta → rechazo; marcar `leida` propia → permitido; leer o escribir la encuesta
+de otro usuario → rechazo.
 
 ## 6. Borrado en cascada
 
@@ -238,7 +269,8 @@ cambiar `mensaje` de una alerta → rechazo; marcar `leida` propia → permitido
   `eliminacionSolicitada` (con señal: espera la confirmación del servidor), vacía `tokensFcm` y cierra la
   sesión. En la siguiente vuelta del ciclo, `eliminarCuentasSolicitadas` (`functions/src/cuentas.js`) borra
   **primero el usuario de Auth** (ya no puede entrar ni recrear su perfil) y luego parcelas (con su
-  cascada), alertas, preferencias y perfil. Si algo falla, la marca queda y la próxima vuelta reintenta.
+  cascada), alertas, encuesta, preferencias y perfil. Si algo falla, la marca queda y la próxima vuelta
+  reintenta.
 
 ## 7. Operación sin conexión
 

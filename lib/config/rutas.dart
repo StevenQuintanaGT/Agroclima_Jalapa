@@ -39,6 +39,8 @@ import '../pantallas/perfil/acerca_pantalla.dart';
 import '../pantallas/perfil/ajustes_pantalla.dart';
 import '../pantallas/perfil/ajustes_vm.dart';
 import '../pantallas/perfil/ayuda_pantalla.dart';
+import '../pantallas/perfil/encuesta_pantalla.dart';
+import '../pantallas/perfil/encuesta_vm.dart';
 import '../pantallas/perfil/perfil_pantalla.dart';
 import '../pantallas/reportes/historial_pantalla.dart';
 import '../pantallas/reportes/historial_vm.dart';
@@ -58,6 +60,7 @@ import '../servicios/historial_servicio.dart';
 import '../servicios/reportes_servicio.dart';
 import '../servicios/notificaciones_servicio.dart';
 import '../servicios/parcelas_servicio.dart';
+import '../servicios/encuesta_servicio.dart';
 import '../servicios/perfil_servicio.dart';
 import '../servicios/ubicacion_servicio.dart';
 import 'tema/colores.dart';
@@ -85,6 +88,7 @@ class Rutas {
   static const String misAvisos = '/perfil/avisos';
   static const String ajustes = '/perfil/ajustes';
   static const String ayuda = '/perfil/ayuda';
+  static const String encuesta = '/perfil/opinion';
   static const String acercaDe = '/perfil/acerca';
 
   /// Detalle y edición van fuera de la barra inferior (pantalla 15).
@@ -426,6 +430,14 @@ GoRouter crearEnrutador({
                   GoRoute(
                     path: 'ayuda',
                     builder: (context, estado) => const AyudaPantalla(),
+                  ),
+                  GoRoute(
+                    path: 'opinion',
+                    builder: (context, estado) => ChangeNotifierProvider(
+                      create: (context) =>
+                          EncuestaVm(context.read<EncuestaServicio>()),
+                      child: const EncuestaPantalla(),
+                    ),
                   ),
                   GoRoute(
                     path: 'acerca',

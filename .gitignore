@@ -130,3 +130,6 @@ $RECYCLE.BIN/
 # Copias locales de APK, capturas y exportaciones de prueba
 capturas/
 *.zip
+
+# Encuestas exportadas: datos personales de los productores (D-58)
+encuestas*.csv

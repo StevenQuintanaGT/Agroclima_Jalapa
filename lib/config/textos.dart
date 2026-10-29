@@ -549,6 +549,66 @@ class Textos {
       'Verde: tranquilo. Amarillo: cuidado. Rojo: peligro';
   static const String acercaDeLaApp = 'Acerca de la app';
 
+  // ---------- Su opinión (encuesta, D-58) ----------
+  static const String suOpinion = 'Su opinión';
+  static const String encuestaIntro =
+      'Cuéntenos cómo le ha ido con la app. Son 8 preguntas cortas y nos '
+      'ayudan a mejorarla.';
+  static String yaRespondioEncuesta(DateTime? local) => local == null
+      ? 'Ya nos dio su opinión. Puede cambiar sus respuestas.'
+      : 'Ya nos dio su opinión el '
+            '${DateFormat("d 'de' MMMM", 'es').format(local)}. '
+            'Puede cambiar sus respuestas.';
+  static const String preguntaFacil =
+      '1. ¿Qué tan fácil le ha sido usar la app?';
+  static const String preguntaColores =
+      '2. ¿Entiende los avisos y los colores (verde, amarillo y rojo)?';
+  static const String preguntaLlegoAviso =
+      '3. ¿Le ha llegado algún aviso a su teléfono?';
+  static const String preguntaPlanificar =
+      '4. ¿Le ha servido para planificar el trabajo de su parcela?';
+  static const String preguntaHizoAlgo =
+      '5. ¿Ha hecho algo en su parcela por un aviso o el pronóstico?';
+  static const String preguntaEvitoDanio =
+      '6. ¿Algún aviso le ayudó a evitar o reducir un daño?';
+  static const String preguntaRecomendaria =
+      '7. ¿La recomendaría a otros productores?';
+  static const String preguntaCambiaria = '8. ¿Qué le cambiaría o agregaría?';
+  static const String deQueFueAviso = '¿De qué fue? (si quiere)';
+  static const String queHizo = '¿Qué hizo? (si quiere)';
+  static const String cualDanio = '¿Cuál? (si quiere)';
+  static const String sugerenciaAyuda = 'Si quiere, escríbalo aquí.';
+  static const String preguntaPermiso =
+      '¿Permite usar su nombre, sus respuestas y una foto en el trabajo de '
+      'graduación?';
+  static const String permisoAyuda =
+      'Si dice que no, sus respuestas se cuentan igual, pero sin su nombre.';
+  static const String faltanRespuestas =
+      'Para enviar, responda las preguntas 1, 2, 4, 5, 6 y 7 y la del permiso.';
+  static const String enviandoOpinion = 'Enviando…';
+  static const String graciasOpinion = '¡Gracias por su opinión!';
+  static const String opinionNoSeEnvio =
+      'No se pudo enviar. Revise su señal e intente otra vez.';
+
+  /// Etiqueta de cada valor guardado de la encuesta (MODELO_DATOS §3).
+  static String opcionEncuesta(String pregunta, String valor) =>
+      switch ((pregunta, valor)) {
+        ('p1', 'facil') => 'Fácil',
+        ('p1', 'masOMenos') => 'Más o menos',
+        ('p1', 'dificil') => 'Difícil',
+        ('p2', 'todo') => 'Sí, todo',
+        ('p2', 'mayoria') => 'La mayoría',
+        ('p2', 'poco') => 'Poco',
+        ('p4', 'mucho') => 'Mucho',
+        ('p4', 'algo') => 'Algo',
+        ('p4', 'poco') => 'Poco',
+        ('p6', 'sinDanio') => 'Todavía no ha habido daño',
+        ('p7', 'talVez') => 'Tal vez',
+        (_, 'si') => si,
+        (_, 'no') => no,
+        _ => valor,
+      };
+
   // ---------- Acerca de (31) ----------
   static const String acercaDe = 'Acerca de';
   static String version(String numero) => 'Versión $numero';

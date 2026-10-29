@@ -5,7 +5,7 @@ class Constantes {
 
   /// Versión que se muestra en "Acerca de" (31). Igual a `version` del
   /// pubspec sin el número de compilación; una prueba lo vigila.
-  static const String versionApp = '1.0.0';
+  static const String versionApp = '1.1.0';
 
   // Vigencia del dato guardado (DECISIONES D-08).
   static const Duration vigenciaCondiciones = Duration(minutes: 60);
