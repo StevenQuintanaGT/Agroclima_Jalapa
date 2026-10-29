@@ -14,6 +14,7 @@ import 'config/rutas.dart';
 import 'repositorios/alertas_repositorio.dart';
 import 'repositorios/auth_repositorio.dart';
 import 'repositorios/firestore_alertas_repositorio.dart';
+import 'repositorios/firestore_encuestas_repositorio.dart';
 import 'repositorios/firestore_historial_repositorio.dart';
 import 'repositorios/firebase_auth_repositorio.dart';
 import 'repositorios/firestore_parcelas_repositorio.dart';
@@ -31,6 +32,7 @@ import 'servicios/alertas_servicio.dart';
 import 'servicios/avisos_servicio.dart';
 import 'servicios/compartir_servicio.dart';
 import 'servicios/cuenta_servicio.dart';
+import 'servicios/encuesta_servicio.dart';
 import 'servicios/historial_servicio.dart';
 import 'servicios/reportes_servicio.dart';
 import 'servicios/busqueda_lugares_servicio.dart';
@@ -117,6 +119,13 @@ Future<void> main() async {
             usuarios: usuarios,
             auth: auth,
             umbrales: context.read<UmbralesRepositorio>(),
+          ),
+        ),
+        Provider(
+          create: (context) => EncuestaServicio(
+            auth: auth,
+            repositorio: FirestoreEncuestasRepositorio(),
+            parcelas: context.read<ParcelasServicio>(),
           ),
         ),
         ChangeNotifierProvider<EstadoSesion>.value(value: estadoSesion),

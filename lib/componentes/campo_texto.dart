@@ -28,6 +28,7 @@ class CampoTexto extends StatefulWidget {
     this.autocompletar,
     this.formatos,
     this.alEnviar,
+    this.lineas = 1,
   });
 
   final String etiqueta;
@@ -48,6 +49,9 @@ class CampoTexto extends StatefulWidget {
   final Iterable<String>? autocompletar;
   final List<TextInputFormatter>? formatos;
   final ValueChanged<String>? alEnviar;
+
+  /// Más de 1: el campo crece hasta este número de líneas (respuestas libres).
+  final int lineas;
 
   @override
   State<CampoTexto> createState() => _CampoTextoState();
@@ -97,7 +101,11 @@ class _CampoTextoState extends State<CampoTexto> {
           obscureText: widget.esContrasena && _oculto,
           enableSuggestions: !widget.esContrasena,
           autocorrect: !widget.esContrasena,
-          keyboardType: widget.teclado,
+          keyboardType:
+              widget.teclado ??
+              (widget.lineas > 1 ? TextInputType.multiline : null),
+          minLines: 1,
+          maxLines: widget.esContrasena ? 1 : widget.lineas,
           textInputAction: widget.accionTeclado,
           autofillHints: widget.autocompletar,
           inputFormatters: widget.formatos,

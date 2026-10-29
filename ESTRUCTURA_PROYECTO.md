@@ -98,7 +98,7 @@ agroclima_jalapa/
 │   │   ├── alertas/              # MOD-04: centro_alertas, detalle_alerta, tarjeta_alerta, mis_avisos,
 │   │   │                         #         apertura_alertas (abrir desde el aviso), contador_avisos (distintivo)
 │   │   ├── reportes/             # MOD-05: reportes, historial, exportar_reporte
-│   │   ├── perfil/               # perfil, ajustes, ayuda_glosario, acerca_de
+│   │   ├── perfil/               # perfil, ajustes, ayuda_glosario, acerca_de, encuesta (D-58)
 │   │   └── shell/                # contenedor con la barra inferior de 5 destinos + pantalla_en_construccion
 │   │
 │   ├── componentes/              # CO-18 transversales, reutilizables

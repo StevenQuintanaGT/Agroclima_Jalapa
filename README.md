@@ -27,6 +27,7 @@ en Jalapa"*, de Marlon Steven Quintana Recinos.
 | **Mapa del clima** | Capas de lluvia, nubes, temperatura y viento sobre el mapa de Jalapa. |
 | **Historial y reportes** | Condiciones día por día y alertas anteriores. Resumen de un período que se exporta a **PDF, Excel o CSV** o se imprime. |
 | **Perfil y ajustes** | °C o °F, manzanas o hectáreas, pantalla oscura, ahorro de datos, qué avisos recibir y horario de silencio, ayuda con glosario y eliminación de la cuenta. |
+| **Su opinión** | Encuesta corta de satisfacción para la evaluación con productores; sus resultados se exportan a CSV. |
 
 Pensada para productores de 25 a 60 años con teléfonos de gama media o baja y señal intermitente: letra grande,
 botones de al menos 48 px, español llano y un semáforo de colores (verde, amarillo, rojo).
@@ -144,6 +145,12 @@ npm run simular:emulador -- <parcelaId> helada   # alertas simuladas en el emula
 ```
 
 Publicar reglas e índices: `firebase deploy --only firestore:rules,firestore:indexes` (funciona con Spark).
+
+Resultados de la encuesta "Su opinión" (D-58), sin correo ni uid y sin el nombre de quien no dio permiso:
+
+```bash
+FIREBASE_SERVICE_ACCOUNT='<JSON de la cuenta de servicio>' node functions/scripts/exportar-encuestas.js C:/ruta/fuera/del/repo/encuestas.csv
+```
 
 ### Probar la app contra los emuladores (sin tocar producción)
 

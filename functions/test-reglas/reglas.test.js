@@ -208,3 +208,35 @@ describe('Alertas y umbrales', () => {
     );
   });
 });
+
+describe('Encuestas (D-58)', () => {
+  const respuestas = (uid) => ({ uid, p1: 'facil', consentimiento: true });
+
+  beforeEach(async () => {
+    await entorno.withSecurityRulesDisabled(async (contexto) => {
+      await setDoc(doc(contexto.firestore(), 'encuestas', BETO), respuestas(BETO));
+    });
+  });
+
+  test('cada quien crea, lee y cambia la suya', async () => {
+    const mia = doc(dbDe(ANA), 'encuestas', ANA);
+    await assertSucceeds(setDoc(mia, respuestas(ANA)));
+    await assertSucceeds(getDoc(mia));
+    await assertSucceeds(setDoc(mia, { ...respuestas(ANA), p1: 'dificil' }));
+  });
+
+  test('no se lee ni se escribe la encuesta de otro usuario', async () => {
+    await assertFails(getDoc(doc(dbDe(ANA), 'encuestas', BETO)));
+    await assertFails(setDoc(doc(dbDe(ANA), 'encuestas', BETO), respuestas(BETO)));
+    await assertFails(updateDoc(doc(dbDe(ANA), 'encuestas', BETO), { p1: 'dificil' }));
+  });
+
+  test('el uid del documento tiene que ser el propio', async () => {
+    await assertFails(setDoc(doc(dbDe(ANA), 'encuestas', ANA), respuestas(BETO)));
+  });
+
+  test('nadie la borra desde la app ni sin sesión', async () => {
+    await assertFails(deleteDoc(doc(dbDe(BETO), 'encuestas', BETO)));
+    await assertFails(getDoc(doc(dbAnonima(), 'encuestas', BETO)));
+  });
+});

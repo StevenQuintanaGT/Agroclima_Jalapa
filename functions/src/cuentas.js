@@ -8,7 +8,8 @@
  * ciclo (≤ 3 h) esto borra todo.
  *
  * Orden: primero el usuario de Auth (ya no puede entrar ni recrear su perfil),
- * después parcelas con su historial, alertas, preferencias y el perfil. Si
+ * después parcelas con su historial, alertas, la encuesta, preferencias y el
+ * perfil. Si
  * algo falla a medias, el perfil con la marca sigue ahí y la próxima vuelta
  * lo vuelve a intentar.
  */
@@ -48,6 +49,7 @@ async function eliminarCuenta(db, auth, doc) {
   }
   // Las alertas llevan `usuarioId`: así caen también las de parcelas ya borradas.
   await borrarAlertasDonde(db, 'usuarioId', uid);
+  await db.doc(`encuestas/${uid}`).delete();
   await db.recursiveDelete(doc.ref);
 }
 

@@ -15,7 +15,7 @@ import 'datos_hoja.dart';
 import 'perfil_vm.dart';
 
 /// Pantalla 28 · Perfil: quién es, cuántas parcelas tiene y dónde, accesos a
-/// parcelas, avisos, ajustes y ayuda, y "Cerrar sesión" (HU-02).
+/// parcelas, avisos, ajustes, ayuda y "Su opinión" (D-58), y "Cerrar sesión" (HU-02).
 class PerfilPantalla extends StatelessWidget {
   const PerfilPantalla({super.key});
 
@@ -60,6 +60,11 @@ class PerfilPantalla extends StatelessWidget {
                         icono: Symbols.help,
                         texto: Textos.ayuda,
                         alTocar: () => context.push(Rutas.ayuda),
+                      ),
+                      FilaOpcion(
+                        icono: Symbols.rate_review,
+                        texto: Textos.suOpinion,
+                        alTocar: () => context.push(Rutas.encuesta),
                       ),
                     ],
                   ),
